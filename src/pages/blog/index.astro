@@ -1,0 +1,11 @@
+---
+import BlogFeatured from '@/components/sections/blog-page/featured';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { getAllPosts } from '@/lib/blog';
+
+const posts = await getAllPosts();
+---
+
+<DefaultLayout>
+  <BlogFeatured posts={posts} client:load />
+</DefaultLayout>

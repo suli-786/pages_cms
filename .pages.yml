@@ -1,0 +1,340 @@
+# Pages CMS configuration — https://pagescms.org/docs/configuration
+# Lives at the repo root. Pages CMS reads it per repo and per branch.
+#
+# Scope: the three file-based content collections (blog, case studies, services).
+# Everything else on the site (homepage hero, FAQ, CTA, about/contact copy, nav,
+# footer, site name/SEO) is still hardcoded in .tsx components and is NOT editable
+# here yet — extracting that is a separate step.
+
+media:
+  input: public/images # where uploaded files are stored in the repo
+  output: /images # the path written into content (matches existing image paths)
+
+content:
+  # ----------------------------------------------------------------- Homepage
+  # Single data file (src/content/home.json) rendered by src/pages/index.astro.
+  # Each section below maps to one block of the homepage.
+  - name: home
+    label: Homepage
+    type: file
+    path: src/content/home.json
+    fields:
+      - name: hero
+        label: 1. Hero
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: title, label: Title, type: string, required: true }
+          - { name: subtitle, label: Subtitle, type: string }
+          - { name: backgroundImage, label: Background image, type: image }
+          - { name: facts, label: Fact lines, type: string, list: true }
+          - name: primaryCta
+            label: Primary button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+          - name: secondaryCta
+            label: Secondary button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+          - { name: footnote, label: Footnote, type: string }
+          - name: saveDate
+            label: Save-the-date strip
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string }
+              - name: cta
+                label: Button
+                type: object
+                fields:
+                  - { name: label, label: Label, type: string }
+                  - { name: href, label: Link, type: string }
+          - name: eventDetails
+            label: Event details (3 columns)
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string }
+
+      - name: vision
+        label: 2. Vision
+        type: object
+        fields:
+          - { name: badge, label: Badge, type: string }
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: lead, label: Lead paragraph, type: text }
+          - name: learnMore
+            label: "Learn-more link"
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+          - name: card
+            label: Highlight card
+            type: object
+            fields:
+              - { name: image, label: Image, type: image }
+              - { name: title, label: Title, type: string }
+              - { name: subtitle, label: Subtitle, type: string }
+              - name: cta
+                label: Button
+                type: object
+                fields:
+                  - { name: label, label: Label, type: string }
+                  - { name: href, label: Link, type: string }
+          - { name: paragraphs, label: Body paragraphs, type: text, list: true }
+
+      - name: conference
+        label: 3. Conference intro
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: body, label: Body, type: text }
+          - { name: facts, label: Fact lines, type: string, list: true }
+          - name: image
+            label: Image
+            type: object
+            fields:
+              - { name: src, label: Image, type: image }
+              - { name: alt, label: Alt text, type: string }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+
+      - name: whyAttend
+        label: 4. Why attend
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string, required: true }
+          - { name: benefits, label: Benefits, type: string, list: true }
+          - name: image
+            label: Image
+            type: object
+            fields:
+              - { name: src, label: Image, type: image }
+              - { name: alt, label: Alt text, type: string }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+
+      - name: speakers
+        label: 5. Speakers
+        type: object
+        fields:
+          - { name: badge, label: Badge, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: description, label: Description, type: text }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+          - name: items
+            label: Speaker cards
+            type: object
+            list: true
+            fields:
+              - { name: name, label: Name, type: string, required: true }
+              - { name: role, label: Role / company, type: string }
+              - { name: theme, label: Talk theme, type: string }
+              - { name: portrait, label: Portrait, type: image }
+
+      - name: partners
+        label: 6. Partners
+        type: object
+        fields:
+          - { name: heading, label: Heading, type: string }
+          - { name: description, label: Description, type: text }
+          - name: items
+            label: Partner logos
+            type: object
+            list: true
+            fields:
+              - { name: src, label: Logo, type: image }
+              - { name: alt, label: Name / alt text, type: string }
+              - { name: href, label: Link, type: string }
+
+      - name: finalCta
+        label: 7. Final CTA
+        type: object
+        fields:
+          - { name: eyebrow, label: Eyebrow, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Body, type: text }
+          - name: cta
+            label: Button
+            type: object
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: href, label: Link, type: string }
+          - name: image
+            label: Image
+            type: object
+            fields:
+              - { name: src, label: Image, type: image }
+              - { name: alt, label: Alt text, type: string }
+
+      - name: newsletter
+        label: 8. Newsletter
+        type: object
+        fields:
+          - { name: badge, label: Badge, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: description, label: Description, type: text }
+          - { name: formEyebrow, label: Form eyebrow, type: string }
+          - { name: formHeading, label: Form heading, type: string }
+          - { name: successMessage, label: Success message, type: text }
+          - name: perksCard
+            label: Perks card
+            type: object
+            fields:
+              - { name: eyebrow, label: Eyebrow, type: string }
+              - { name: heading, label: Heading, type: string }
+              - { name: perks, label: Perks, type: string, list: true }
+
+  # ---------------------------------------------------------------- Blog posts
+  - name: blog
+    label: Blog posts
+    type: collection
+    path: src/content/blog
+    filename: '{primary}.mdx' # new files named from the title
+    view:
+      fields: [title, category, date]
+      primary: title
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - {
+          name: slug,
+          label: Slug (URL path),
+          type: string,
+          required: true,
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$',
+          description: 'Drives the page URL. Lowercase, hyphens, must be unique.',
+        }
+      - { name: excerpt, label: Excerpt, type: text, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - {
+          name: image,
+          label: Cover image,
+          type: image,
+          required: true,
+        }
+      - { name: category, label: Category, type: string, required: true }
+      - { name: tags, label: Tags, type: string, list: true }
+      - name: author
+        label: Author
+        type: object
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: role, label: Role, type: string, required: true }
+          - { name: avatar, label: Avatar, type: image }
+      - { name: readTime, label: Read time, type: string, description: 'e.g. 5 min' }
+      - { name: pinned, label: Pin to top, type: boolean }
+      - name: body
+        label: Content
+        type: rich-text
+
+  # ------------------------------------------------------------- Case studies
+  - name: case-studies
+    label: Case studies
+    type: collection
+    path: src/content/case-studies
+    filename: '{primary}.mdx'
+    view:
+      fields: [title, sector, year]
+      primary: title
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - {
+          name: slug,
+          label: Slug (URL path),
+          type: string,
+          required: true,
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$',
+          description: 'Drives the page URL. Lowercase, hyphens, must be unique.',
+        }
+      - { name: description, label: Description, type: text, required: true }
+      - { name: id, label: Display number, type: string, required: true, description: 'e.g. 01' }
+      - { name: sector, label: Sector, type: string, required: true }
+      - { name: practice, label: Practice area, type: string, required: true }
+      - { name: outcome, label: Outcome, type: text, required: true }
+      - { name: metric, label: Metric, type: string, required: true, description: 'e.g. $4.2B' }
+      - { name: metricLabel, label: Metric label, type: string, required: true, description: 'e.g. at stake' }
+      - { name: forum, label: Forum, type: string, required: true }
+      - { name: year, label: Year, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: image, label: Image, type: image, required: true }
+      - { name: pinned, label: Pin to top, type: boolean }
+      - name: testimonial
+        label: Testimonial (optional)
+        type: object
+        fields:
+          - { name: quote, label: Quote, type: text }
+          - { name: author, label: Author, type: string }
+          - { name: role, label: Role, type: string }
+          - { name: avatar, label: Avatar, type: image }
+      - name: body
+        label: Content
+        type: rich-text
+
+  # ---------------------------------------------------------------- Services
+  - name: services
+    label: Services
+    type: collection
+    path: src/content/services
+    filename: '{primary}.mdx'
+    view:
+      fields: [name, order]
+      primary: name
+    fields:
+      - { name: name, label: Name, type: string, required: true }
+      - {
+          name: slug,
+          label: Slug (URL path),
+          type: string,
+          required: true,
+          pattern: '^[a-z0-9]+(?:-[a-z0-9]+)*$',
+          description: 'Drives the page URL. Lowercase, hyphens, must be unique.',
+        }
+      - { name: id, label: Display number, type: string, required: true, description: 'e.g. I' }
+      - { name: tagline, label: Tagline, type: string, required: true }
+      - { name: description, label: Description, type: text, required: true }
+      - {
+          name: icon,
+          label: Icon,
+          type: string,
+          required: true,
+          description: 'lucide-react icon name, e.g. Handshake',
+        }
+      - { name: order, label: Order, type: number, required: true }
+      - { name: image, label: Image, type: image, required: true }
+      - { name: subAreas, label: Sub-areas, type: string, list: true }
+      - name: partner
+        label: Partner
+        type: object
+        fields:
+          - { name: name, label: Name, type: string, required: true }
+          - { name: role, label: Role, type: string, required: true }
+      - name: representativeCase
+        label: Representative case
+        type: object
+        fields:
+          - { name: title, label: Title, type: string, required: true }
+          - { name: metric, label: Metric, type: string, required: true }
+          - { name: metricLabel, label: Metric label, type: string, required: true }
+          - { name: slug, label: Linked case slug, type: string, required: true }
+      - name: body
+        label: Content
+        type: rich-text

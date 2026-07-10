@@ -1,0 +1,281 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --display-weight: 900;
+  --text-weight: 400;
+  --font-display: "Arial Black", Arial, sans-serif;
+  --font-text: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);
+    }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);
+    }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+}
+
+:root {
+  /* Brand palette — Midnight Indigo #13144D · Cornflower #5B82FC · Spring Aqua #06E3A7
+     · Electric Lime #1BDB00 · Mist #F4F5F7 · Black #000000. Contrast-verified for WCAG AA. */
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #13144d;                  /* Midnight Indigo — white text 17:1 */
+  --primary-foreground: #ffffff;
+  --secondary: #f4f5f7;                /* Mist */
+  --secondary-foreground: #13144d;
+  --muted: #f4f5f7;
+  --muted-foreground: #575a72;         /* navy-grey — 6.8:1 on white */
+  --accent: #5b82fc;                   /* Cornflower — dark text only (white fails) */
+  --accent-foreground: #13144d;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #e2e4eb;
+  --input: #e2e4eb;
+  --ring: #5b82fc;                     /* Cornflower focus ring — 3.5:1 on white */
+  --chart-1: #1bdb00;                  /* Electric Lime */
+  --chart-2: #06e3a7;                  /* Spring Aqua */
+  --chart-3: #5b82fc;                  /* Cornflower */
+  --chart-4: #13144d;                  /* Midnight Indigo */
+  --chart-5: #8a8fb5;                  /* muted indigo */
+  --radius: 0.625rem;
+  --sidebar: #f4f5f7;
+  --sidebar-foreground: #13144d;
+  --sidebar-primary: #13144d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9ebf0;
+  --sidebar-accent-foreground: #13144d;
+  --sidebar-border: #e2e4eb;
+  --sidebar-ring: #5b82fc;
+}
+
+.dark {
+  /* Deep-indigo canvas built from the brand navy; bright colours carry accents. */
+  --background: #0b0c2e;               /* deep indigo (darker shade of brand navy) */
+  --foreground: #f4f5f7;               /* Mist */
+  --card: #13144d;                     /* Midnight Indigo */
+  --card-foreground: #f4f5f7;
+  --popover: #13144d;
+  --popover-foreground: #f4f5f7;
+  --primary: #f4f5f7;                  /* light anchor inverts on dark */
+  --primary-foreground: #13144d;
+  --secondary: #1e1f5c;
+  --secondary-foreground: #f4f5f7;
+  --muted: #1e1f5c;
+  --muted-foreground: #b4b7d0;         /* 7.6:1 on muted */
+  --accent: #5b82fc;                   /* Cornflower */
+  --accent-foreground: #0b0c2e;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: #ffffff1f;                 /* ~12% white */
+  --input: #ffffff2e;                  /* ~18% white */
+  --ring: #5b82fc;
+  --chart-1: #1bdb00;                  /* Electric Lime */
+  --chart-2: #06e3a7;                  /* Spring Aqua */
+  --chart-3: #5b82fc;                  /* Cornflower */
+  --chart-4: #8aa5fd;                  /* light cornflower (navy is invisible on dark) */
+  --chart-5: #b4b7d0;                  /* muted indigo */
+  --sidebar: #13144d;
+  --sidebar-foreground: #f4f5f7;
+  --sidebar-primary: #5b82fc;
+  --sidebar-primary-foreground: #0b0c2e;
+  --sidebar-accent: #1e1f5c;
+  --sidebar-accent-foreground: #f4f5f7;
+  --sidebar-border: #ffffff1a;
+  --sidebar-ring: #5b82fc;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-background font-text font-weight-text text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-weight-display;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-28;
+  }
+  .hero-padding {
+    @apply pt-32 pb-16 md:pt-44 md:pb-20 lg:pt-52 lg:pb-24;
+  }
+  .leading-trim {
+    text-box-trim: trim-both;
+    text-box-edge: cap alphabetic;
+  }
+}
+
+@utility font-weight-display {
+  font-weight: var(--display-weight);
+}
+
+@utility font-weight-text {
+  font-weight: var(--text-weight);
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 800px) {
+    max-width: 1432px;
+  }
+}
+
+@utility bigger-container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/* Animated brand mesh — cool indigo / cornflower / mint gradient for the contact CTA card.
+   Class name kept as `.brass-mesh` so consumers (contact.tsx) don't need touching.
+   @property lets the custom properties interpolate smoothly on the GPU. */
+@property --vg-x1 { syntax: "<percentage>"; inherits: false; initial-value: 12%; }
+@property --vg-y1 { syntax: "<percentage>"; inherits: false; initial-value: 18%; }
+@property --vg-x2 { syntax: "<percentage>"; inherits: false; initial-value: 88%; }
+@property --vg-y2 { syntax: "<percentage>"; inherits: false; initial-value: 12%; }
+@property --vg-x3 { syntax: "<percentage>"; inherits: false; initial-value: 20%; }
+@property --vg-y3 { syntax: "<percentage>"; inherits: false; initial-value: 88%; }
+@property --vg-x4 { syntax: "<percentage>"; inherits: false; initial-value: 92%; }
+@property --vg-y4 { syntax: "<percentage>"; inherits: false; initial-value: 84%; }
+@property --vg-x5 { syntax: "<percentage>"; inherits: false; initial-value: 50%; }
+@property --vg-y5 { syntax: "<percentage>"; inherits: false; initial-value: 48%; }
+@property --vg-s1 { syntax: "<percentage>"; inherits: false; initial-value: 60%; }
+@property --vg-s2 { syntax: "<percentage>"; inherits: false; initial-value: 58%; }
+@property --vg-s3 { syntax: "<percentage>"; inherits: false; initial-value: 62%; }
+@property --vg-s4 { syntax: "<percentage>"; inherits: false; initial-value: 56%; }
+@property --vg-s5 { syntax: "<percentage>"; inherits: false; initial-value: 70%; }
+
+.brass-mesh {
+  background-color: #0b0c2e;
+  background-image:
+    radial-gradient(circle at var(--vg-x1) var(--vg-y1), #5b82fc 0px, transparent var(--vg-s1)),
+    radial-gradient(circle at var(--vg-x2) var(--vg-y2), #06e3a7 0px, transparent var(--vg-s2)),
+    radial-gradient(circle at var(--vg-x3) var(--vg-y3), #4a6bf5 0px, transparent var(--vg-s3)),
+    radial-gradient(circle at var(--vg-x4) var(--vg-y4), #1bdb00 0px, transparent var(--vg-s4)),
+    radial-gradient(circle at var(--vg-x5) var(--vg-y5), #2e3180 0px, transparent var(--vg-s5));
+  animation:
+    vg-b1 13s ease-in-out infinite,
+    vg-b2 16s ease-in-out infinite,
+    vg-b3 15s ease-in-out infinite,
+    vg-b4 18s ease-in-out infinite,
+    vg-b5 11s ease-in-out infinite,
+    vg-sz1 9s ease-in-out infinite,
+    vg-sz2 11s ease-in-out infinite,
+    vg-sz3 10s ease-in-out infinite,
+    vg-sz4 12s ease-in-out infinite,
+    vg-sz5 8s ease-in-out infinite;
+}
+
+@keyframes vg-b1 {
+  0%, 100% { --vg-x1: 8%;  --vg-y1: 10%; }
+  33%      { --vg-x1: 38%; --vg-y1: 26%; }
+  66%      { --vg-x1: 22%; --vg-y1: 50%; }
+}
+@keyframes vg-b2 {
+  0%, 100% { --vg-x2: 92%; --vg-y2: 8%;  }
+  40%      { --vg-x2: 60%; --vg-y2: 34%; }
+  70%      { --vg-x2: 82%; --vg-y2: 58%; }
+}
+@keyframes vg-b3 {
+  0%, 100% { --vg-x3: 12%; --vg-y3: 90%; }
+  35%      { --vg-x3: 42%; --vg-y3: 64%; }
+  65%      { --vg-x3: 26%; --vg-y3: 96%; }
+}
+@keyframes vg-b4 {
+  0%, 100% { --vg-x4: 94%; --vg-y4: 88%; }
+  30%      { --vg-x4: 64%; --vg-y4: 68%; }
+  60%      { --vg-x4: 98%; --vg-y4: 52%; }
+}
+@keyframes vg-b5 {
+  0%, 100% { --vg-x5: 50%; --vg-y5: 48%; }
+  25%      { --vg-x5: 66%; --vg-y5: 32%; }
+  50%      { --vg-x5: 40%; --vg-y5: 66%; }
+  75%      { --vg-x5: 32%; --vg-y5: 42%; }
+}
+
+@keyframes vg-sz1 { 0%, 100% { --vg-s1: 52%; } 50% { --vg-s1: 78%; } }
+@keyframes vg-sz2 { 0%, 100% { --vg-s2: 50%; } 50% { --vg-s2: 76%; } }
+@keyframes vg-sz3 { 0%, 100% { --vg-s3: 54%; } 50% { --vg-s3: 80%; } }
+@keyframes vg-sz4 { 0%, 100% { --vg-s4: 48%; } 50% { --vg-s4: 74%; } }
+@keyframes vg-sz5 { 0%, 100% { --vg-s5: 60%; } 50% { --vg-s5: 84%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .brass-mesh { animation: none; }
+}

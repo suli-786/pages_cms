@@ -1,0 +1,11 @@
+---
+import CaseStudiesFolio from '@/components/sections/case-studies-page/folio';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { getAllCaseStudies } from '@/lib/case-studies';
+
+const cases = await getAllCaseStudies();
+---
+
+<DefaultLayout>
+  <CaseStudiesFolio cases={cases} client:load />
+</DefaultLayout>

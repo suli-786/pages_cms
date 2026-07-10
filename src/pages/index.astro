@@ -1,0 +1,51 @@
+---
+// Homepage — Ummah Tech Conference.
+// Reworked from the Verdict law-firm template. Section order follows
+// homepage_layout.md. Kept blocks still carry template CONTENT — content
+// adaptation (copy, images, data) is a follow-up pass.
+//
+// Removed from this page (law-firm blocks, not needed):
+//   Services, CaseStudies, Process, Awards, Endorsements, Faq
+//   (awards.tsx + endorsements.tsx are still used elsewhere — files kept.)
+//
+// Pro blocks (shadcnblocks) adapted into template sections — see each file:
+//   conference-intro.tsx  ← @shadcnblocks/feature125
+//   why-attend.tsx        ← @shadcnblocks/feature124
+//   partners.tsx          ← @shadcnblocks/logos17
+import About from '@/components/sections/about';
+import ConferenceIntro from '@/components/sections/conference-intro';
+import Contact from '@/components/sections/contact';
+import Cta from '@/components/sections/cta';
+import Hero from '@/components/sections/hero';
+import Partners from '@/components/sections/partners';
+import Team from '@/components/sections/team';
+import WhyAttend from '@/components/sections/why-attend';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { home } from '@/lib/home';
+---
+
+<DefaultLayout>
+  <!-- Hero → "Ummah Tech Conference / Save the Date 2026" -->
+  <Hero content={home.hero} client:load />
+
+  <!-- About → "The Ummah Tech Vision" (mission) -->
+  <About content={home.vision} />
+
+  <!-- Conference intro → "Ummah Tech Conference" (pro: feature125) -->
+  <ConferenceIntro content={home.conference} />
+
+  <!-- Why Attend → 4 benefit checkmarks (pro: feature124) -->
+  <WhyAttend content={home.whyAttend} />
+
+  <!-- Team → "Last Year's Speakers" -->
+  <Team content={home.speakers} client:visible />
+
+  <!-- Our Partners → logo cloud (pro: logos17) -->
+  <Partners content={home.partners} />
+
+  <!-- Cta → "Final CTA: Upcoming conference — Johannesburg, 7 Nov 2026" -->
+  <Cta content={home.finalCta} />
+
+  <!-- Contact → Newsletter / lead-capture form -->
+  <Contact content={home.newsletter} client:visible />
+</DefaultLayout>

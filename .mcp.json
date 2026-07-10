@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"],
+      "env": {
+        "SHADCNBLOCKS_API_KEY": "${SHADCNBLOCKS_API_KEY}"
+      }
+    }
+  }
+}
