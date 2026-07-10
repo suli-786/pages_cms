@@ -60,7 +60,7 @@ function LogoRow({ logos, reverse }: { logos: PartnerLogo[]; reverse?: boolean }
 }
 
 function Partners({ content }: { content: PartnersContent }) {
-  const { heading, description, items } = content
+  const { heading, description, items = [] } = content
   const mid = Math.floor(items.length / 2)
   const topRow = items.slice(0, mid)
   const bottomRow = items.slice(mid)

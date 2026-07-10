@@ -89,7 +89,7 @@ function PerksCard({
       </motion.div>
 
       <ul className="relative mt-12 divide-y divide-white/10 border-t border-white/10">
-        {content.perks.map((perk) => (
+        {(content.perks ?? []).map((perk) => (
           <li
             key={perk}
             className="flex items-center gap-3 py-4 text-sm font-light tracking-tight text-foreground/90"

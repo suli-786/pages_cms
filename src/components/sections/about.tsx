@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import type { VisionContent } from "@/lib/home"
 
 function About({ content }: { content: VisionContent }) {
-  const { badge, heading, lead, learnMore, card, paragraphs } = content
+  const { badge, heading, lead, learnMore, card, paragraphs = [] } = content
 
   return (
     <section id="vision" className="section-padding scroll-mt-24">

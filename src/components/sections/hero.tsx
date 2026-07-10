@@ -19,12 +19,12 @@ function Hero({ content }: { content: HeroContent }) {
     title,
     subtitle,
     backgroundImage,
-    facts,
+    facts = [],
     primaryCta,
     secondaryCta,
     footnote,
     saveDate,
-    eventDetails,
+    eventDetails = [],
   } = content
 
   return (
@@ -58,14 +58,16 @@ function Hero({ content }: { content: HeroContent }) {
               {subtitle}
             </p>
 
-            <ul className="mt-10 space-y-3 text-lg">
-              {facts.map((fact) => (
-                <li key={fact} className="flex items-center gap-3">
-                  <span className="size-1.5 rounded-full bg-foreground" />
-                  {fact}
-                </li>
-              ))}
-            </ul>
+            {facts.length > 0 && (
+              <ul className="mt-10 space-y-3 text-lg">
+                {facts.map((fact) => (
+                  <li key={fact} className="flex items-center gap-3">
+                    <span className="size-1.5 rounded-full bg-foreground" />
+                    {fact}
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div className="mt-10 flex flex-wrap gap-3">
               <Button size="lg" asChild>

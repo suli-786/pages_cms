@@ -25,7 +25,7 @@ const slots = [
 ]
 
 function Team({ content }: { content: SpeakersContent }) {
-  const { badge, heading, description, cta, items } = content
+  const { badge, heading, description, cta, items = [] } = content
 
   return (
     <section id="speakers" className="section-padding scroll-mt-24 overflow-hidden">

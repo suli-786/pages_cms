@@ -12,7 +12,7 @@ const PATTERN =
   "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/patterns/cross-pattern.svg"
 
 function WhyAttend({ content }: { content: WhyAttendContent }) {
-  const { heading, benefits, image, cta } = content
+  const { heading, benefits = [], image, cta } = content
 
   return (
     <section className="section-padding overflow-hidden">

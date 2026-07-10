@@ -12,7 +12,7 @@ const PATTERN =
   "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/patterns/cross-pattern.svg"
 
 function ConferenceIntro({ content }: { content: ConferenceContent }) {
-  const { heading, body, facts, image, cta } = content
+  const { heading, body, facts = [], image, cta } = content
 
   return (
     <section id="event" className="section-padding scroll-mt-24 overflow-hidden">
