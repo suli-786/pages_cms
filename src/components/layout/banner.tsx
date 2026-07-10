@@ -7,7 +7,7 @@ import { useBannerVisibility } from '@/hooks/use-banner-visibility';
 import { cn } from '@/lib/utils';
 
 function Banner({
-  url = 'https://shadcnblocks.com',
+  url = '/#newsletter',
   initialVisible = true,
   pathname = '/',
 }: {
@@ -30,8 +30,8 @@ function Banner({
       <div className="container flex h-14 items-center justify-between gap-4 pr-12">
         <div className="flex flex-1 items-center justify-center gap-3 sm:gap-4">
           <span className="text-center text-sm">
-            Purchase this theme on{' '}
-            <span className="font-semibold">shadcnblocks.com</span>
+            Ummah Tech Conference 2026 &middot; 7 November &middot;{' '}
+            <span className="font-semibold">Johannesburg</span>
           </span>
           <Button
             size="sm"
@@ -42,9 +42,7 @@ function Banner({
                 : 'bg-white text-black hover:bg-white/85',
             )}
           >
-            <a href={url} target="_blank" rel="noreferrer">
-              Get Template
-            </a>
+            <a href={url}>Get ticket updates</a>
           </Button>
         </div>
         <button

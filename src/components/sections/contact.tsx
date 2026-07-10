@@ -9,10 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import type { NewsletterContent } from "@/lib/home"
-import { SUPPORT_EMAIL } from "@/lib/contact"
 import { cn } from "@/lib/utils"
 
-const ERROR_MESSAGE = `Something went wrong. Please try again, or email us at ${SUPPORT_EMAIL}.`
+const ERROR_MESSAGE = "Something went wrong. Please try again in a moment."
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const
 

@@ -1,8 +1,7 @@
 const inkLinks = [
   { href: "/", label: "Home" },
-  { href: "/services", label: "Practice areas" },
-  { href: "/case-studies", label: "Recent results" },
-  { href: "/contact", label: "Contact" },
+  { href: "/#speakers", label: "Speakers" },
+  { href: "/#newsletter", label: "Get updates" },
 ]
 
 function NotFound() {
@@ -32,10 +31,10 @@ function NotFound() {
                 &ldquo;
               </span>
               <h1 className="mt-5 text-3xl leading-tight font-light tracking-tight text-balance md:mt-6 md:text-4xl lg:text-5xl">
-                Some pages, like some cases, simply aren&apos;t filed.
+                This page took a wrong turn.
               </h1>
               <figcaption className="mt-7 text-sm text-muted-foreground md:mt-8">
-                &mdash; a note from the bench, regarding the page you tried
+                &mdash; the page you tried to reach isn&apos;t here
               </figcaption>
             </figure>
           </div>

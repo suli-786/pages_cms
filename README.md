@@ -1,38 +1,26 @@
-# Verdict Astro Template
+# Ummah Tech Conference
 
-Verdict Astro Template is a premium template built by https://www.shadcnblocks.com
-
-- [Demo](https://verdict-astro-template.vercel.app/)
-- [Documentation](https://www.shadcnblocks.com/docs/templates/getting-started)
-
-## Screenshot
-
-![Verdict Astro Template screenshot](./public/og-image.jpg)
+Marketing site for the **Ummah Tech Conference** (annual conference — 7 November 2026, Johannesburg, South Africa), built with Astro and made content-editable through [Pages CMS](https://pagescms.org).
 
 ## Getting Started
 
 ```bash
-# Install dependencies
+# Install dependencies (requires Node >= 22.12)
 npm install
 
 # Run the development server
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321) with your browser to see the result.
+Open [http://localhost:4321](http://localhost:4321) to view it.
+
+## Editing content
+
+Homepage copy and images live in `src/content/home.json` and are edited through Pages CMS (see `.pages.yml`). Editing there commits back to this repo; a deploy rebuilds the site.
 
 ## Tech Stack
 
-- Astro 6.x
-- Tailwind 4
+- Astro 6
+- Tailwind CSS 4
 - shadcn/ui
-
-## Deploy
-
-You can deploy this template to your preferred hosting platform that supports Astro applications.
-
-We have tested this template with the following providers using static export.
-
-- [Netlify](https://netlify.com)
-- [Vercel](https://vercel.com)
-- [Cloudflare Pages](https://pages.cloudflare.com)
+- Pages CMS

@@ -1,10 +1,10 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_NAME = 'Verdict';
-export const SITE_TITLE = 'Verdict — trusted legal help when it matters most';
+export const SITE_NAME = 'Ummah Tech';
+export const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
 export const SITE_DESCRIPTION =
-  'Senior lawyers on every case. Proven results in court. Clear fees, no surprises.';
+  'The annual Ummah Tech Conference brings together Muslim founders, technologists and innovators. 7 November 2026, Johannesburg, South Africa.';
 
 export const SITE_METADATA = {
   title: {
@@ -13,19 +13,19 @@ export const SITE_METADATA = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    'Astro',
-    'React',
-    'TypeScript',
-    'TailwindCSS',
-    'Template',
-    'Shadcn/UI',
-    'Landing Page',
-    'Law Firm',
-    'Litigation',
-    'Legal',
+    'Ummah Tech',
+    'Ummah Tech Conference',
+    'Muslim technologists',
+    'tech conference',
+    'Johannesburg',
+    'Cape Town',
+    'South Africa',
+    'founders',
+    'innovation',
+    'community',
   ],
-  authors: [{ name: 'Verdict - Shadcnblocks.com' }],
-  creator: 'Verdict - Shadcnblocks.com',
+  authors: [{ name: 'Ummah Tech' }],
+  creator: 'Ummah Tech',
   publisher: SITE_NAME,
   robots: {
     index: true,
@@ -51,6 +51,7 @@ export const SITE_METADATA = {
     siteName: SITE_NAME,
     images: [
       {
+        // TODO: replace with an Ummah Tech Conference OG image.
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
@@ -63,6 +64,6 @@ export const SITE_METADATA = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ['/og-image.jpg'],
-    creator: '@shadcnblocks',
+    creator: '@ummahtech',
   },
 };

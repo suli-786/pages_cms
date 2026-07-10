@@ -9,16 +9,16 @@ import {
 } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 
-import { VerdictLogo } from '@/components/layout/logo';
+import { SiteLogo } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import { useBannerVisibility } from '@/hooks/use-banner-visibility';
 import { cn } from '@/lib/utils';
 
 const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Events', href: '/events' },
+  { label: 'Partner With Us', href: '/partner' },
   { label: 'About', href: '/about' },
-  { label: 'Services', href: '/services' },
-  { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Blog', href: '/blog' },
 ];
 
 function Navbar({
@@ -37,7 +37,7 @@ function Navbar({
   const lastY = useRef(0);
   const isDarkHero = pathname === '/';
   const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(href + '/');
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(href + '/');
   const activeHref = navItems.find((item) => isActive(item.href))?.href;
 
   useMotionValueEvent(scrollY, 'change', (y) => {
@@ -103,9 +103,9 @@ function Navbar({
           >
             <div className="flex flex-1 items-center">
               <a href="/" className="flex items-center gap-2.5">
-                <VerdictLogo className="size-9" />
+                <SiteLogo className="size-9" />
                 <span className="text-xl font-semibold tracking-tight">
-                  Verdict
+                  Ummah Tech
                 </span>
               </a>
             </div>
@@ -149,7 +149,7 @@ function Navbar({
 
             <div className="flex flex-1 items-center justify-end gap-2">
               <Button size="lg" className="hidden md:inline-flex" asChild>
-                <a href="/contact">Book Free Consultation</a>
+                <a href="/#newsletter">Get updates</a>
               </Button>
               <button
                 type="button"
@@ -195,9 +195,9 @@ function Navbar({
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2.5"
                 >
-                  <VerdictLogo className="size-8" />
+                  <SiteLogo className="size-8" />
                   <span className="text-lg font-semibold tracking-tight">
-                    Verdict
+                    Ummah Tech
                   </span>
                 </a>
                 <button
@@ -233,8 +233,8 @@ function Navbar({
 
               <div className="mt-auto pt-8">
                 <Button size="lg" className="w-full" asChild>
-                  <a href="/contact" onClick={() => setMenuOpen(false)}>
-                    Book Free Consultation
+                  <a href="/#newsletter" onClick={() => setMenuOpen(false)}>
+                    Get updates
                   </a>
                 </Button>
               </div>

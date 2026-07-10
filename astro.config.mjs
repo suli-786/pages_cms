@@ -7,7 +7,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://verdict-astro-template.vercel.app',
+  site: 'https://ummah-tech.pages.dev',
   integrations: [mdx(), sitemap(), react()],
 
   // Headings use Arial Black and body uses Helvetica Neue — system fonts set as CSS

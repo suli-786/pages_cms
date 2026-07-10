@@ -1,41 +1,34 @@
 import { type ReactNode } from "react"
 
-import { VerdictLogo } from "@/components/layout/logo"
-import {
-  OFFICES,
-  PRIMARY_OFFICE,
-  SUPPORT_EMAIL,
-  SUPPORT_EMAIL_HREF,
-} from "@/lib/contact"
+import { SiteLogo } from "@/components/layout/logo"
 
 const STATEMENT =
-  "We do the work to know — and to say — what others are still trying to figure out."
+  "A growing community nurturing collaboration, innovation and skills among Muslim technologists — for the benefit of the Ummah and humanity."
 
-const FIRM_LINKS = [
+const EXPLORE_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Events", href: "/events" },
+  { label: "Partner With Us", href: "/partner" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Case studies", href: "/case-studies" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
 ]
 
-const CONTACT_LINKS = [
-  { label: SUPPORT_EMAIL, href: SUPPORT_EMAIL_HREF },
-  { label: PRIMARY_OFFICE.phone.display, href: PRIMARY_OFFICE.phone.href },
+// TODO: replace with the real community contact details.
+const CONNECT_LINKS = [
+  { label: "Join the mailing list", href: "/#newsletter" },
+  { label: "hello@ummahtech.org", href: "mailto:hello@ummahtech.org" },
   { label: "LinkedIn", href: "#" },
-  { label: "Chambers", href: "#" },
 ]
 
 function Footer() {
   return (
     <footer className="dark bg-background pt-16 pb-10 text-foreground md:pt-24 md:pb-14">
       <div className="container">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1.1fr_1fr] lg:gap-10">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr] lg:gap-10">
           <div className="flex flex-col gap-5">
             <a href="/" className="flex w-fit items-center gap-2.5">
-              <VerdictLogo className="size-8 text-accent" />
+              <SiteLogo className="size-8 text-accent" />
               <span className="text-xl font-semibold tracking-tight">
-                Verdict
+                Ummah Tech
               </span>
             </a>
             <p className="max-w-xs text-sm leading-relaxed text-foreground/60">
@@ -43,9 +36,9 @@ function Footer() {
             </p>
           </div>
 
-          <FooterColumn label="Firm">
+          <FooterColumn label="Explore">
             <ul className="space-y-3 text-sm">
-              {FIRM_LINKS.map((l) => (
+              {EXPLORE_LINKS.map((l) => (
                 <li key={l.label}>
                   <FooterLink href={l.href}>{l.label}</FooterLink>
                 </li>
@@ -53,22 +46,9 @@ function Footer() {
             </ul>
           </FooterColumn>
 
-          <FooterColumn label="Offices">
-            <ul className="space-y-5">
-              {OFFICES.map((o) => (
-                <li key={o.city}>
-                  <p className="text-sm text-foreground/85">{o.city}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-foreground/45">
-                    {o.address.line1}, {o.address.line2}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </FooterColumn>
-
-          <FooterColumn label="Contact">
+          <FooterColumn label="Connect">
             <ul className="space-y-3 text-sm">
-              {CONTACT_LINKS.map((l) => (
+              {CONNECT_LINKS.map((l) => (
                 <li key={l.label}>
                   <FooterLink href={l.href}>{l.label}</FooterLink>
                 </li>
@@ -118,13 +98,13 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
 function Baseline() {
   return (
     <div className="mt-16 flex flex-col gap-3 border-t border-foreground/12 pt-6 text-xs text-foreground/40 sm:flex-row sm:items-center sm:justify-between md:mt-20">
-      <span>© Verdict LLP · Attorney advertising</span>
+      <span>© 2026 Ummah Tech</span>
       <span className="flex items-center gap-2">
         <span
           aria-hidden
           className="size-1.5 animate-pulse rounded-full bg-accent"
         />
-        Licensed in New York &amp; Washington D.C.
+        Johannesburg &amp; Cape Town, South Africa
       </span>
     </div>
   )

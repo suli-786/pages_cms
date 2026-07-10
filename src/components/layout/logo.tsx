@@ -1,6 +1,6 @@
 import type { SVGProps } from "react"
 
-export const VerdictLogo = (props: SVGProps<SVGSVGElement>) => (
+export const SiteLogo = (props: SVGProps<SVGSVGElement>) => (
   <svg
     viewBox="0 0 44 44"
     fill="none"
