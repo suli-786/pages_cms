@@ -1,0 +1,10 @@
+{
+  // Deploys the static Astro build output (dist/) as a Cloudflare Worker with
+  // static assets. Used by the "Workers Builds" deploy command `npx wrangler deploy`.
+  // Note: Cloudflare Pages ignores this file (no `pages_build_output_dir` key).
+  "name": "ummah-tech",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}
