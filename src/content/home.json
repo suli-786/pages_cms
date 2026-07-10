@@ -1,34 +1,54 @@
 {
   "hero": {
-    "eyebrow": "Save the date · 2026",
     "title": "Ummah Tech Conference",
     "subtitle": "Save the date for 2026.",
-    "backgroundImage": "/images/hero/office.webp",
-    "facts": ["7 November 2026", "Johannesburg, South Africa"],
-    "primaryCta": { "label": "Ticket sales open soon", "href": "#newsletter" },
-    "secondaryCta": { "label": "Our vision", "href": "#vision" },
-    "footnote": "Building the Ummah in tech.",
+    "backgroundImage": "/images/other/02.jpg",
+    "primaryCta": {
+      "label": "Ticket sales open soon",
+      "href": "#newsletter"
+    },
+    "secondaryCta": {
+      "label": "Our vision",
+      "href": "#vision"
+    },
     "saveDate": {
       "label": "Save the date",
       "value": "7 November 2026",
-      "cta": { "label": "Get ticket updates", "href": "#newsletter" }
+      "cta": {
+        "label": "Get ticket ",
+        "href": "#newsletter"
+      }
     },
     "eventDetails": [
-      { "label": "Date", "value": "7 Nov 2026" },
-      { "label": "Venue", "value": "Johannesburg" },
-      { "label": "Tickets", "value": "Coming soon" }
+      {
+        "label": "Date",
+        "value": "7 Nov 2026"
+      },
+      {
+        "label": "Venue",
+        "value": "Johannesburg"
+      },
+      {
+        "label": "Tickets",
+        "value": "Coming soon"
+      }
     ]
   },
   "vision": {
-    "badge": "Our Vision",
     "heading": "The Ummah Tech Vision",
     "lead": "Ummah Tech is a growing community that seeks to nurture collaboration, inspire innovation, and build skills among Muslims in the technology sector, with the aim of benefiting the Ummah and humanity.",
-    "learnMore": { "label": "Learn more", "href": "#event" },
+    "learnMore": {
+      "label": "Learn more",
+      "href": "#event"
+    },
     "card": {
-      "image": "/images/about/team.webp",
+      "image": "/images/other/o1.jpg",
       "title": "Technologists, founders & creatives",
       "subtitle": "A growing community across South Africa and beyond",
-      "cta": { "label": "Join the community", "href": "#newsletter" }
+      "cta": {
+        "label": "Join the community",
+        "href": "#newsletter"
+      }
     },
     "paragraphs": [
       "We create spaces where Muslim technologists, founders, and creatives can come together to share ideas, learn from one another, and develop technology rooted in Islamic values. Together, we can take on the challenges facing our communities and the wider world.",
@@ -44,10 +64,13 @@
       "Founders, technologists and innovators, together"
     ],
     "image": {
-      "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/saas-details/saas-detail-1-1x1.png",
+      "src": "/images/other/03.jpg",
       "alt": "Ummah Tech Conference — placeholder image"
     },
-    "cta": { "label": "See the 2026 event", "href": "#newsletter" }
+    "cta": {
+      "label": "See the 2026 event",
+      "href": "#newsletter"
+    }
   },
   "whyAttend": {
     "heading": "Why Attend",
@@ -58,47 +81,122 @@
       "Make an impact by creating meaningful technology"
     ],
     "image": {
-      "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/saas-details/saas-detail-1-16x9.png",
+      "src": "/images/images (1).jpg",
       "alt": "Why attend the Ummah Tech Conference — placeholder image"
     },
-    "cta": { "label": "Save your seat", "href": "#newsletter" }
+    "cta": {
+      "label": "Save your seat",
+      "href": "#newsletter"
+    }
   },
   "speakers": {
     "badge": "Speakers",
     "heading": "Last year's speakers.",
     "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
-    "cta": { "label": "Interested in speaking?", "href": "#newsletter" },
+    "cta": {
+      "label": "Interested in speaking?",
+      "href": "#newsletter"
+    },
     "items": [
-      { "name": "Speaker Name", "role": "CEO, Cassava Technologies", "theme": "Keynote", "portrait": "/images/partners/01-anderson.webp" },
-      { "name": "Speaker Name", "role": "Founder & CTO, Company", "theme": "Engineering", "portrait": "/images/partners/02-klein.webp" },
-      { "name": "Speaker Name", "role": "Head of Product, Company", "theme": "Product", "portrait": "/images/partners/03-lee.webp" },
-      { "name": "Speaker Name", "role": "Managing Director, Company", "theme": "Fintech", "portrait": "/images/partners/04-singh.webp" },
-      { "name": "Speaker Name", "role": "AI Lead, Company", "theme": "AI & Data", "portrait": "/images/partners/05-petrova.webp" },
-      { "name": "Speaker Name", "role": "Community Lead, Ummah Tech", "theme": "Community", "portrait": "/images/partners/06-okonkwo.webp" }
+      {
+        "name": "Speaker Name",
+        "role": "CEO, Cassava Technologies",
+        "theme": "Keynote",
+        "portrait": "/images/speakers/1.png"
+      },
+      {
+        "name": "Speaker Name",
+        "role": "Founder & CTO, Company",
+        "theme": "Engineering",
+        "portrait": "/images/speakers/5.png"
+      },
+      {
+        "name": "Speaker Name",
+        "role": "Head of Product, Company",
+        "theme": "Product",
+        "portrait": "/images/speakers/7.png"
+      },
+      {
+        "name": "Speaker Name",
+        "role": "Managing Director, Company",
+        "theme": "Fintech",
+        "portrait": "/images/speakers/11.png"
+      },
+      {
+        "name": "Speaker Name",
+        "role": "AI Lead, Company",
+        "theme": "AI & Data",
+        "portrait": "/images/speakers/14.png"
+      },
+      {
+        "name": "Speaker Name",
+        "role": "Community Lead, Ummah Tech",
+        "theme": "Community",
+        "portrait": "/images/speakers/2.png"
+      }
     ]
   },
   "partners": {
     "heading": "Our Partners",
     "description": "Proudly supported by the organisations backing the Ummah tech community.",
     "items": [
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-1.svg", "alt": "Partner 1", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-2.svg", "alt": "Partner 2", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-3.svg", "alt": "Partner 3", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-4.svg", "alt": "Partner 4", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-5.svg", "alt": "Partner 5", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-6.svg", "alt": "Partner 6", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-7.svg", "alt": "Partner 7", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-8.svg", "alt": "Partner 8", "href": "#" },
-      { "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/placeholder/logos/fictional-company-logo-9.svg", "alt": "Partner 9", "href": "#" }
+      {
+        "src": "/images/partners/1.png",
+        "alt": "Partner 1",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/10.png",
+        "alt": "Partner 2",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/4.png",
+        "alt": "Partner 3",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/7.png",
+        "alt": "Partner 4",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/Awqaf logo.png",
+        "alt": "Partner 5",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/Ashraful aid logo.png",
+        "alt": "Partner 6",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/9.png",
+        "alt": "Partner 7",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/6.png",
+        "alt": "Partner 8",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/5.png",
+        "alt": "Partner 9",
+        "href": "#"
+      }
     ]
   },
   "finalCta": {
     "eyebrow": "Upcoming conference",
     "heading": "See you in Johannesburg.",
     "body": "Ummah Tech Conference 2026 — 7 November 2026, Johannesburg, South Africa. Save the date; ticket sales open soon.",
-    "cta": { "label": "Register your interest", "href": "#newsletter" },
+    "cta": {
+      "label": "Book your Seat",
+      "href": "#newsletter"
+    },
     "image": {
-      "src": "/images/cta/seal-01.png",
+      "src": "/images/other/02.jpg",
       "alt": "Ummah Tech Conference 2026 — Johannesburg, South Africa"
     }
   },
