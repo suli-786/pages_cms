@@ -16,15 +16,44 @@ import { cn } from '@/lib/utils';
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'Events', href: '/events' },
-  { label: 'Partner With Us', href: '/partner' },
-  { label: 'About', href: '/about' },
+  { label: 'Events', href: '/#event' },
+  { label: 'Partner With Us', href: '/#partners' },
+  { label: 'About', href: '/#vision' },
 ];
 
+// Uploaded logo (from Site settings) if set, otherwise the SVG mark + name.
+function Brand({
+  logo,
+  siteName,
+  imgClass,
+  svgClass,
+  textClass,
+}: {
+  logo?: string;
+  siteName: string;
+  imgClass: string;
+  svgClass: string;
+  textClass: string;
+}) {
+  if (logo) {
+    return <img src={logo} alt={siteName} className={imgClass} />;
+  }
+  return (
+    <>
+      <SiteLogo className={svgClass} />
+      <span className={textClass}>{siteName}</span>
+    </>
+  );
+}
+
 function Navbar({
+  logo,
+  siteName = 'Ummah Tech',
   initialBannerVisible = true,
   pathname = '/',
 }: {
+  logo?: string;
+  siteName?: string;
   initialBannerVisible?: boolean;
   pathname?: string;
 }) {
@@ -103,10 +132,13 @@ function Navbar({
           >
             <div className="flex flex-1 items-center">
               <a href="/" className="flex items-center gap-2.5">
-                <SiteLogo className="size-9" />
-                <span className="text-xl font-semibold tracking-tight">
-                  Ummah Tech
-                </span>
+                <Brand
+                  logo={logo}
+                  siteName={siteName}
+                  imgClass="h-9 w-auto"
+                  svgClass="size-9"
+                  textClass="text-xl font-semibold tracking-tight"
+                />
               </a>
             </div>
 
@@ -195,10 +227,13 @@ function Navbar({
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2.5"
                 >
-                  <SiteLogo className="size-8" />
-                  <span className="text-lg font-semibold tracking-tight">
-                    Ummah Tech
-                  </span>
+                  <Brand
+                    logo={logo}
+                    siteName={siteName}
+                    imgClass="h-8 w-auto"
+                    svgClass="size-8"
+                    textClass="text-lg font-semibold tracking-tight"
+                  />
                 </a>
                 <button
                   type="button"

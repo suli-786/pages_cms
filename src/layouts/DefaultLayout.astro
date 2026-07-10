@@ -4,6 +4,7 @@ import Banner from '@/components/layout/banner';
 import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import { StyleGlideProvider } from '@/components/providers/styleglide-provider';
+import { site } from '@/lib/site';
 
 interface Props {
   title?: string;
@@ -23,10 +24,16 @@ const pathname = Astro.url.pathname;
   <body class="flex min-h-screen flex-col">
     <StyleGlideProvider client:only="react" />
     <Banner pathname={pathname} initialVisible={true} client:load />
-    <Navbar pathname={pathname} initialBannerVisible={true} client:load />
+    <Navbar
+      pathname={pathname}
+      initialBannerVisible={true}
+      logo={site.logo}
+      siteName={site.siteName}
+      client:load
+    />
     <main class="relative flex-1">
       <slot />
     </main>
-    <Footer />
+    <Footer logo={site.logo} siteName={site.siteName} />
   </body>
 </html>

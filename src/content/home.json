@@ -23,7 +23,7 @@
     "badge": "Our Vision",
     "heading": "The Ummah Tech Vision",
     "lead": "Ummah Tech is a growing community that seeks to nurture collaboration, inspire innovation, and build skills among Muslims in the technology sector, with the aim of benefiting the Ummah and humanity.",
-    "learnMore": { "label": "Learn more", "href": "/about" },
+    "learnMore": { "label": "Learn more", "href": "#event" },
     "card": {
       "image": "/images/about/team.webp",
       "title": "Technologists, founders & creatives",
@@ -47,7 +47,7 @@
       "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/saas-details/saas-detail-1-1x1.png",
       "alt": "Ummah Tech Conference — placeholder image"
     },
-    "cta": { "label": "See the 2026 event", "href": "/events" }
+    "cta": { "label": "See the 2026 event", "href": "#newsletter" }
   },
   "whyAttend": {
     "heading": "Why Attend",
@@ -61,13 +61,13 @@
       "src": "https://deifkwefumgah.cloudfront.net/shadcnblocks/image-set/modern/saas-details/saas-detail-1-16x9.png",
       "alt": "Why attend the Ummah Tech Conference — placeholder image"
     },
-    "cta": { "label": "Save your seat", "href": "/events" }
+    "cta": { "label": "Save your seat", "href": "#newsletter" }
   },
   "speakers": {
     "badge": "Speakers",
     "heading": "Last year's speakers.",
     "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
-    "cta": { "label": "Interested in speaking?", "href": "/partner" },
+    "cta": { "label": "Interested in speaking?", "href": "#newsletter" },
     "items": [
       { "name": "Speaker Name", "role": "CEO, Cassava Technologies", "theme": "Keynote", "portrait": "/images/partners/01-anderson.webp" },
       { "name": "Speaker Name", "role": "Founder & CTO, Company", "theme": "Engineering", "portrait": "/images/partners/02-klein.webp" },

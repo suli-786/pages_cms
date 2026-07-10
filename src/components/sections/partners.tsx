@@ -66,7 +66,7 @@ function Partners({ content }: { content: PartnersContent }) {
   const bottomRow = items.slice(mid)
 
   return (
-    <section className="section-padding overflow-hidden">
+    <section id="partners" className="section-padding scroll-mt-24 overflow-hidden">
       <div className="container space-y-10 lg:space-y-16">
         <div className="text-center">
           <h2 className="text-xl font-medium tracking-tight text-balance md:text-2xl lg:text-3xl">

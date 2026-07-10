@@ -15,7 +15,7 @@ function ConferenceIntro({ content }: { content: ConferenceContent }) {
   const { heading, body, facts, image, cta } = content
 
   return (
-    <section className="section-padding overflow-hidden">
+    <section id="event" className="section-padding scroll-mt-24 overflow-hidden">
       <div className="container flex flex-col items-start gap-16 md:flex-row md:items-center md:gap-20">
         {/* Media — left */}
         <div className="relative order-last flex h-[430px] w-full pt-4 pl-4 md:order-first md:w-[55%]">

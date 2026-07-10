@@ -7,9 +7,9 @@ const STATEMENT =
 
 const EXPLORE_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Events", href: "/events" },
-  { label: "Partner With Us", href: "/partner" },
-  { label: "About", href: "/about" },
+  { label: "Events", href: "/#event" },
+  { label: "Partner With Us", href: "/#partners" },
+  { label: "About", href: "/#vision" },
 ]
 
 // TODO: replace with the real community contact details.
@@ -19,17 +19,29 @@ const CONNECT_LINKS = [
   { label: "LinkedIn", href: "#" },
 ]
 
-function Footer() {
+function Footer({
+  logo,
+  siteName = "Ummah Tech",
+}: {
+  logo?: string
+  siteName?: string
+}) {
   return (
     <footer className="dark bg-background pt-16 pb-10 text-foreground md:pt-24 md:pb-14">
       <div className="container">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr] lg:gap-10">
           <div className="flex flex-col gap-5">
             <a href="/" className="flex w-fit items-center gap-2.5">
-              <SiteLogo className="size-8 text-accent" />
-              <span className="text-xl font-semibold tracking-tight">
-                Ummah Tech
-              </span>
+              {logo ? (
+                <img src={logo} alt={siteName} className="h-8 w-auto" />
+              ) : (
+                <>
+                  <SiteLogo className="size-8 text-accent" />
+                  <span className="text-xl font-semibold tracking-tight">
+                    {siteName}
+                  </span>
+                </>
+              )}
             </a>
             <p className="max-w-xs text-sm leading-relaxed text-foreground/60">
               {STATEMENT}
