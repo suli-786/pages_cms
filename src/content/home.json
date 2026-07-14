@@ -1,25 +1,9 @@
 {
   "hero": {
-    "eyebrow": ".......",
-    "title": "Ummah Tech Conference",
-    "subtitle": "Save the date for 2026.",
-    "backgroundImage": "/images/other/02.jpg",
-    "primaryCta": {
-      "label": "Ticket sales open soon",
-      "href": "#newsletter"
-    },
-    "secondaryCta": {
-      "label": "Our vision",
-      "href": "#vision"
-    },
-    "saveDate": {
-      "label": "Save the date",
-      "value": "7 November 2026",
-      "cta": {
-        "label": "Get ticket ",
-        "href": "#newsletter"
-      }
-    },
+    "visible": true,
+    "eyebrow": "Save the date",
+    "title": "Ummah Tech *Conference* 2026",
+    "subtitle": "A gathering of Muslim founders, technologists and creatives — building technology that benefits the Ummah and humanity.",
     "eventDetails": [
       {
         "label": "Date",
@@ -33,64 +17,106 @@
         "label": "Tickets",
         "value": "Coming soon"
       }
+    ],
+    "speakersLabel": "Featuring speakers from across the community",
+    "primaryCta": {
+      "label": "Ticket sales open soon",
+      "href": "#newsletter"
+    },
+    "secondaryCta": {
+      "label": "Our vision",
+      "href": "#vision"
+    },
+    "partnersLabel": "Backed by our partners",
+    "gallery": [
+      "/images/other/o1.jpg",
+      "/images/other/02.jpg",
+      "/images/other/03.jpg",
+      "/images/speakers/1.png",
+      "/images/speakers/5.png",
+      "/images/speakers/7.png",
+      "/images/speakers/11.png",
+      "/images/speakers/14.png",
+      "/images/speakers/2.png"
     ]
   },
   "vision": {
+    "visible": true,
+    "badge": "Our vision",
     "heading": "The Ummah Tech Vision",
-    "lead": "Ummah Tech is a growing community that seeks to nurture collaboration, inspire innovation, and build skills among Muslims in the technology sector, with the aim of benefiting the Ummah and humanity.",
-    "learnMore": {
-      "label": "Learn more",
-      "href": "#event"
-    },
-    "card": {
-      "image": "/images/other/o1.jpg",
-      "title": "Technologists, founders & creatives",
-      "subtitle": "A growing community across South Africa and beyond",
-      "cta": {
-        "label": "Join the community",
-        "href": "#newsletter"
+    "statement": "Ummah Tech is a growing community that seeks to nurture collaboration, inspire innovation, and build skills among Muslims in the technology sector, with the aim of benefiting the Ummah and humanity.\n\nWe create spaces where Muslim technologists, founders, and creatives can come together to share ideas, learn from one another, and develop technology rooted in Islamic values. Together, we can take on the challenges facing our communities and the wider world.\n\nThrough this community, we believe ideas can grow into solutions – and solutions can drive meaningful change.",
+    "highlights": [
+      {
+        "phrase": "inspire innovation",
+        "image": "/images/other/o1.jpg",
+        "href": ""
+      },
+      {
+        "phrase": "technology rooted in Islamic values",
+        "image": "/images/other/03.jpg",
+        "href": ""
+      },
+      {
+        "phrase": "meaningful change",
+        "image": "/images/other/02.jpg",
+        "href": ""
       }
-    },
-    "paragraphs": [
-      "We create spaces where Muslim technologists, founders, and creatives can come together to share ideas, learn from one another, and develop technology rooted in Islamic values. Together, we can take on the challenges facing our communities and the wider world.",
-      "Through this community, we believe ideas can grow into solutions – and solutions can drive meaningful change."
     ]
   },
   "conference": {
+    "visible": true,
+    "tagline": "The flagship event",
     "heading": "Ummah Tech Conference",
     "body": "Our flagship event, the annual Ummah Tech Conference usually takes place in November, rotating between Johannesburg and Cape Town. It is a gathering of founders, technologists and innovators to network and share knowledge. Our goal is to build a thriving community in South Africa focused on using technology to make a positive impact on society.",
-    "facts": [
-      "Annual flagship gathering, usually held in November",
-      "Rotates between Johannesburg and Cape Town",
-      "Founders, technologists and innovators, together"
-    ],
-    "image": {
-      "src": "/images/other/03.jpg",
-      "alt": "Ummah Tech Conference — placeholder image"
+    "primaryCta": {
+      "label": "Meet the speakers",
+      "href": "#speakers"
     },
-    "cta": {
-      "label": "See the 2026 event",
-      "href": "#newsletter"
-    }
-  },
-  "whyAttend": {
-    "heading": "Why Attend",
-    "benefits": [
-      "Connect with a thriving network of peers that will inspire you to grow",
-      "Learn from industry experts and thought leaders",
-      "Be inspired to innovate and lead in tech",
-      "Make an impact by creating meaningful technology"
-    ],
-    "image": {
-      "src": "/images/images (1).jpg",
-      "alt": "Why attend the Ummah Tech Conference — placeholder image"
-    },
-    "cta": {
+    "secondaryCta": {
       "label": "Save your seat",
       "href": "#newsletter"
-    }
+    },
+    "tiles": [
+      {
+        "image": {
+          "src": "/images/other/03.jpg",
+          "alt": "Attendees networking at Ummah Tech Conference 2025"
+        },
+        "caption": "Ummah Tech 2025",
+        "href": "#speakers",
+        "linkLabel": "Meet the speakers"
+      },
+      {
+        "image": {
+          "src": "/images/other/o1.jpg",
+          "alt": "A talk in progress at the Ummah Tech Conference"
+        },
+        "caption": "Johannesburg · 7 Nov 2026",
+        "href": "#newsletter",
+        "linkLabel": "Get updates"
+      }
+    ],
+    "benefits": [
+      {
+        "title": "Connect",
+        "description": "with a thriving network of peers that will inspire you to grow"
+      },
+      {
+        "title": "Learn",
+        "description": "from industry experts and thought leaders"
+      },
+      {
+        "title": "Innovate",
+        "description": "and be inspired to lead in tech"
+      },
+      {
+        "title": "Impact",
+        "description": "by creating meaningful technology"
+      }
+    ]
   },
   "speakers": {
+    "visible": true,
     "badge": "Speakers",
     "heading": "Last year's speakers.",
     "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
@@ -138,6 +164,7 @@
     ]
   },
   "partners": {
+    "visible": true,
     "heading": "Our Partners",
     "description": "Proudly supported by the organisations backing the Ummah tech community.",
     "items": [
@@ -189,6 +216,7 @@
     ]
   },
   "finalCta": {
+    "visible": true,
     "eyebrow": "Upcoming conference",
     "heading": "See you in Johannesburg.",
     "body": "Ummah Tech Conference 2026 — 7 November 2026, Johannesburg, South Africa. Save the date; ticket sales open soon.",
@@ -202,6 +230,7 @@
     }
   },
   "newsletter": {
+    "visible": true,
     "badge": "Newsletter",
     "heading": "Join the mailing list.",
     "description": "Be the first to know. Get conference updates, speaker announcements and ticket news straight to your inbox.",

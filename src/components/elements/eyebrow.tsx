@@ -19,7 +19,9 @@ function Eyebrow({
       data-tone={tone}
       className={cn(
         "flex items-center gap-3 font-mono text-[0.6875rem] tracking-[0.25em] uppercase",
-        muted ? "text-foreground/65" : "text-accent",
+        // Cornflower text can't reach 4.5:1 on white at this size — the accent
+        // lives in the rule line instead; the label reads in primary.
+        muted ? "text-foreground/65" : "text-primary dark:text-accent",
         className
       )}
     >

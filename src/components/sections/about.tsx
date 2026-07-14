@@ -1,71 +1,119 @@
+"use client"
+
+import { Fragment } from "react"
+
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { LinkPreview } from "@/components/ui/link-preview"
 import type { VisionContent } from "@/lib/home"
 
+// Vision — adapted from @shadcnblocks/feature288: one large centered statement
+// in muted type where key phrases stand out in full contrast and reveal a
+// photo preview on hover. Phrases and their images come from the CMS
+// `highlights` list and are matched inside the statement text; a phrase that
+// no longer appears in the statement simply renders as plain text.
+//
+// Parsing order matters: *emphasis* markers are resolved first, then highlight
+// phrases are matched inside each resulting run — so a phrase that is itself
+// emphasised ("*inspire innovation*") nests cleanly instead of leaving stray
+// asterisks. Phrases spanning an emphasis boundary don't match (by design).
+type Highlight = VisionContent["highlights"][number]
+
+type Segment = { text: string; highlight?: Highlight }
+
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+
+function segmentText(text: string, highlights: Highlight[]): Segment[] {
+  let segments: Segment[] = [{ text }]
+  for (const h of highlights) {
+    if (!h.phrase) continue
+    // Case-insensitive match on the original string (regex index/length refer
+    // to the source text, so locale case-mapping can't shift the boundaries).
+    const pattern = new RegExp(escapeRegExp(h.phrase), "i")
+    segments = segments.flatMap((seg) => {
+      if (seg.highlight) return [seg]
+      const m = pattern.exec(seg.text)
+      if (!m) return [seg]
+      return [
+        { text: seg.text.slice(0, m.index) },
+        { text: m[0], highlight: h },
+        { text: seg.text.slice(m.index + m[0].length) },
+      ].filter((s) => s.text !== "")
+    })
+  }
+  return segments
+}
+
+function renderSegments(text: string, highlights: Highlight[], keyPrefix: string) {
+  return segmentText(text, highlights).map((seg, i) =>
+    seg.highlight ? (
+      seg.highlight.image ? (
+        <LinkPreview
+          key={`${keyPrefix}-${i}`}
+          imageSrc={seg.highlight.image}
+          href={seg.highlight.href || undefined}
+          className="px-1"
+        >
+          {seg.text}
+        </LinkPreview>
+      ) : (
+        <span key={`${keyPrefix}-${i}`} className="text-foreground">
+          {seg.text}
+        </span>
+      )
+    ) : (
+      <Fragment key={`${keyPrefix}-${i}`}>{seg.text}</Fragment>
+    )
+  )
+}
+
+/** `*text*` emphasis first, then highlight phrases within each run. */
+function renderParagraph(paragraph: string, highlights: Highlight[], pIndex: number) {
+  return paragraph.split(/\*([^*]+)\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <em key={`${pIndex}-${i}`} className="text-foreground italic">
+        {renderSegments(part, highlights, `${pIndex}-${i}`)}
+      </em>
+    ) : (
+      <Fragment key={`${pIndex}-${i}`}>
+        {renderSegments(part, highlights, `${pIndex}-${i}`)}
+      </Fragment>
+    )
+  )
+}
+
 function About({ content }: { content: VisionContent }) {
-  const { badge, heading, lead, learnMore, card, paragraphs = [] } = content
+  const { badge, heading, statement, highlights = [] } = content
+
+  const paragraphs = statement
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean)
 
   return (
-    <section id="vision" className="section-padding scroll-mt-24">
-      <div className="container space-y-12 md:space-y-16">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2.6fr] md:gap-16">
-          <div>
-            <Badge variant="outline" size="lg">
-              <span className="size-1 rounded-full bg-foreground/40" />
-              {badge}
-              <span className="size-1 rounded-full bg-foreground/40" />
-            </Badge>
-          </div>
+    <section id="vision" className="section-padding scroll-mt-24 overflow-hidden">
+      <div className="container flex max-w-5xl flex-col items-center text-center">
+        {badge && (
+          <Badge variant="outline" size="lg">
+            <span className="size-1 rounded-full bg-foreground/40" />
+            {badge}
+            <span className="size-1 rounded-full bg-foreground/40" />
+          </Badge>
+        )}
+        {heading && (
+          <h2 className="mt-6 text-sm tracking-[0.2em] text-muted-foreground uppercase">
+            {heading}
+          </h2>
+        )}
 
-          <div>
-            <h2 className="text-4xl leading-[1.1] font-medium tracking-tight md:text-5xl lg:text-6xl">
-              {heading}
-            </h2>
-            <p className="mt-8 max-w-3xl text-base text-muted-foreground">
-              {lead}
+        <div className="mt-10 space-y-10 md:mt-14">
+          {paragraphs.map((paragraph, pIndex) => (
+            <p
+              key={pIndex}
+              className="text-2xl leading-snug font-semibold tracking-tight text-balance text-muted-foreground md:text-3xl lg:text-4xl"
+            >
+              {renderParagraph(paragraph, highlights, pIndex)}
             </p>
-            <a
-              href={learnMore.href}
-              className="mt-10 inline-flex items-center gap-1.5 text-sm underline underline-offset-4 transition-colors hover:text-muted-foreground"
-            >
-              {learnMore.label}
-            </a>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_2.6fr] md:gap-16">
-          <div className="dark relative flex flex-col overflow-hidden rounded-xl bg-card text-foreground">
-            <div
-              aria-hidden
-              className="relative aspect-[4/3] bg-cover bg-center"
-              style={{ backgroundImage: `url(${card.image})` }}
-            >
-              <div className="absolute inset-0 bg-linear-to-t from-card via-card/40 to-transparent" />
-            </div>
-
-            <div className="space-y-6 p-6">
-              <div>
-                <p className="text-lg font-medium">{card.title}</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {card.subtitle}
-                </p>
-              </div>
-              <Button asChild size="lg" className="w-full">
-                <a href={card.cta.href}>{card.cta.label}</a>
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex min-w-0 flex-col justify-center gap-6">
-            {paragraphs.map((paragraph) => (
-              <p
-                key={paragraph}
-                className="max-w-2xl text-lg leading-relaxed text-muted-foreground"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </section>

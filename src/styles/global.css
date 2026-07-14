@@ -278,4 +278,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .brass-mesh { animation: none; }
+  /* Marquees (hero partner strip, partners section) hold still. */
+  .animate-marquee,
+  .animate-marquee-vertical {
+    animation-play-state: paused;
+  }
+}
+
+/* User-facing pause control (see elements/marquee-pause.tsx). */
+[data-marquee-paused] .animate-marquee,
+[data-marquee-paused] .animate-marquee-vertical {
+  animation-play-state: paused;
 }

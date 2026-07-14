@@ -84,7 +84,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <p className="text-xs tracking-[0.2em] text-foreground/45 uppercase">
+      <p className="text-xs tracking-[0.2em] text-foreground/70 uppercase">
         {label}
       </p>
       <div className="mt-5">{children}</div>
@@ -109,7 +109,7 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
 
 function Baseline() {
   return (
-    <div className="mt-16 flex flex-col gap-3 border-t border-foreground/12 pt-6 text-xs text-foreground/40 sm:flex-row sm:items-center sm:justify-between md:mt-20">
+    <div className="mt-16 flex flex-col gap-3 border-t border-foreground/12 pt-6 text-xs text-foreground/70 sm:flex-row sm:items-center sm:justify-between md:mt-20">
       <span>© 2026 Ummah Tech</span>
       <span className="flex items-center gap-2">
         <span

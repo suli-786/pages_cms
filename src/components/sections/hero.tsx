@@ -1,141 +1,258 @@
+"use client"
+
+import { Fragment, useEffect, useState } from "react"
 import {
-  ArrowDown,
   CalendarDays,
   MapPin,
   MoveRight,
   Ticket,
   type LucideIcon,
 } from "lucide-react"
+import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 
+import { MarqueePause } from "@/components/elements/marquee-pause"
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import type { HeroContent } from "@/lib/home"
+import { Marquee } from "@/components/ui/marquee"
+import type { HeroContent, PartnerLogo, Speaker } from "@/lib/home"
+
+// Adapted from @shadcnblocks/hero272: split layout with a stacked, divided
+// left column and a nine-cell photo grid that rotates on a timer. The three
+// left bands are repurposed for the conference — headline + event details,
+// featured speakers + CTAs, partner logo marquee. Speakers and partner logos
+// are cross-fed from their own CMS sections (no duplicate content entry).
+const GRID_SIZE = 9
+const ROTATION_INTERVAL = 7000 // ms
 
 // Icons for the event-details strip, matched to eventDetails by position.
 const detailIcons: LucideIcon[] = [CalendarDays, MapPin, Ticket]
 
-function Hero({ content }: { content: HeroContent }) {
+/** Renders `*text*` markers as emphasized words (documented in .pages.yml). */
+function renderEmphasis(text: string) {
+  return text.split(/\*([^*]+)\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <em key={i} className="text-foreground italic">
+        {part}
+      </em>
+    ) : (
+      <Fragment key={i}>{part}</Fragment>
+    )
+  )
+}
+
+function Hero({
+  content,
+  speakers = [],
+  partners = [],
+}: {
+  content: HeroContent
+  speakers?: Speaker[]
+  partners?: PartnerLogo[]
+}) {
   const {
     eyebrow,
     title,
     subtitle,
-    backgroundImage,
-    facts = [],
+    eventDetails = [],
+    speakersLabel,
     primaryCta,
     secondaryCta,
-    footnote,
-    saveDate,
-    eventDetails = [],
+    partnersLabel,
+    gallery = [],
   } = content
 
+  const featuredSpeakers = speakers.filter((s) => s.portrait).slice(0, 6)
+  const galleryImages = gallery.filter(Boolean)
+  const hasGallery = galleryImages.length > 0
+  const hasPartnerBand = partnersLabel !== "" && partners.length > 0
+  const [marqueePaused, setMarqueePaused] = useState(false)
+
   return (
-    <section className="dark relative flex min-h-[max(100svh,800px)] flex-col bg-background text-foreground">
-      <div className="relative isolate flex flex-1 flex-col overflow-hidden">
+    <section className="dark relative overflow-hidden bg-background text-foreground">
+      <div className="container pt-28 pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20">
         <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-background bg-cover bg-[position:65%_50%] md:bg-center"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-linear-to-r from-background via-background/75 to-background/10 [mask-image:radial-gradient(ellipse_60%_70%_at_70%_55%,transparent_30%,black_95%)]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-linear-to-b from-transparent to-background"
-        />
-
-        <div className="container flex flex-1 flex-col">
-          <div className="hero-padding max-w-5xl">
-            <div className="flex items-center gap-3 text-sm">
-              <MoveRight className="size-5" strokeWidth={1.25} />
-              <span>{eyebrow}</span>
+          className={
+            hasGallery
+              ? "grid border border-foreground/10 lg:grid-cols-2 lg:divide-x lg:divide-foreground/10"
+              : "grid border border-foreground/10"
+          }
+        >
+          {/* min-w-0: keep the marquee's intrinsic width from stretching the column */}
+          <div className="flex min-w-0 flex-col divide-y divide-foreground/10">
+            {/* Band 1 — headline, subtitle, event details */}
+            <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
+              {eyebrow && (
+                <p className="mb-6 flex items-center gap-3 text-sm text-foreground/70">
+                  <MoveRight aria-hidden className="size-5" strokeWidth={1.25} />
+                  {eyebrow}
+                </p>
+              )}
+              <h1 className="max-w-3xl text-4xl tracking-tight text-foreground/60 md:text-5xl lg:text-6xl">
+                {renderEmphasis(title)}
+              </h1>
+              {subtitle && (
+                <p className="mt-5 max-w-xl text-balance text-lg text-foreground/75">
+                  {subtitle}
+                </p>
+              )}
+              {eventDetails.length > 0 && (
+                <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+                  {eventDetails.map((d, i) => {
+                    const Icon = detailIcons[i] ?? CalendarDays
+                    return (
+                      <li key={`${d.label}-${i}`} className="flex items-center gap-2.5">
+                        <Icon
+                          aria-hidden
+                          className="size-5 text-accent"
+                          strokeWidth={1.5}
+                        />
+                        <span className="text-sm">
+                          <span className="block font-medium">{d.value}</span>
+                          <span className="block text-xs text-foreground/55">
+                            {d.label}
+                          </span>
+                        </span>
+                      </li>
+                    )
+                  })}
+                </ul>
+              )}
             </div>
 
-            <h1 className="mt-8 text-5xl leading-[1.05] font-medium tracking-tight md:text-6xl lg:text-7xl">
-              {title}
-            </h1>
-            <p className="mt-6 max-w-2xl text-xl text-foreground/80 md:text-2xl">
-              {subtitle}
-            </p>
-
-            {facts.length > 0 && (
-              <ul className="mt-10 space-y-3 text-lg">
-                {facts.map((fact) => (
-                  <li key={fact} className="flex items-center gap-3">
-                    <span className="size-1.5 rounded-full bg-foreground" />
-                    {fact}
-                  </li>
-                ))}
-              </ul>
-            )}
-
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button size="lg" asChild>
-                <a href={primaryCta.href}>{primaryCta.label}</a>
-              </Button>
-              <Button size="lg" variant="secondary" asChild>
-                <a href={secondaryCta.href}>{secondaryCta.label}</a>
-              </Button>
-            </div>
-          </div>
-
-          <div className="mt-auto flex justify-between gap-2 border-t border-foreground/10 py-6 text-sm">
-            <div className="flex items-center gap-3">
-              <span className="size-1.5 rounded-full bg-foreground" />
-              <span>{footnote}</span>
-            </div>
-            <div className="flex flex-col items-center gap-1 text-foreground/60">
-              <span>Scroll to explore</span>
-              <ArrowDown className="size-4" strokeWidth={1.25} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-card">
-        <div className="container grid grid-cols-1 items-center gap-10 py-10 lg:grid-cols-[1fr_2fr]">
-          <div className="space-y-4">
-            <p className="text-base">
-              <span className="font-semibold">{saveDate.label}</span>
-              <span className="ml-3 text-foreground/80">{saveDate.value}</span>
-            </p>
-            <Button size="lg" asChild>
-              <a href={saveDate.cta.href}>{saveDate.cta.label}</a>
-            </Button>
-          </div>
-
-          <ul className="grid grid-cols-3 text-center lg:w-fit lg:justify-self-end lg:text-end">
-            {eventDetails.map((d, i) => {
-              const Icon = detailIcons[i] ?? CalendarDays
-              return (
-                <li
-                  key={d.label}
-                  className="relative px-3 last:pr-0 sm:px-5 md:px-6 lg:px-8"
-                >
-                  {i > 0 && (
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-y-0 left-0 w-px bg-linear-to-b from-transparent from-15% via-foreground via-50% to-transparent to-85%"
-                    />
+            {/* Band 2 — featured speakers + CTAs */}
+            <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
+              {featuredSpeakers.length > 0 && (
+                <>
+                  {speakersLabel && (
+                    <p className="mb-3 text-sm font-medium tracking-tight text-foreground/70">
+                      {speakersLabel}
+                    </p>
                   )}
-                  <Icon
-                    aria-hidden
-                    className="mx-auto size-6 text-foreground/60 lg:mr-0"
-                    strokeWidth={1.5}
+                  <AvatarGroup className="grayscale">
+                    {featuredSpeakers.map((s) => (
+                      <Avatar
+                        key={`${s.name}-${s.portrait}`}
+                        className="size-12 ring-2 ring-background"
+                      >
+                        <AvatarImage src={s.portrait} alt={s.name} />
+                        <AvatarFallback>{s.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                    ))}
+                  </AvatarGroup>
+                </>
+              )}
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                {primaryCta.label && primaryCta.href && (
+                  <Button size="lg" asChild>
+                    <a href={primaryCta.href}>{primaryCta.label}</a>
+                  </Button>
+                )}
+                {secondaryCta.label && secondaryCta.href && (
+                  <Button size="lg" variant="outline" asChild>
+                    <a href={secondaryCta.href}>{secondaryCta.label}</a>
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Band 3 — partner logo marquee (decorative teaser; the Partners
+                section carries the accessible list) */}
+            {hasPartnerBand && (
+              <div
+                className="flex flex-1 flex-col justify-center p-6 md:p-8"
+                data-marquee-paused={marqueePaused || undefined}
+              >
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <p className="text-sm font-medium tracking-tight text-foreground/70">
+                    {partnersLabel}
+                  </p>
+                  <MarqueePause
+                    paused={marqueePaused}
+                    onToggle={() => setMarqueePaused((p) => !p)}
+                    className="text-foreground/70"
                   />
-                  <p className="mt-3 text-2xl font-medium tracking-tight md:text-3xl">
-                    {d.value}
-                  </p>
-                  <p className="mt-2 text-xs text-muted-foreground sm:text-sm">
-                    {d.label}
-                  </p>
-                </li>
-              )
-            })}
-          </ul>
+                </div>
+                <div
+                  aria-hidden
+                  className="relative w-full overflow-hidden mask-x-from-80%"
+                >
+                  <Marquee pauseOnHover className="[--gap:1.5rem] p-0">
+                    {partners.map((p, i) => (
+                      <span
+                        key={`${p.src}-${i}`}
+                        className="flex h-12 w-24 items-center justify-center rounded-md bg-white/95 p-1.5"
+                      >
+                        <img
+                          src={p.src}
+                          alt=""
+                          className="max-h-9 w-auto max-w-full object-contain"
+                        />
+                      </span>
+                    ))}
+                  </Marquee>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Rotating photo grid — ambient event imagery, hidden from AT */}
+          {hasGallery && (
+            <div aria-hidden className="min-w-0 max-lg:border-t max-lg:border-foreground/10">
+              <PhotoGrid gallery={galleryImages} />
+            </div>
+          )}
         </div>
       </div>
     </section>
+  )
+}
+
+function PhotoGrid({ gallery }: { gallery: string[] }) {
+  const [startIndex, setStartIndex] = useState(0)
+  const reducedMotion = useReducedMotion()
+
+  const canRotate = !reducedMotion && gallery.length > GRID_SIZE
+
+  useEffect(() => {
+    if (!canRotate) return
+    const id = setInterval(() => {
+      setStartIndex((prev) => (prev + GRID_SIZE) % gallery.length)
+    }, ROTATION_INTERVAL)
+    return () => clearInterval(id)
+  }, [canRotate, gallery.length])
+
+  return (
+    <div className="grid h-full grid-cols-3 gap-px bg-foreground/10 perspective-[1200px]">
+      {Array.from({ length: GRID_SIZE }).map((_, cell) => {
+        const src = gallery[(startIndex + cell) % gallery.length]
+        return (
+          <div key={cell} className="overflow-hidden bg-background/40 p-1">
+            <div className="relative aspect-square h-full w-full">
+              <AnimatePresence initial={false}>
+                <motion.img
+                  key={`${cell}-${src}`}
+                  src={src}
+                  alt=""
+                  className="absolute inset-0 size-full object-cover"
+                  initial={
+                    reducedMotion ? { opacity: 1 } : { rotateY: 15, opacity: 0 }
+                  }
+                  animate={{ rotateY: 0, opacity: 1 }}
+                  exit={
+                    reducedMotion ? { opacity: 0 } : { rotateY: -10, opacity: 0 }
+                  }
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeInOut",
+                    delay: reducedMotion ? 0 : cell * 0.09,
+                  }}
+                />
+              </AnimatePresence>
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 

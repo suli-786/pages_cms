@@ -1,12 +1,39 @@
 # Pages CMS configuration — https://pagescms.org/docs/configuration
 # Lives at the repo root. Pages CMS reads it per repo and per branch.
 #
-# Scope: the homepage (src/content/home.json). Nav, footer and site name/SEO are
-# intentionally hardcoded in the components, not edited here.
+# Scope: the homepage (src/content/home.json) and site settings
+# (src/content/settings.json). Nav, footer links and SEO are hardcoded.
+#
+# Every homepage section has a "Show section" switch: turning it off hides the
+# section on the site but keeps its content, so it can be switched back on.
+#
+# This file mirrors the zod schema in src/lib/home.ts — change both together.
 
 media:
   input: public/images # where uploaded files are stored in the repo
   output: /images # the path written into content (matches existing image paths)
+  categories: [image] # editors can only upload image files
+  rename: safe # slugify upload filenames (no more "photo (1).jpg")
+
+# ------------------------------------------------------- Reusable field groups
+components:
+  visible:
+    type: boolean
+    label: Show section
+    default: true
+    description: 'Turn off to hide this section on the site. Its content is kept and it can be switched back on any time.'
+  cta:
+    type: object
+    label: Button
+    fields:
+      - { name: label, label: Label, type: string }
+      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #newsletter to jump to a section.' }
+  picture:
+    type: object
+    label: Image
+    fields:
+      - { name: src, label: Image, type: image }
+      - { name: alt, label: Alt text, type: string, description: 'Describe the image for screen readers and search engines.' }
 
 content:
   # ----------------------------------------------------------------- Homepage
@@ -21,124 +48,119 @@ content:
         label: 1. Hero
         type: object
         fields:
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: title, label: Title, type: string, required: true }
-          - { name: subtitle, label: Subtitle, type: string }
-          - { name: backgroundImage, label: Background image, type: image }
-          - { name: facts, label: Fact lines, type: string, list: true }
-          - name: primaryCta
-            label: Primary button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
-          - name: secondaryCta
-            label: Secondary button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
-          - { name: footnote, label: Footnote, type: string }
-          - name: saveDate
-            label: Save-the-date strip
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: value, label: Value, type: string }
-              - name: cta
-                label: Button
-                type: object
-                fields:
-                  - { name: label, label: Label, type: string }
-                  - { name: href, label: Link, type: string }
+          - { name: visible, component: visible }
+          - { name: eyebrow, label: Eyebrow, type: string, description: 'Small line above the title.' }
+          - {
+              name: title,
+              label: Title,
+              type: string,
+              required: true,
+              description: 'Wrap words in *asterisks* to emphasise them, e.g. "Ummah Tech *Conference* 2026".',
+            }
+          - { name: subtitle, label: Subtitle, type: text }
           - name: eventDetails
-            label: Event details (3 columns)
+            label: Event details (icon row)
             type: object
-            list: true
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.value}'
+            description: 'Shown with calendar / map-pin / ticket icons, in this order.'
             fields:
               - { name: label, label: Label, type: string }
               - { name: value, label: Value, type: string }
+          - {
+              name: speakersLabel,
+              label: Speakers caption,
+              type: string,
+              description: 'Caption above the speaker photos. The photos come from the Speakers section below (first six with portraits).',
+            }
+          - { name: primaryCta, label: Primary button, component: cta }
+          - { name: secondaryCta, label: Secondary button, component: cta }
+          - {
+              name: partnersLabel,
+              label: Partners caption,
+              type: string,
+              description: 'Caption above the scrolling partner logos (logos come from the Partners section). Leave empty to hide this strip.',
+            }
+          - {
+              name: gallery,
+              label: Photo grid,
+              type: image,
+              list: true,
+              description: 'The rotating 3×3 photo wall. Nine photos fill the grid; add more than nine and it cycles through them.',
+            }
 
       - name: vision
         label: 2. Vision
         type: object
         fields:
+          - { name: visible, component: visible }
           - { name: badge, label: Badge, type: string }
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: lead, label: Lead paragraph, type: text }
-          - name: learnMore
-            label: "Learn-more link"
+          - { name: heading, label: Heading, type: string }
+          - {
+              name: statement,
+              label: Statement,
+              type: text,
+              description: 'The big centred text. Leave an empty line between paragraphs. Wrap words in *asterisks* to emphasise them.',
+            }
+          - name: highlights
+            label: Highlighted phrases
             type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.phrase}'
+            description: 'Each phrase must appear somewhere in the statement; it is shown in full colour and reveals its photo on hover.'
             fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
-          - name: card
-            label: Highlight card
-            type: object
-            fields:
-              - { name: image, label: Image, type: image }
-              - { name: title, label: Title, type: string }
-              - { name: subtitle, label: Subtitle, type: string }
-              - name: cta
-                label: Button
-                type: object
-                fields:
-                  - { name: label, label: Label, type: string }
-                  - { name: href, label: Link, type: string }
-          - { name: paragraphs, label: Body paragraphs, type: text, list: true }
+              - { name: phrase, label: Phrase, type: string }
+              - { name: image, label: Hover photo, type: image }
+              - { name: href, label: 'Link (optional)', type: string }
 
       - name: conference
-        label: 3. Conference intro
+        label: 3. Conference & Why Attend
         type: object
         fields:
+          - { name: visible, component: visible }
+          - { name: tagline, label: Tagline, type: string, description: 'Small uppercase line above the heading.' }
           - { name: heading, label: Heading, type: string, required: true }
           - { name: body, label: Body, type: text }
-          - { name: facts, label: Fact lines, type: string, list: true }
-          - name: image
-            label: Image
+          - { name: primaryCta, label: Primary button, component: cta }
+          - { name: secondaryCta, label: Secondary button, component: cta }
+          - name: tiles
+            label: Photo tiles
             type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.caption}'
+            description: 'The two wide photo cards in the grid. Only the first two with an image are shown.'
             fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
+              - { name: image, component: picture }
+              - { name: caption, label: Caption, type: string }
               - { name: href, label: Link, type: string }
-
-      - name: whyAttend
-        label: 4. Why attend
-        type: object
-        fields:
-          - { name: heading, label: Heading, type: string, required: true }
-          - { name: benefits, label: Benefits, type: string, list: true }
-          - name: image
-            label: Image
+              - { name: linkLabel, label: Link label, type: string }
+          - name: benefits
+            label: Why attend (coloured cells)
             type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.title}'
+            description: 'Four look best — big word plus a short line, e.g. "Connect — with a thriving network of peers".'
             fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
+              - { name: title, label: Big word, type: string }
+              - { name: description, label: Short line, type: string }
 
       - name: speakers
-        label: 5. Speakers
+        label: 4. Speakers
         type: object
         fields:
+          - { name: visible, component: visible }
           - { name: badge, label: Badge, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
+          - { name: cta, label: Button, component: cta }
           - name: items
             label: Speaker cards
             type: object
@@ -146,6 +168,7 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.name}'
+            description: 'The first six with portraits also appear as small photos in the hero.'
             fields:
               - { name: name, label: Name, type: string, required: true }
               - { name: role, label: Role / company, type: string }
@@ -153,9 +176,10 @@ content:
               - { name: portrait, label: Portrait, type: image }
 
       - name: partners
-        label: 6. Partners
+        label: 5. Partners
         type: object
         fields:
+          - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
           - name: items
@@ -165,35 +189,33 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.alt}'
+            description: 'Shown as two scrolling rows here and as a small strip in the hero.'
             fields:
               - { name: src, label: Logo, type: image }
               - { name: alt, label: Name / alt text, type: string }
-              - { name: href, label: Link, type: string }
+              - {
+                  name: href,
+                  label: Website (optional),
+                  type: string,
+                  description: 'Kept for a future partner directory — the scrolling logos themselves are not clickable.',
+                }
 
       - name: finalCta
-        label: 7. Final CTA
+        label: 6. Final CTA
         type: object
         fields:
+          - { name: visible, component: visible }
           - { name: eyebrow, label: Eyebrow, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: body, label: Body, type: text }
-          - name: cta
-            label: Button
-            type: object
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: href, label: Link, type: string }
-          - name: image
-            label: Image
-            type: object
-            fields:
-              - { name: src, label: Image, type: image }
-              - { name: alt, label: Alt text, type: string }
+          - { name: cta, label: Button, component: cta }
+          - { name: image, label: Image, component: picture }
 
       - name: newsletter
-        label: 8. Newsletter
+        label: 7. Newsletter
         type: object
         fields:
+          - { name: visible, component: visible }
           - { name: badge, label: Badge, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
@@ -229,4 +251,3 @@ content:
           required: true,
           description: 'Brand text shown next to / instead of the logo.',
         }
-

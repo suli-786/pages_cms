@@ -71,7 +71,23 @@ Set media `input: public/media` and `output: /media`. This makes committed image
 
 ---
 
-## 7. Sources (verified 2026-06-19)
+## 7. How THIS site's homepage model works (2026-07-14 rebuild)
+
+Editor-facing notes for the Ummah Tech homepage (`Homepage` in the CMS sidebar):
+
+- **Show section toggles.** Every section has a "Show section" switch. Off = hidden on the site, content kept. Hiding *Speakers* or *Partners* also removes their photos/logos from the hero (the hero borrows those lists).
+- **Emphasis markers.** In the hero *Title* and the vision *Statement*, wrap words in `*asterisks*` to emphasise them (e.g. `Ummah Tech *Conference* 2026`).
+- **Vision highlights.** Each "Highlighted phrase" must appear somewhere in the statement text; it renders in full colour and shows its photo on hover. If the phrase no longer matches the statement, it simply renders as normal text.
+- **Hero photo grid.** Nine images fill the 3×3 wall; more than nine cycle on a timer.
+- **One list, two places.** Speaker portraits (first six) and partner logos also appear in the hero automatically — edit them once in their own sections.
+- **Uploads are renamed.** Media config uses `rename: safe` + images only, so filenames like `photo (1).jpg` become slugs automatically.
+- **Cleared fields are safe.** Emptying an optional field or list hides that piece; only clearing the hero Title (required) or structurally breaking the file fails the build — with a field-path error message.
+
+Developer contract: `.pages.yml` mirrors the zod schema in `src/lib/home.ts` — change both together. See [pages-cms-best-practices.md](pages-cms-best-practices.md) for the wider Pages CMS research.
+
+---
+
+## 8. Sources (verified 2026-06-19)
 
 - **`.pages.yml` structure (media, content, collection/file types, fields), reads per repo/branch:** pagescms.org/docs/configuration ("Overview"); pagescms.org/docs/configuration/media (media sources).
 - **Git-native (no content DB), reads file on open, commits on Save, GitHub App install + sign-in:** pagescms.org/docs ("Introduction"); css-tricks.com/using-pages-cms-for-static-site-content-management (the `input`/`output` note and the Save→commit behaviour).
