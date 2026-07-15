@@ -1,31 +1,28 @@
-"use client"
+'use client';
 
-import { Fragment, useEffect, useState } from "react"
-import {
-  CalendarDays,
-  MapPin,
-  MoveRight,
-  Ticket,
-  type LucideIcon,
-} from "lucide-react"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import { Fragment, useEffect, useState } from 'react';
 
-import { MarqueePause } from "@/components/elements/marquee-pause"
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Marquee } from "@/components/ui/marquee"
-import type { HeroContent, PartnerLogo, Speaker } from "@/lib/home"
+import { CalendarDays, MapPin, MoveRight, type LucideIcon } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
-// Adapted from @shadcnblocks/hero272: split layout with a stacked, divided
+import { SocialGlyph, socialLabel } from '@/components/elements/social-icons';
+import { Button } from '@/components/ui/button';
+import type { HeroContent } from '@/lib/home';
+import type { SocialLink } from '@/lib/site';
+
+// Adapted from @shadcnblocks/hero272: a split layout with a stacked, divided
 // left column and a nine-cell photo grid that rotates on a timer. The three
-// left bands are repurposed for the conference — headline + event details,
-// featured speakers + CTAs, partner logo marquee. Speakers and partner logos
-// are cross-fed from their own CMS sections (no duplicate content entry).
-const GRID_SIZE = 9
-const ROTATION_INTERVAL = 7000 // ms
+// left bands carry the conference's pitch — the statement + event details, the
+// ticket CTA + WhatsApp community invite, and the social links. Social links
+// come from Site settings so the whole site shares one list.
+const GRID_SIZE = 9;
+const ROTATION_INTERVAL = 7000; // ms
 
 // Icons for the event-details strip, matched to eventDetails by position.
-const detailIcons: LucideIcon[] = [CalendarDays, MapPin, Ticket]
+const detailIcons: LucideIcon[] = [CalendarDays, MapPin];
+
+/** Only real URLs open in a new tab — a placeholder `#` must not. */
+const isExternal = (href: string) => /^https?:\/\//.test(href);
 
 /** Renders `*text*` markers as emphasized words (documented in .pages.yml). */
 function renderEmphasis(text: string) {
@@ -36,197 +33,186 @@ function renderEmphasis(text: string) {
       </em>
     ) : (
       <Fragment key={i}>{part}</Fragment>
-    )
-  )
+    ),
+  );
 }
 
 function Hero({
   content,
-  speakers = [],
-  partners = [],
+  socials = [],
 }: {
-  content: HeroContent
-  speakers?: Speaker[]
-  partners?: PartnerLogo[]
+  content: HeroContent;
+  socials?: SocialLink[];
 }) {
   const {
     eyebrow,
     title,
-    subtitle,
     eventDetails = [],
-    speakersLabel,
     primaryCta,
-    secondaryCta,
-    partnersLabel,
+    community,
+    socialsLabel,
     gallery = [],
-  } = content
+  } = content;
 
-  const featuredSpeakers = speakers.filter((s) => s.portrait).slice(0, 6)
-  const galleryImages = gallery.filter(Boolean)
-  const hasGallery = galleryImages.length > 0
-  const hasPartnerBand = partnersLabel !== "" && partners.length > 0
-  const [marqueePaused, setMarqueePaused] = useState(false)
+  const galleryImages = gallery.filter(Boolean);
+  const hasGallery = galleryImages.length > 0;
+  const hasCommunity = Boolean(community.body || community.cta.label);
+  // The `whatsapp` CMS token is already resolved to a real URL by lib/home.ts.
+  const communityHref = community.cta.href;
 
   return (
-    <section className="dark relative overflow-hidden bg-background text-foreground">
+    <section className="dark bg-background text-foreground relative overflow-hidden">
       <div className="container pt-28 pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20">
         <div
           className={
             hasGallery
-              ? "grid border border-foreground/10 lg:grid-cols-2 lg:divide-x lg:divide-foreground/10"
-              : "grid border border-foreground/10"
+              ? 'border-foreground/10 lg:divide-foreground/10 grid border lg:grid-cols-2 lg:divide-x'
+              : 'border-foreground/10 grid border'
           }
         >
-          {/* min-w-0: keep the marquee's intrinsic width from stretching the column */}
-          <div className="flex min-w-0 flex-col divide-y divide-foreground/10">
-            {/* Band 1 — headline, subtitle, event details */}
+          <div className="divide-foreground/10 flex min-w-0 flex-col divide-y">
+            {/* Band 1 — the statement and when/where. The event name sits inside
+                the h1 so the page heading names the event, not just the pitch. */}
             <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
-              {eyebrow && (
-                <p className="mb-6 flex items-center gap-3 text-sm text-foreground/70">
-                  <MoveRight aria-hidden className="size-5" strokeWidth={1.25} />
-                  {eyebrow}
-                </p>
-              )}
-              <h1 className="max-w-3xl text-4xl tracking-tight text-foreground/60 md:text-5xl lg:text-6xl">
-                {renderEmphasis(title)}
+              <h1 className="max-w-3xl">
+                {eyebrow && (
+                  <span className="text-accent font-text font-weight-text mb-6 flex items-center gap-3 text-sm tracking-tight">
+                    <span aria-hidden className="bg-accent h-px w-8" />
+                    {eyebrow}
+                  </span>
+                )}
+                <span className="text-foreground/60 block text-4xl tracking-tight text-balance md:text-5xl lg:text-6xl">
+                  {renderEmphasis(title)}
+                </span>
               </h1>
-              {subtitle && (
-                <p className="mt-5 max-w-xl text-balance text-lg text-foreground/75">
-                  {subtitle}
-                </p>
-              )}
+
               {eventDetails.length > 0 && (
-                <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+                <ul className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
                   {eventDetails.map((d, i) => {
-                    const Icon = detailIcons[i] ?? CalendarDays
+                    const Icon = detailIcons[i] ?? CalendarDays;
                     return (
-                      <li key={`${d.label}-${i}`} className="flex items-center gap-2.5">
+                      <li
+                        key={`${d.label}-${i}`}
+                        className="flex items-center gap-2.5"
+                      >
                         <Icon
                           aria-hidden
-                          className="size-5 text-accent"
+                          className="text-accent size-5"
                           strokeWidth={1.5}
                         />
                         <span className="text-sm">
                           <span className="block font-medium">{d.value}</span>
-                          <span className="block text-xs text-foreground/55">
+                          <span className="text-foreground/55 block text-xs">
                             {d.label}
                           </span>
                         </span>
                       </li>
-                    )
+                    );
                   })}
                 </ul>
               )}
             </div>
 
-            {/* Band 2 — featured speakers + CTAs */}
-            <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
-              {featuredSpeakers.length > 0 && (
-                <>
-                  {speakersLabel && (
-                    <p className="mb-3 text-sm font-medium tracking-tight text-foreground/70">
-                      {speakersLabel}
-                    </p>
-                  )}
-                  <AvatarGroup className="grayscale">
-                    {featuredSpeakers.map((s) => (
-                      <Avatar
-                        key={`${s.name}-${s.portrait}`}
-                        className="size-12 ring-2 ring-background"
-                      >
-                        <AvatarImage src={s.portrait} alt={s.name} />
-                        <AvatarFallback>{s.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                    ))}
-                  </AvatarGroup>
-                </>
+            {/* Band 2 — the one CTA, plus the WhatsApp community invite */}
+            <div className="flex flex-1 flex-col justify-center gap-6 p-6 md:p-8">
+              {community.body && (
+                <p className="text-foreground/70 max-w-md text-sm text-pretty">
+                  {community.body}
+                </p>
               )}
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 {primaryCta.label && primaryCta.href && (
                   <Button size="lg" asChild>
-                    <a href={primaryCta.href}>{primaryCta.label}</a>
+                    <a href={primaryCta.href}>
+                      {primaryCta.label}
+                      <MoveRight
+                        aria-hidden
+                        className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"
+                      />
+                    </a>
                   </Button>
                 )}
-                {secondaryCta.label && secondaryCta.href && (
+                {hasCommunity && community.cta.label && communityHref && (
                   <Button size="lg" variant="outline" asChild>
-                    <a href={secondaryCta.href}>{secondaryCta.label}</a>
+                    <a
+                      href={communityHref}
+                      {...(isExternal(communityHref)
+                        ? { target: '_blank', rel: 'noopener noreferrer' }
+                        : {})}
+                    >
+                      <SocialGlyph platform="whatsapp" className="size-4" />
+                      {community.cta.label}
+                    </a>
                   </Button>
                 )}
               </div>
             </div>
 
-            {/* Band 3 — partner logo marquee (decorative teaser; the Partners
-                section carries the accessible list) */}
-            {hasPartnerBand && (
-              <div
-                className="flex flex-1 flex-col justify-center p-6 md:p-8"
-                data-marquee-paused={marqueePaused || undefined}
-              >
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <p className="text-sm font-medium tracking-tight text-foreground/70">
-                    {partnersLabel}
+            {/* Band 3 — social links (from Site settings) */}
+            {socials.length > 0 && (
+              <div className="flex flex-1 flex-col justify-center gap-4 p-6 md:p-8">
+                {socialsLabel && (
+                  <p className="text-foreground/70 text-sm font-medium tracking-tight">
+                    {socialsLabel}
                   </p>
-                  <MarqueePause
-                    paused={marqueePaused}
-                    onToggle={() => setMarqueePaused((p) => !p)}
-                    className="text-foreground/70"
-                  />
-                </div>
-                <div
-                  aria-hidden
-                  className="relative w-full overflow-hidden mask-x-from-80%"
-                >
-                  <Marquee pauseOnHover className="[--gap:1.5rem] p-0">
-                    {partners.map((p, i) => (
-                      <span
-                        key={`${p.src}-${i}`}
-                        className="flex h-12 w-24 items-center justify-center rounded-md bg-white/95 p-1.5"
+                )}
+                <ul className="flex flex-wrap items-center gap-2">
+                  {socials.map((s) => (
+                    <li key={s.platform}>
+                      <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={socialLabel(s.platform)}
+                        className="border-foreground/15 text-foreground/70 hover:border-accent hover:bg-accent/10 hover:text-foreground focus-visible:ring-ring grid size-10 place-items-center rounded-full border transition-colors outline-none focus-visible:ring-2"
                       >
-                        <img
-                          src={p.src}
-                          alt=""
-                          className="max-h-9 w-auto max-w-full object-contain"
+                        <SocialGlyph
+                          platform={s.platform}
+                          className="size-[18px]"
                         />
-                      </span>
-                    ))}
-                  </Marquee>
-                </div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
 
           {/* Rotating photo grid — ambient event imagery, hidden from AT */}
           {hasGallery && (
-            <div aria-hidden className="min-w-0 max-lg:border-t max-lg:border-foreground/10">
+            <div
+              aria-hidden
+              className="max-lg:border-foreground/10 min-w-0 max-lg:border-t"
+            >
               <PhotoGrid gallery={galleryImages} />
             </div>
           )}
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 function PhotoGrid({ gallery }: { gallery: string[] }) {
-  const [startIndex, setStartIndex] = useState(0)
-  const reducedMotion = useReducedMotion()
+  const [startIndex, setStartIndex] = useState(0);
+  const reducedMotion = useReducedMotion();
 
-  const canRotate = !reducedMotion && gallery.length > GRID_SIZE
+  const canRotate = !reducedMotion && gallery.length > GRID_SIZE;
 
   useEffect(() => {
-    if (!canRotate) return
+    if (!canRotate) return;
     const id = setInterval(() => {
-      setStartIndex((prev) => (prev + GRID_SIZE) % gallery.length)
-    }, ROTATION_INTERVAL)
-    return () => clearInterval(id)
-  }, [canRotate, gallery.length])
+      setStartIndex((prev) => (prev + GRID_SIZE) % gallery.length);
+    }, ROTATION_INTERVAL);
+    return () => clearInterval(id);
+  }, [canRotate, gallery.length]);
 
   return (
-    <div className="grid h-full grid-cols-3 gap-px bg-foreground/10 perspective-[1200px]">
+    <div className="bg-foreground/10 grid h-full grid-cols-3 gap-px perspective-[1200px]">
       {Array.from({ length: GRID_SIZE }).map((_, cell) => {
-        const src = gallery[(startIndex + cell) % gallery.length]
+        const src = gallery[(startIndex + cell) % gallery.length];
         return (
-          <div key={cell} className="overflow-hidden bg-background/40 p-1">
+          <div key={cell} className="bg-background/40 overflow-hidden p-1">
             <div className="relative aspect-square h-full w-full">
               <AnimatePresence initial={false}>
                 <motion.img
@@ -239,21 +225,23 @@ function PhotoGrid({ gallery }: { gallery: string[] }) {
                   }
                   animate={{ rotateY: 0, opacity: 1 }}
                   exit={
-                    reducedMotion ? { opacity: 0 } : { rotateY: -10, opacity: 0 }
+                    reducedMotion
+                      ? { opacity: 0 }
+                      : { rotateY: -10, opacity: 0 }
                   }
                   transition={{
                     duration: 0.6,
-                    ease: "easeInOut",
+                    ease: 'easeInOut',
                     delay: reducedMotion ? 0 : cell * 0.09,
                   }}
                 />
               </AnimatePresence>
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;

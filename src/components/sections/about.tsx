@@ -1,57 +1,71 @@
-"use client"
+'use client';
 
-import { Fragment } from "react"
+import { Fragment } from 'react';
 
-import { Badge } from "@/components/ui/badge"
-import { LinkPreview } from "@/components/ui/link-preview"
-import type { VisionContent } from "@/lib/home"
+import { LinkPreview } from '@/components/ui/link-preview';
+import type { VisionContent } from '@/lib/home';
 
-// Vision — adapted from @shadcnblocks/feature288: one large centered statement
-// in muted type where key phrases stand out in full contrast and reveal a
-// photo preview on hover. Phrases and their images come from the CMS
-// `highlights` list and are matched inside the statement text; a phrase that
-// no longer appears in the statement simply renders as plain text.
+// Vision — adapted from @shadcnblocks/feature288: a centred statement in muted
+// type where key phrases stand out in full contrast and reveal a photo preview
+// on hover. Phrases and their images come from the CMS `highlights` list and
+// are matched inside the text; a phrase that no longer appears anywhere simply
+// renders as plain text, and one with no photo yet renders in full contrast
+// without a hover preview.
+//
+// Two CMS fields: `heading` (the opening declaration, and the section's h2) and
+// `statement` (everything after it). Every block is set at one size — see
+// BLOCK_TYPE — so the emphasis lands on the highlighted phrases, not on a type
+// scale. Inside `statement`, a blank line starts a new paragraph and a single
+// newline breaks a line, which is how the editor controls where lines land.
 //
 // Parsing order matters: *emphasis* markers are resolved first, then highlight
 // phrases are matched inside each resulting run — so a phrase that is itself
-// emphasised ("*inspire innovation*") nests cleanly instead of leaving stray
+// emphasised ("*challenge assumptions*") nests cleanly instead of leaving stray
 // asterisks. Phrases spanning an emphasis boundary don't match (by design).
-type Highlight = VisionContent["highlights"][number]
+type Highlight = VisionContent['highlights'][number];
 
-type Segment = { text: string; highlight?: Highlight }
+type Segment = { text: string; highlight?: Highlight };
 
-const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 function segmentText(text: string, highlights: Highlight[]): Segment[] {
-  let segments: Segment[] = [{ text }]
+  let segments: Segment[] = [{ text }];
   for (const h of highlights) {
-    if (!h.phrase) continue
+    if (!h.phrase) continue;
     // Case-insensitive match on the original string (regex index/length refer
     // to the source text, so locale case-mapping can't shift the boundaries).
-    const pattern = new RegExp(escapeRegExp(h.phrase), "i")
+    const pattern = new RegExp(escapeRegExp(h.phrase), 'i');
     segments = segments.flatMap((seg) => {
-      if (seg.highlight) return [seg]
-      const m = pattern.exec(seg.text)
-      if (!m) return [seg]
+      if (seg.highlight) return [seg];
+      const m = pattern.exec(seg.text);
+      if (!m) return [seg];
       return [
         { text: seg.text.slice(0, m.index) },
         { text: m[0], highlight: h },
         { text: seg.text.slice(m.index + m[0].length) },
-      ].filter((s) => s.text !== "")
-    })
+      ].filter((s) => s.text !== '');
+    });
   }
-  return segments
+  return segments;
 }
 
-function renderSegments(text: string, highlights: Highlight[], keyPrefix: string) {
+function renderSegments(
+  text: string,
+  highlights: Highlight[],
+  keyPrefix: string,
+) {
   return segmentText(text, highlights).map((seg, i) =>
     seg.highlight ? (
       seg.highlight.image ? (
+        // No horizontal padding: it would push the punctuation that follows the
+        // phrase away from it ("built with purpose ." instead of "…purpose.").
+        // alt = the phrase, so a screen reader user who opens the preview hears
+        // what the photo illustrates rather than an unlabelled image.
         <LinkPreview
           key={`${keyPrefix}-${i}`}
           imageSrc={seg.highlight.image}
+          imageAlt={seg.text}
           href={seg.highlight.href || undefined}
-          className="px-1"
         >
           {seg.text}
         </LinkPreview>
@@ -62,62 +76,78 @@ function renderSegments(text: string, highlights: Highlight[], keyPrefix: string
       )
     ) : (
       <Fragment key={`${keyPrefix}-${i}`}>{seg.text}</Fragment>
-    )
-  )
+    ),
+  );
 }
 
 /** `*text*` emphasis first, then highlight phrases within each run. */
-function renderParagraph(paragraph: string, highlights: Highlight[], pIndex: number) {
-  return paragraph.split(/\*([^*]+)\*/g).map((part, i) =>
+function renderRich(text: string, highlights: Highlight[], keyPrefix: string) {
+  return text.split(/\*([^*]+)\*/g).map((part, i) =>
     i % 2 === 1 ? (
-      <em key={`${pIndex}-${i}`} className="text-foreground italic">
-        {renderSegments(part, highlights, `${pIndex}-${i}`)}
+      <em key={`${keyPrefix}-${i}`} className="text-foreground italic">
+        {renderSegments(part, highlights, `${keyPrefix}-${i}`)}
       </em>
     ) : (
-      <Fragment key={`${pIndex}-${i}`}>
-        {renderSegments(part, highlights, `${pIndex}-${i}`)}
+      <Fragment key={`${keyPrefix}-${i}`}>
+        {renderSegments(part, highlights, `${keyPrefix}-${i}`)}
       </Fragment>
-    )
-  )
+    ),
+  );
 }
 
-function About({ content }: { content: VisionContent }) {
-  const { badge, heading, statement, highlights = [] } = content
-
-  const paragraphs = statement
+/** Blank line → new paragraph. Single newline → line break inside a paragraph. */
+const paragraphsOf = (text: string) =>
+  text
     .split(/\n\s*\n/)
-    .map((p) => p.trim())
-    .filter(Boolean)
+    .map((p) =>
+      p
+        .split('\n')
+        .map((line) => line.trim())
+        .filter(Boolean),
+    )
+    .filter((p) => p.length > 0);
+
+// One type scale for the whole section. The hierarchy comes from contrast, not
+// size: the heading and the highlighted phrases sit in full colour against
+// muted body text.
+const BLOCK_TYPE =
+  'text-2xl leading-snug font-semibold tracking-tight text-balance md:text-3xl lg:text-4xl';
+
+function About({ content }: { content: VisionContent }) {
+  const { heading, statement, highlights = [] } = content;
+
+  const paragraphs = paragraphsOf(statement);
 
   return (
-    <section id="vision" className="section-padding scroll-mt-24 overflow-hidden">
+    <section
+      id="vision"
+      className="section-padding scroll-mt-24 overflow-hidden"
+    >
       <div className="container flex max-w-5xl flex-col items-center text-center">
-        {badge && (
-          <Badge variant="outline" size="lg">
-            <span className="size-1 rounded-full bg-foreground/40" />
-            {badge}
-            <span className="size-1 rounded-full bg-foreground/40" />
-          </Badge>
-        )}
+        {/* font-text overrides the global display face on headings, so the
+            heading sits at the same weight and scale as the paragraphs. */}
         {heading && (
-          <h2 className="mt-6 text-sm tracking-[0.2em] text-muted-foreground uppercase">
+          <h2 className={`text-foreground font-text ${BLOCK_TYPE}`}>
             {heading}
           </h2>
         )}
 
-        <div className="mt-10 space-y-10 md:mt-14">
-          {paragraphs.map((paragraph, pIndex) => (
-            <p
-              key={pIndex}
-              className="text-2xl leading-snug font-semibold tracking-tight text-balance text-muted-foreground md:text-3xl lg:text-4xl"
-            >
-              {renderParagraph(paragraph, highlights, pIndex)}
-            </p>
-          ))}
-        </div>
+        {paragraphs.length > 0 && (
+          <div className="mt-10 space-y-10 md:mt-14">
+            {paragraphs.map((linesInParagraph, pIndex) => (
+              <p key={pIndex} className={`text-muted-foreground ${BLOCK_TYPE}`}>
+                {linesInParagraph.map((line, i) => (
+                  <span key={i} className="block">
+                    {renderRich(line, highlights, `${pIndex}-${i}`)}
+                  </span>
+                ))}
+              </p>
+            ))}
+          </div>
+        )}
       </div>
     </section>
-  )
+  );
 }
 
-export default About
+export default About;

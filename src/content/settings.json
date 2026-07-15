@@ -1,4 +1,35 @@
 {
   "logo": "/images/other/logo.jpg",
-  "siteName": "Ummah Tech"
+  "siteName": "Ummah Tech",
+  "whatsapp": "",
+  "socials": [
+    {
+      "platform": "instagram",
+      "href": "https://www.instagram.com/ummah.tech"
+    },
+    {
+      "platform": "linkedin",
+      "href": "https://www.linkedin.com/company/ummahtech/"
+    },
+    {
+      "platform": "x",
+      "href": "https://x.com/ummah_tech"
+    },
+    {
+      "platform": "facebook",
+      "href": "https://www.facebook.com/people/UmmahTech/61565943317390/"
+    },
+    {
+      "platform": "youtube",
+      "href": "https://www.youtube.com/@Ummah.TechZa"
+    },
+    {
+      "platform": "tiktok",
+      "href": "https://www.tiktok.com/@ummah.techza"
+    },
+    {
+      "platform": "threads",
+      "href": "https://www.threads.com/@ummah.tech"
+    }
+  ]
 }

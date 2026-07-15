@@ -1,33 +1,30 @@
 {
   "hero": {
     "visible": true,
-    "eyebrow": "Save the date",
-    "title": "Ummah Tech *Conference* 2026",
-    "subtitle": "A gathering of Muslim founders, technologists and creatives — building technology that benefits the Ummah and humanity.",
+    "eyebrow": "Ummah Tech Conference 2026",
+    "title": "We're building *what's worth inheriting.* Be part of it.",
     "eventDetails": [
       {
         "label": "Date",
-        "value": "7 Nov 2026"
+        "value": "7 November 2026"
       },
       {
         "label": "Venue",
         "value": "Johannesburg"
-      },
-      {
-        "label": "Tickets",
-        "value": "Coming soon"
       }
     ],
-    "speakersLabel": "Featuring speakers from across the community",
     "primaryCta": {
-      "label": "Ticket sales open soon",
+      "label": "Get Tickets",
       "href": "#newsletter"
     },
-    "secondaryCta": {
-      "label": "Our vision",
-      "href": "#vision"
+    "community": {
+      "body": "Ticket sales open soon. Join our WhatsApp community to hear it first — along with speaker announcements and everything else as it happens.",
+      "cta": {
+        "label": "Join the WhatsApp community",
+        "href": "whatsapp"
+      }
     },
-    "partnersLabel": "Backed by our partners",
+    "socialsLabel": "Stay connected",
     "gallery": [
       "/images/other/o1.jpg",
       "/images/other/02.jpg",
@@ -42,40 +39,41 @@
   },
   "vision": {
     "visible": true,
-    "badge": "Our vision",
-    "heading": "The Ummah Tech Vision",
-    "statement": "Ummah Tech is a growing community that seeks to nurture collaboration, inspire innovation, and build skills among Muslims in the technology sector, with the aim of benefiting the Ummah and humanity.\n\nWe create spaces where Muslim technologists, founders, and creatives can come together to share ideas, learn from one another, and develop technology rooted in Islamic values. Together, we can take on the challenges facing our communities and the wider world.\n\nThrough this community, we believe ideas can grow into solutions – and solutions can drive meaningful change.",
+    "heading": "The Ummah is building.",
+    "statement": "The question isn't whether we'll build.\nIt's what we're building for.\n\nUmmah Tech brings together Muslim technologists, founders, creatives and innovators who believe the technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and service.\n\nBecause when builders find their people, they build what's worth inheriting.",
     "highlights": [
       {
-        "phrase": "inspire innovation",
+        "phrase": "what we're building for",
         "image": "/images/other/o1.jpg",
         "href": ""
       },
       {
-        "phrase": "technology rooted in Islamic values",
+        "phrase": "built with purpose",
         "image": "/images/other/03.jpg",
         "href": ""
       },
       {
-        "phrase": "meaningful change",
+        "phrase": "challenge assumptions",
         "image": "/images/other/02.jpg",
+        "href": ""
+      },
+      {
+        "phrase": "guided by faith, purpose and service",
+        "image": "",
+        "href": ""
+      },
+      {
+        "phrase": "what's worth inheriting",
+        "image": "",
         "href": ""
       }
     ]
   },
   "conference": {
     "visible": true,
-    "tagline": "The flagship event",
-    "heading": "Ummah Tech Conference",
-    "body": "Our flagship event, the annual Ummah Tech Conference usually takes place in November, rotating between Johannesburg and Cape Town. It is a gathering of founders, technologists and innovators to network and share knowledge. Our goal is to build a thriving community in South Africa focused on using technology to make a positive impact on society.",
-    "primaryCta": {
-      "label": "Meet the speakers",
-      "href": "#speakers"
-    },
-    "secondaryCta": {
-      "label": "Save your seat",
-      "href": "#newsletter"
-    },
+    "tagline": "",
+    "heading": "Why should we build?",
+    "body": "Every year, Muslim founders, technologists, creatives and innovators come together at Ummah Tech's annual flagship conference to explore a bigger question than what can we build?",
     "tiles": [
       {
         "image": {
@@ -84,40 +82,43 @@
         },
         "caption": "Ummah Tech 2025",
         "href": "#speakers",
-        "linkLabel": "Meet the speakers"
+        "linkLabel": "Explore Past Conferences"
       },
       {
         "image": {
           "src": "/images/other/o1.jpg",
           "alt": "A talk in progress at the Ummah Tech Conference"
         },
-        "caption": "Johannesburg · 7 Nov 2026",
-        "href": "#newsletter",
-        "linkLabel": "Get updates"
+        "caption": "Stay in the loop",
+        "href": "whatsapp",
+        "linkLabel": "Join the WhatsApp Community"
       }
     ],
     "benefits": [
       {
-        "title": "Connect",
-        "description": "with a thriving network of peers that will inspire you to grow"
+        "category": "Community",
+        "title": "Find Your People",
+        "body": "Building can be lonely. Find founders, technologists and creatives who share your values and your ambition."
       },
       {
-        "title": "Learn",
-        "description": "from industry experts and thought leaders"
+        "category": "Perspective",
+        "title": "Challenge Your Thinking",
+        "body": "Hear from leaders building at the intersection of technology, faith and impact, and leave asking better questions than you arrived with."
       },
       {
-        "title": "Innovate",
-        "description": "and be inspired to lead in tech"
+        "category": "Networking",
+        "title": "Build Meaningful Connections",
+        "body": "Meet collaborators, mentors and future partners who understand not just what you're building, but why you're building it."
       },
       {
-        "title": "Impact",
-        "description": "by creating meaningful technology"
+        "category": "Momentum",
+        "title": "Leave With Direction",
+        "body": "Walk away with fresh ideas, practical insights and renewed clarity about your role in shaping the future."
       }
     ]
   },
   "speakers": {
     "visible": true,
-    "badge": "Speakers",
     "heading": "Last year's speakers.",
     "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
     "cta": {
@@ -169,49 +170,58 @@
     "description": "Proudly supported by the organisations backing the Ummah tech community.",
     "items": [
       {
-        "src": "/images/partners/1.png",
-        "alt": "Partner 1",
-        "href": "#"
-      },
-      {
-        "src": "/images/partners/10.png",
-        "alt": "Partner 2",
-        "href": "#"
-      },
-      {
-        "src": "/images/partners/4.png",
-        "alt": "Partner 3",
-        "href": "#"
-      },
-      {
-        "src": "/images/partners/7.png",
-        "alt": "Partner 4",
-        "href": "#"
+        "src": "/images/partners/Ashraful aid logo.png",
+        "alt": "Ashraful Aid",
+        "href": "#",
+        "tier": "headline"
       },
       {
         "src": "/images/partners/Awqaf logo.png",
-        "alt": "Partner 5",
-        "href": "#"
+        "alt": "Awqaf SA",
+        "href": "#",
+        "tier": "supporting"
       },
       {
-        "src": "/images/partners/Ashraful aid logo.png",
+        "src": "/images/partners/1.png",
+        "alt": "Partner 3",
+        "href": "#",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/10.png",
+        "alt": "Partner 4",
+        "href": "#",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/4.png",
+        "alt": "Partner 5",
+        "href": "#",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/7.png",
         "alt": "Partner 6",
-        "href": "#"
+        "href": "#",
+        "tier": "regular"
       },
       {
         "src": "/images/partners/9.png",
         "alt": "Partner 7",
-        "href": "#"
+        "href": "#",
+        "tier": "regular"
       },
       {
         "src": "/images/partners/6.png",
         "alt": "Partner 8",
-        "href": "#"
+        "href": "#",
+        "tier": "regular"
       },
       {
         "src": "/images/partners/5.png",
         "alt": "Partner 9",
-        "href": "#"
+        "href": "#",
+        "tier": "regular"
       }
     ]
   },

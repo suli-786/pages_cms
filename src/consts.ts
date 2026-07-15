@@ -32,17 +32,15 @@ export const SITE_METADATA = {
     follow: true,
   },
   icons: {
+    // Ummah Tech brand mark. SVG (scalable) for modern browsers; PNGs as
+    // raster fallbacks. Generated from public/logo/graphic-blue.svg.
     icon: [
-      { url: '/favicon/favicon.ico', sizes: '48x48' },
-      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
-      {
-        url: '/favicon/favicon-96x96.png',
-        sizes: '96x96',
-        type: 'image/png',
-      },
+      { url: '/logo/favicon.svg', type: 'image/svg+xml' },
+      { url: '/logo/favicon-96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/logo/favicon-32.png', sizes: '32x32', type: 'image/png' },
     ],
-    apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180' }],
-    shortcut: [{ url: '/favicon/favicon.ico' }],
+    apple: [{ url: '/logo/favicon-180.png', sizes: '180x180' }],
+    shortcut: [{ url: '/logo/favicon.svg' }],
   },
   manifest: '/favicon/site.webmanifest',
   openGraph: {

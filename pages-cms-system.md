@@ -75,11 +75,11 @@ Set media `input: public/media` and `output: /media`. This makes committed image
 
 Editor-facing notes for the Ummah Tech homepage (`Homepage` in the CMS sidebar):
 
-- **Show section toggles.** Every section has a "Show section" switch. Off = hidden on the site, content kept. Hiding *Speakers* or *Partners* also removes their photos/logos from the hero (the hero borrows those lists).
-- **Emphasis markers.** In the hero *Title* and the vision *Statement*, wrap words in `*asterisks*` to emphasise them (e.g. `Ummah Tech *Conference* 2026`).
-- **Vision highlights.** Each "Highlighted phrase" must appear somewhere in the statement text; it renders in full colour and shows its photo on hover. If the phrase no longer matches the statement, it simply renders as normal text.
+- **Show section toggles.** Every section has a "Show section" switch. Off = hidden on the site, content kept.
+- **Emphasis markers.** In the hero *Title*, the vision *Heading* / *Statement*, wrap words in `*asterisks*` to emphasise them (e.g. `We're building *what's worth inheriting.*`).
+- **Vision highlights.** Each "Highlighted phrase" must appear word-for-word in the vision *Heading* or *Statement*; it renders in full colour, and if it has a photo it shows on hover. If the phrase no longer matches, it simply renders as normal text.
 - **Hero photo grid.** Nine images fill the 3×3 wall; more than nine cycle on a timer.
-- **One list, two places.** Speaker portraits (first six) and partner logos also appear in the hero automatically — edit them once in their own sections.
+- **Social links.** Entered once under *Site settings → Social links* and shown as icons in the hero.
 - **Uploads are renamed.** Media config uses `rename: safe` + images only, so filenames like `photo (1).jpg` become slugs automatically.
 - **Cleared fields are safe.** Emptying an optional field or list hides that piece; only clearing the hero Title (required) or structurally breaking the file fails the build — with a field-path error message.
 

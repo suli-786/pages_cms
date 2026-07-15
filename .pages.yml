@@ -27,7 +27,7 @@ components:
     label: Button
     fields:
       - { name: label, label: Label, type: string }
-      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #newsletter to jump to a section.' }
+      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #newsletter to jump to a section, or the word whatsapp to use the WhatsApp community link from Site settings.' }
   picture:
     type: object
     label: Image
@@ -49,15 +49,19 @@ content:
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: eyebrow, label: Eyebrow, type: string, description: 'Small line above the title.' }
+          - {
+              name: eyebrow,
+              label: Eyebrow,
+              type: string,
+              description: 'Small line above the title — the event name. Part of the page heading, so keep it descriptive.',
+            }
           - {
               name: title,
               label: Title,
               type: string,
               required: true,
-              description: 'Wrap words in *asterisks* to emphasise them, e.g. "Ummah Tech *Conference* 2026".',
+              description: 'The big statement. Wrap words in *asterisks* to emphasise them, e.g. "We''re building *what''s worth inheriting.* Be part of it.".',
             }
-          - { name: subtitle, label: Subtitle, type: text }
           - name: eventDetails
             label: Event details (icon row)
             type: object
@@ -65,23 +69,23 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.value}'
-            description: 'Shown with calendar / map-pin / ticket icons, in this order.'
+            description: 'Shown with calendar / map-pin icons, in this order.'
             fields:
               - { name: label, label: Label, type: string }
               - { name: value, label: Value, type: string }
+          - { name: primaryCta, label: Ticket button, component: cta }
+          - name: community
+            label: Community invite
+            type: object
+            description: 'The WhatsApp community block under the ticket button.'
+            fields:
+              - { name: body, label: Wording, type: text }
+              - { name: cta, label: WhatsApp button, component: cta }
           - {
-              name: speakersLabel,
-              label: Speakers caption,
+              name: socialsLabel,
+              label: Social links caption,
               type: string,
-              description: 'Caption above the speaker photos. The photos come from the Speakers section below (first six with portraits).',
-            }
-          - { name: primaryCta, label: Primary button, component: cta }
-          - { name: secondaryCta, label: Secondary button, component: cta }
-          - {
-              name: partnersLabel,
-              label: Partners caption,
-              type: string,
-              description: 'Caption above the scrolling partner logos (logos come from the Partners section). Leave empty to hide this strip.',
+              description: 'Caption above the social icons. The icons themselves come from Site settings → Social links. Leave empty to hide the caption.',
             }
           - {
               name: gallery,
@@ -96,13 +100,17 @@ content:
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: badge, label: Badge, type: string }
-          - { name: heading, label: Heading, type: string }
+          - {
+              name: heading,
+              label: Heading,
+              type: string,
+              description: 'The opening declaration. Same size as the text below it, but in full colour.',
+            }
           - {
               name: statement,
               label: Statement,
               type: text,
-              description: 'The big centred text. Leave an empty line between paragraphs. Wrap words in *asterisks* to emphasise them.',
+              description: 'Everything under the heading. Leave an empty line between paragraphs; a single new line breaks the line where you break it. Wrap words in *asterisks* to emphasise them.',
             }
           - name: highlights
             label: Highlighted phrases
@@ -111,10 +119,10 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.phrase}'
-            description: 'Each phrase must appear somewhere in the statement; it is shown in full colour and reveals its photo on hover.'
+            description: 'Each phrase must appear word-for-word in the heading or statement above. It is shown in full colour; add a photo and it also reveals that photo on hover. A phrase with no photo is still highlighted, just without the hover preview.'
             fields:
               - { name: phrase, label: Phrase, type: string }
-              - { name: image, label: Hover photo, type: image }
+              - { name: image, label: 'Hover photo (optional)', type: image }
               - { name: href, label: 'Link (optional)', type: string }
 
       - name: conference
@@ -122,11 +130,9 @@ content:
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: tagline, label: Tagline, type: string, description: 'Small uppercase line above the heading.' }
+          - { name: tagline, label: Tagline, type: string, description: 'Small uppercase line above the heading. Leave empty to hide it.' }
           - { name: heading, label: Heading, type: string, required: true }
           - { name: body, label: Body, type: text }
-          - { name: primaryCta, label: Primary button, component: cta }
-          - { name: secondaryCta, label: Secondary button, component: cta }
           - name: tiles
             label: Photo tiles
             type: object
@@ -134,33 +140,33 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.caption}'
-            description: 'The two wide photo cards in the grid. Only the first two with an image are shown.'
+            description: 'The two wide photo cards in the grid. Only the first two with an image are shown. Each has a caption, an optional link and a link label shown at the bottom.'
             fields:
               - { name: image, component: picture }
               - { name: caption, label: Caption, type: string }
-              - { name: href, label: Link, type: string }
+              - { name: href, label: Link, type: string, description: 'A section anchor (e.g. #speakers) or the word whatsapp to use the WhatsApp community link from Site settings.' }
               - { name: linkLabel, label: Link label, type: string }
           - name: benefits
-            label: Why attend (coloured cells)
+            label: Why attend (cards)
             type: object
             list:
               collapsible:
                 collapsed: true
                 summary: '{fields.title}'
-            description: 'Four look best — big word plus a short line, e.g. "Connect — with a thriving network of peers".'
+            description: 'Four look best. Each card is a category, a title and a short paragraph, e.g. "Community · Find Your People · Building can be lonely…".'
             fields:
-              - { name: title, label: Big word, type: string }
-              - { name: description, label: Short line, type: string }
+              - { name: category, label: Category, type: string, description: 'Small label above the title, e.g. "Community".' }
+              - { name: title, label: Title, type: string }
+              - { name: body, label: Body, type: text }
 
       - name: speakers
         label: 4. Speakers
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: badge, label: Badge, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
-          - { name: cta, label: Button, component: cta }
+          - { name: cta, label: 'Corner link (top right)', component: cta }
           - name: items
             label: Speaker cards
             type: object
@@ -168,7 +174,7 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.name}'
-            description: 'The first six with portraits also appear as small photos in the hero.'
+            description: 'Shown as a card grid in the Speakers section.'
             fields:
               - { name: name, label: Name, type: string, required: true }
               - { name: role, label: Role / company, type: string }
@@ -189,15 +195,24 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.alt}'
-            description: 'Shown as two scrolling rows here and as a small strip in the hero.'
+            description: 'Grouped by tier: Headline and Supporting logos get a square framed spotlight (labelled by tier), Regular logos scroll in the marquee. Order within the list is the order within each tier.'
             fields:
               - { name: src, label: Logo, type: image }
               - { name: alt, label: Name / alt text, type: string }
+              - name: tier
+                label: Tier
+                type: select
+                default: regular
+                options:
+                  values:
+                    - { value: headline, label: Headline }
+                    - { value: supporting, label: Supporting }
+                    - { value: regular, label: Regular }
               - {
                   name: href,
                   label: Website (optional),
                   type: string,
-                  description: 'Kept for a future partner directory — the scrolling logos themselves are not clickable.',
+                  description: 'Headline and Supporting logos become links when this is a full URL. The scrolling Regular logos are never clickable.',
                 }
 
       - name: finalCta
@@ -231,8 +246,8 @@ content:
               - { name: perks, label: Perks, type: string, list: true }
 
   # ------------------------------------------------------------ Site settings
-  # Branding shared across every page (src/content/settings.json), read by the
-  # navbar and footer.
+  # Branding shared across every page (src/content/settings.json): the logo and
+  # site name feed the navbar and footer; the social links feed the hero.
   - name: settings
     label: Site settings
     type: file
@@ -251,3 +266,32 @@ content:
           required: true,
           description: 'Brand text shown next to / instead of the logo.',
         }
+      - {
+          name: whatsapp,
+          label: WhatsApp community link,
+          type: string,
+          description: 'The WhatsApp community invite URL. Entered once here and used by every "Join the WhatsApp community" link on the site (the hero and the conference section). Leave empty until you have the invite link.',
+        }
+      - name: socials
+        label: Social links
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: '{fields.platform}'
+        description: 'Shown as icons in the hero. Entered once here so it can be reused elsewhere on the site. A row with no link is ignored.'
+        fields:
+          - name: platform
+            label: Platform
+            type: select
+            options:
+              values:
+                - facebook
+                - x
+                - instagram
+                - youtube
+                - tiktok
+                - threads
+                - linkedin
+                - whatsapp
+          - { name: href, label: Link, type: string }

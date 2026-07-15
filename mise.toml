@@ -1,0 +1,5 @@
+# Astro 6 requires Node >= 22.12; the system Node is older.
+# mise is already activated in the shell, so `cd`ing into this repo switches
+# Node automatically and `npm run dev` just works. Mirrors .nvmrc.
+[tools]
+node = "22"

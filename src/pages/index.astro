@@ -18,21 +18,16 @@ import Partners from '@/components/sections/partners';
 import Team from '@/components/sections/team';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { home } from '@/lib/home';
+import { site } from '@/lib/site';
 ---
 
 <DefaultLayout>
-  <!-- Hero → headline, event details, featured speakers, partner marquee,
-       rotating photo grid. Speakers/partners are cross-fed from their own
-       sections so the CMS holds each list once; a hidden section's content
-       stays out of the hero too. -->
+  <!-- Hero → statement, date/venue, ticket CTA, WhatsApp community invite,
+       social links, rotating photo grid. Social links are cross-fed from Site
+       settings so the CMS holds that list once. -->
   {
     home.hero.visible && (
-      <Hero
-        content={home.hero}
-        speakers={home.speakers.visible ? home.speakers.items : []}
-        partners={home.partners.visible ? home.partners.items : []}
-        client:load
-      />
+      <Hero content={home.hero} socials={site.socials} client:load />
     )
   }
 
@@ -52,5 +47,9 @@ import { home } from '@/lib/home';
   {home.finalCta.visible && <Cta content={home.finalCta} />}
 
   <!-- Newsletter / lead-capture form -->
-  {home.newsletter.visible && <Contact content={home.newsletter} client:visible />}
+  {
+    home.newsletter.visible && (
+      <Contact content={home.newsletter} client:visible />
+    )
+  }
 </DefaultLayout>

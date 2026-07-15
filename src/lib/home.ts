@@ -9,12 +9,27 @@
 import { z } from 'astro/zod';
 
 import data from '@/content/home.json';
+import { site } from '@/lib/site';
 
 /** Optional string → '' when cleared. */
 const str = z
   .string()
   .nullish()
   .transform((v) => v ?? '');
+
+/**
+ * Link field. The literal token `whatsapp` (documented in .pages.yml) resolves
+ * to the single WhatsApp community URL from Site settings — resolved here, at
+ * parse time, so every link field on the site gets it without each component
+ * having to remember to. Falls back to `#` until the URL is filled in.
+ */
+const link = z
+  .string()
+  .nullish()
+  .transform((v) => {
+    const href = v ?? '';
+    return href === 'whatsapp' ? site.whatsapp || '#' : href;
+  });
 
 /** Section visibility toggle; missing/cleared = shown. */
 const visible = z
@@ -39,33 +54,35 @@ const strList = z.preprocess(
   z.array(z.string()),
 );
 
-const ctaSchema = z.object({ label: str, href: str }).nullish().transform(
-  (v) => v ?? { label: '', href: '' },
-);
+const ctaSchema = z
+  .object({ label: str, href: link })
+  .nullish()
+  .transform((v) => v ?? { label: '', href: '' });
 
-const mediaSchema = z.object({ src: str, alt: str }).nullish().transform(
-  (v) => v ?? { src: '', alt: '' },
-);
+const mediaSchema = z
+  .object({ src: str, alt: str })
+  .nullish()
+  .transform((v) => v ?? { src: '', alt: '' });
 
 const heroSchema = z.object({
   visible,
   eyebrow: str,
   title: z.string(), // required in .pages.yml; a hero without a title is a broken build
-  subtitle: str,
   eventDetails: list(z.object({ label: str, value: str })),
-  speakersLabel: str,
   primaryCta: ctaSchema,
-  secondaryCta: ctaSchema,
-  partnersLabel: str,
+  community: z
+    .object({ body: str, cta: ctaSchema })
+    .nullish()
+    .transform((v) => v ?? { body: '', cta: { label: '', href: '' } }),
+  socialsLabel: str,
   gallery: strList,
 });
 
 const visionSchema = z.object({
   visible,
-  badge: str,
   heading: str,
   statement: str,
-  highlights: list(z.object({ phrase: str, image: str, href: str })),
+  highlights: list(z.object({ phrase: str, image: str, href: link })),
 });
 
 const conferenceSchema = z.object({
@@ -73,17 +90,15 @@ const conferenceSchema = z.object({
   tagline: str,
   heading: str,
   body: str,
-  primaryCta: ctaSchema,
-  secondaryCta: ctaSchema,
   tiles: list(
     z.object({
       image: mediaSchema,
       caption: str,
-      href: str,
+      href: link,
       linkLabel: str,
     }),
   ),
-  benefits: list(z.object({ title: str, description: str })),
+  benefits: list(z.object({ category: str, title: str, body: str })),
 });
 
 const speakerSchema = z.object({
@@ -95,14 +110,22 @@ const speakerSchema = z.object({
 
 const speakersSchema = z.object({
   visible,
-  badge: str,
   heading: str,
   description: str,
   cta: ctaSchema,
   items: list(speakerSchema),
 });
 
-const partnerLogoSchema = z.object({ src: str, alt: str, href: str });
+const partnerLogoSchema = z.object({
+  src: str,
+  alt: str,
+  href: link,
+  // Anything unrecognised (cleared select, legacy items) lands in `regular`.
+  tier: z.preprocess(
+    (v) => (v === 'headline' || v === 'supporting' ? v : 'regular'),
+    z.enum(['headline', 'supporting', 'regular']),
+  ),
+});
 
 const partnersSchema = z.object({
   visible,

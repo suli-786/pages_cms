@@ -1,21 +1,28 @@
-"use client"
+'use client';
 
-import { type FormEvent, type ReactNode, useCallback, useState } from "react"
-import { AlertCircle, CheckCircle2, Loader2, Mail, MoveUpRight } from "lucide-react"
-import { motion } from "motion/react"
+import { type FormEvent, type ReactNode, useCallback, useState } from 'react';
 
-import SectionHeader from "@/components/elements/section-header"
-import { Button } from "@/components/ui/button"
-import { Field, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import type { NewsletterContent } from "@/lib/home"
-import { cn } from "@/lib/utils"
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  Mail,
+  MoveUpRight,
+} from 'lucide-react';
+import { motion } from 'motion/react';
 
-const ERROR_MESSAGE = "Something went wrong. Please try again in a moment."
+import SectionHeader from '@/components/elements/section-header';
+import { Button } from '@/components/ui/button';
+import { Field, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import type { NewsletterContent } from '@/lib/home';
+import { cn } from '@/lib/utils';
 
-const EASE_OUT = [0.23, 1, 0.32, 1] as const
+const ERROR_MESSAGE = 'Something went wrong. Please try again in a moment.';
 
-type Status = "idle" | "submitting" | "success" | "error"
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+
+type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 /* ────────────────────  ROOT  ──────────────────── */
 
@@ -28,7 +35,7 @@ function Contact({ content }: { content: NewsletterContent }) {
     formHeading,
     successMessage,
     perksCard,
-  } = content
+  } = content;
 
   return (
     <section
@@ -40,8 +47,18 @@ function Contact({ content }: { content: NewsletterContent }) {
           badge={badge}
           heading={heading}
           description={description}
+          // Decoration only makes sense alongside the badge: without one,
+          // SectionHeader's badge-less layout would repeat the mark under the
+          // description on mobile — fine for a functional link, noise for an
+          // ornament. A cleared badge therefore drops the icon too.
           mark={
-            <Mail aria-hidden className="size-10 text-foreground/30" strokeWidth={1} />
+            badge ? (
+              <Mail
+                aria-hidden
+                className="text-foreground/30 size-10"
+                strokeWidth={1}
+              />
+            ) : undefined
           }
         />
       </div>
@@ -59,18 +76,14 @@ function Contact({ content }: { content: NewsletterContent }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 /* ────────────────────  PERKS CARD  ──────────────────── */
 
-function PerksCard({
-  content,
-}: {
-  content: NewsletterContent["perksCard"]
-}) {
+function PerksCard({ content }: { content: NewsletterContent['perksCard'] }) {
   return (
-    <div className="brass-mesh dark relative flex min-h-[30rem] flex-col justify-between overflow-hidden rounded-xl p-8 text-foreground md:p-12">
+    <div className="brass-mesh dark text-foreground relative flex min-h-[30rem] flex-col justify-between overflow-hidden rounded-xl p-8 md:p-12">
       <div
         aria-hidden
         className="absolute inset-0 bg-linear-to-t from-black/55 via-black/10 to-transparent"
@@ -78,7 +91,7 @@ function PerksCard({
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-12%" }}
+        viewport={{ once: true, margin: '-12%' }}
         transition={{ duration: 0.7, ease: EASE_OUT }}
         className="relative"
       >
@@ -92,15 +105,15 @@ function PerksCard({
         {(content.perks ?? []).map((perk) => (
           <li
             key={perk}
-            className="flex items-center gap-3 py-4 text-sm font-light tracking-tight text-foreground/90"
+            className="text-foreground/90 flex items-center gap-3 py-4 text-sm font-light tracking-tight"
           >
-            <span aria-hidden className="block h-px w-5 shrink-0 bg-accent" />
+            <span aria-hidden className="bg-accent block h-px w-5 shrink-0" />
             {perk}
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 /* ────────────────────  FORM  ──────────────────── */
@@ -110,20 +123,20 @@ function SignupForm({
   heading,
   successMessage,
 }: {
-  eyebrow: string
-  heading: string
-  successMessage: string
+  eyebrow: string;
+  heading: string;
+  successMessage: string;
 }) {
-  const [status, setStatus] = useState<Status>("idle")
+  const [status, setStatus] = useState<Status>('idle');
 
   const onSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const email = String(new FormData(e.currentTarget).get("email") ?? "")
-    setStatus("submitting")
+    e.preventDefault();
+    const email = String(new FormData(e.currentTarget).get('email') ?? '');
+    setStatus('submitting');
     window.setTimeout(() => {
-      setStatus(email.toLowerCase().includes("fail") ? "error" : "success")
-    }, 1200)
-  }, [])
+      setStatus(email.toLowerCase().includes('fail') ? 'error' : 'success');
+    }, 1200);
+  }, []);
 
   return (
     <>
@@ -133,27 +146,27 @@ function SignupForm({
       </h3>
 
       <form onSubmit={onSubmit} className="mt-8">
-        <FormFields locked={status === "submitting" || status === "success"} />
+        <FormFields locked={status === 'submitting' || status === 'success'} />
         <div className="mt-6 space-y-4">
-          {status === "success" && (
+          {status === 'success' && (
             <Banner tone="success">{successMessage}</Banner>
           )}
-          {status === "error" && <Banner tone="error">{ERROR_MESSAGE}</Banner>}
+          {status === 'error' && <Banner tone="error">{ERROR_MESSAGE}</Banner>}
           <SubmitButton status={status} />
         </div>
       </form>
     </>
-  )
+  );
 }
 
 function Banner({
   tone,
   children,
 }: {
-  tone: "success" | "error"
-  children: ReactNode
+  tone: 'success' | 'error';
+  children: ReactNode;
 }) {
-  const success = tone === "success"
+  const success = tone === 'success';
   return (
     <motion.div
       role="status"
@@ -161,25 +174,25 @@ function Banner({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: EASE_OUT }}
       className={cn(
-        "flex items-start gap-3 rounded-md border p-4 text-sm",
+        'flex items-start gap-3 rounded-md border p-4 text-sm',
         success
-          ? "border-accent/30 bg-accent/10 text-foreground"
-          : "border-destructive/30 bg-destructive/10 text-destructive"
+          ? 'border-accent/30 bg-accent/10 text-foreground'
+          : 'border-destructive/30 bg-destructive/10 text-destructive',
       )}
     >
       {success ? (
-        <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-accent" />
+        <CheckCircle2 className="text-accent mt-0.5 size-4 shrink-0" />
       ) : (
         <AlertCircle className="mt-0.5 size-4 shrink-0" />
       )}
       <span>{children}</span>
     </motion.div>
-  )
+  );
 }
 
 function SubmitButton({ status }: { status: Status }) {
-  const busy = status === "submitting"
-  const locked = busy || status === "success"
+  const busy = status === 'submitting';
+  const locked = busy || status === 'success';
   return (
     <Button type="submit" size="lg" disabled={locked}>
       {busy ? (
@@ -194,11 +207,11 @@ function SubmitButton({ status }: { status: Status }) {
         </>
       )}
     </Button>
-  )
+  );
 }
 
 const labelClass =
-  "gap-2 text-[0.5625rem] tracking-[0.25em] text-foreground/65 uppercase"
+  'gap-2 text-[0.5625rem] tracking-[0.25em] text-foreground/65 uppercase';
 
 function FormFields({ locked }: { locked?: boolean }) {
   return (
@@ -273,11 +286,11 @@ function FormFields({ locked }: { locked?: boolean }) {
         />
       </Field>
     </fieldset>
-  )
+  );
 }
 
 function FieldTick() {
-  return <span aria-hidden className="block h-px w-4 bg-accent" />
+  return <span aria-hidden className="bg-accent block h-px w-4" />;
 }
 
 function Required() {
@@ -285,7 +298,7 @@ function Required() {
     <span aria-hidden className="text-accent">
       *
     </span>
-  )
+  );
 }
 
 /* ────────────────────  SHARED  ──────────────────── */
@@ -294,20 +307,20 @@ function Eyebrow({
   children,
   className,
 }: {
-  children: ReactNode
-  className?: string
+  children: ReactNode;
+  className?: string;
 }) {
   return (
     <span
       className={cn(
-        "flex items-center gap-2.5 text-[0.5625rem] tracking-[0.25em] text-foreground/65 uppercase",
-        className
+        'text-foreground/65 flex items-center gap-2.5 text-[0.5625rem] tracking-[0.25em] uppercase',
+        className,
       )}
     >
-      <span aria-hidden className="block h-px w-5 bg-accent" />
+      <span aria-hidden className="bg-accent block h-px w-5" />
       {children}
     </span>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
