@@ -210,11 +210,15 @@ function PhotoGrid({ gallery }: { gallery: string[] }) {
   }, [canRotate, gallery.length]);
 
   return (
+    // Flush cells (no inner padding): the gallery can carry a 9-tile logo
+    // mosaic (images/Home-carousal-logo) that must assemble seamlessly when
+    // the rotation lands on it — padding visibly slices it apart. The 1px
+    // hairline gap stays, matching the site's divider language.
     <div className="bg-foreground/10 grid h-full grid-cols-3 gap-px perspective-[1200px]">
       {Array.from({ length: GRID_SIZE }).map((_, cell) => {
         const src = gallery[(startIndex + cell) % gallery.length];
         return (
-          <div key={cell} className="bg-background/40 overflow-hidden p-1">
+          <div key={cell} className="bg-background/40 overflow-hidden">
             <div className="relative aspect-square h-full w-full">
               <AnimatePresence initial={false}>
                 <motion.img
