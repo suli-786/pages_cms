@@ -93,9 +93,12 @@ function Contact({ content }: { content: ContactContent }) {
                 aria-hidden
                 className="border-accent absolute -top-3 -right-1 size-5 border-t-2 border-r-2"
               />
+              {/* Poke less to the left on mobile: at -left-4 the bracket lands
+                  on the viewport edge (heading is flush to the container's
+                  16px gutter) and the section's overflow-hidden clips it. */}
               <span
                 aria-hidden
-                className="border-accent absolute -bottom-3 -left-4 size-5 border-b-2 border-l-2"
+                className="border-accent absolute -bottom-3 -left-2 size-5 border-b-2 border-l-2 md:-left-4"
               />
             </div>
 
