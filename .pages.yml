@@ -92,7 +92,7 @@ content:
               label: Photo grid,
               type: image,
               list: true,
-              description: 'The rotating 3×3 photo wall. Nine photos fill the grid; add more than nine and it cycles through them.',
+              description: 'The rotating 3×3 wall. The first nine images show first, then it cycles nine at a time. The nine Home-carousal-logo tiles assemble the logo — keep them together and in their 1-9 order (they show first right now).',
             }
 
       - name: vision
