@@ -5,19 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: string) {
-  return new Date(date).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  });
-}
-
-export function initialsOf(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? '')
-    .join('');
-}
+/**
+ * Only real URLs open in a new tab / are worth linking — the CMS placeholder
+ * `#` (and internal `/#anchor` links) must not.
+ */
+export const isExternal = (href: string) => /^https?:\/\//.test(href);

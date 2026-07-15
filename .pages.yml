@@ -10,7 +10,11 @@
 # This file mirrors the zod schema in src/lib/home.ts — change both together.
 
 media:
-  input: public/images # where uploaded files are stored in the repo
+  # Uploads live under src/ so Astro's image pipeline optimizes them at build
+  # time (resize + WebP + srcset — see src/lib/images.ts). `output` still
+  # writes `/images/...` into content, so existing paths keep working; the
+  # resolver maps that prefix onto src/assets/images.
+  input: src/assets/images # where uploaded files are stored in the repo
   output: /images # the path written into content (matches existing image paths)
   categories: [image] # editors can only upload image files
   rename: safe # slugify upload filenames (no more "photo (1).jpg")

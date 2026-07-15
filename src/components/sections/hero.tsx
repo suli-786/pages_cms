@@ -7,11 +7,12 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { CornerBrackets } from '@/components/elements/corner-brackets';
 import { renderEmphasis } from '@/components/elements/emphasis';
-import { SocialGlyph, socialLabel } from '@/components/elements/social-icons';
+import { SocialGlyph } from '@/components/elements/social-icons';
+import { SocialLinks } from '@/components/elements/social-links';
 import { Button } from '@/components/ui/button';
-import type { HeroContent } from '@/lib/home';
+import type { ResolvedHeroContent, ResolvedImage } from '@/lib/images';
 import type { SocialLink } from '@/lib/site';
-import { cn } from '@/lib/utils';
+import { cn, isExternal } from '@/lib/utils';
 
 // Adapted from @shadcnblocks/hero272: a split layout with a stacked, divided
 // left column and a nine-cell photo grid that rotates on a timer. The three
@@ -24,14 +25,11 @@ const ROTATION_INTERVAL = 7000; // ms
 // Icons for the event-details strip, matched to eventDetails by position.
 const detailIcons: LucideIcon[] = [CalendarDays, MapPin];
 
-/** Only real URLs open in a new tab — a placeholder `#` must not. */
-const isExternal = (href: string) => /^https?:\/\//.test(href);
-
 function Hero({
   content,
   socials = [],
 }: {
-  content: HeroContent;
+  content: ResolvedHeroContent;
   socials?: SocialLink[];
 }) {
   const {
@@ -44,7 +42,7 @@ function Hero({
     gallery = [],
   } = content;
 
-  const galleryImages = gallery.filter(Boolean);
+  const galleryImages = gallery.filter((g) => g.src);
   const hasGallery = galleryImages.length > 0;
   const hasCommunity = Boolean(community.body || community.cta.label);
   // The `whatsapp` CMS token is already resolved to a real URL by lib/home.ts.
@@ -159,24 +157,7 @@ function Hero({
                     {socialsLabel}
                   </p>
                 )}
-                <ul className="flex flex-wrap items-center gap-2">
-                  {socials.map((s) => (
-                    <li key={s.platform}>
-                      <a
-                        href={s.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={socialLabel(s.platform)}
-                        className="border-foreground/15 text-foreground/70 hover:border-accent hover:bg-accent/10 hover:text-foreground focus-visible:ring-ring grid size-10 place-items-center rounded-full border transition-colors outline-none focus-visible:ring-2"
-                      >
-                        <SocialGlyph
-                          platform={s.platform}
-                          className="size-[18px]"
-                        />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+                <SocialLinks socials={socials} size="md" wrap={false} />
               </div>
             )}
           </div>
@@ -196,7 +177,7 @@ function Hero({
   );
 }
 
-function PhotoGrid({ gallery }: { gallery: string[] }) {
+function PhotoGrid({ gallery }: { gallery: ResolvedImage[] }) {
   const [startIndex, setStartIndex] = useState(0);
   const reducedMotion = useReducedMotion();
 
@@ -217,14 +198,18 @@ function PhotoGrid({ gallery }: { gallery: string[] }) {
     // hairline gap stays, matching the site's divider language.
     <div className="bg-foreground/10 grid h-full grid-cols-3 gap-px perspective-[1200px]">
       {Array.from({ length: GRID_SIZE }).map((_, cell) => {
-        const src = gallery[(startIndex + cell) % gallery.length];
+        const img = gallery[(startIndex + cell) % gallery.length];
         return (
           <div key={cell} className="bg-background/40 overflow-hidden">
             <div className="relative aspect-square h-full w-full">
               <AnimatePresence initial={false}>
+                {/* Above the fold: stays eager so React 19's SSR preloads
+                    these cells — now as small WebPs with imagesrcset. */}
                 <motion.img
-                  key={`${cell}-${src}`}
-                  src={src}
+                  key={`${cell}-${img.src}`}
+                  src={img.src}
+                  srcSet={img.srcSet}
+                  sizes={img.sizes}
                   alt=""
                   // Photos crop to fill; SVG mosaic tiles must map edge-to-edge
                   // instead — cells go non-square at many viewports, and cover
@@ -232,7 +217,7 @@ function PhotoGrid({ gallery }: { gallery: string[] }) {
                   // logo's seams. Uniform stretch keeps them aligned.
                   className={cn(
                     'absolute inset-0 size-full',
-                    src.endsWith('.svg') ? 'object-fill' : 'object-cover',
+                    img.src.endsWith('.svg') ? 'object-fill' : 'object-cover',
                   )}
                   initial={
                     reducedMotion ? { opacity: 1 } : { rotateY: 15, opacity: 0 }

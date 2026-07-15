@@ -14,24 +14,36 @@
 // prefers-reduced-motion (global.css); there is no manual pause control.
 
 import { Marquee } from '@/components/ui/marquee';
-import type { PartnerLogo, PartnersContent } from '@/lib/home';
-import { cn } from '@/lib/utils';
-
-/** Only real URLs are worth linking; the CMS placeholder `#` is not. */
-const isLinkable = (href: string) => /^https?:\/\//.test(href);
+import type {
+  ResolvedPartnerLogo,
+  ResolvedPartnersContent,
+} from '@/lib/images';
+import { cn, isExternal } from '@/lib/utils';
 
 /** One square logo box. The current logo files are 500×500 canvases, so they
  *  fill the box; a non-square upload letterboxes inside it. */
-function Logo({ logo, boxClass }: { logo: PartnerLogo; boxClass: string }) {
+function Logo({
+  logo,
+  boxClass,
+}: {
+  logo: ResolvedPartnerLogo;
+  boxClass: string;
+}) {
+  // No width/height: the img sizes via object-contain inside a fixed box, so
+  // there is no CLS to prevent. lazy keeps React SSR from preloading logos.
   const img = (
     <img
-      src={logo.src}
+      src={logo.src.src}
+      srcSet={logo.src.srcSet}
+      sizes={logo.src.sizes}
+      loading="lazy"
+      decoding="async"
       alt={logo.alt}
       className="max-h-full max-w-full object-contain"
     />
   );
   const box = cn('flex items-center justify-center', boxClass);
-  return isLinkable(logo.href) ? (
+  return isExternal(logo.href) ? (
     <a
       href={logo.href}
       target="_blank"
@@ -57,7 +69,13 @@ function Logo({ logo, boxClass }: { logo: PartnerLogo; boxClass: string }) {
 const cornerWord =
   'absolute font-mono text-xs tracking-[0.18em] uppercase text-muted-foreground md:text-sm';
 
-function FramedLogo({ tier, logo }: { tier: string; logo: PartnerLogo }) {
+function FramedLogo({
+  tier,
+  logo,
+}: {
+  tier: string;
+  logo: ResolvedPartnerLogo;
+}) {
   return (
     <li className="relative p-10 md:p-12">
       <span
@@ -93,7 +111,7 @@ function TierLabel({ children }: { children: string }) {
   );
 }
 
-function Partners({ content }: { content: PartnersContent }) {
+function Partners({ content }: { content: ResolvedPartnersContent }) {
   const { heading, description, items = [] } = content;
 
   const headline = items.filter((p) => p.tier === 'headline');
@@ -133,7 +151,7 @@ function Partners({ content }: { content: PartnersContent }) {
               >
                 {headline.map((logo, i) => (
                   <FramedLogo
-                    key={`${logo.src}-${i}`}
+                    key={`${logo.src.src}-${i}`}
                     tier="Headline"
                     logo={logo}
                   />
@@ -147,7 +165,7 @@ function Partners({ content }: { content: PartnersContent }) {
               >
                 {supporting.map((logo, i) => (
                   <FramedLogo
-                    key={`${logo.src}-${i}`}
+                    key={`${logo.src.src}-${i}`}
                     tier="Supporting"
                     logo={logo}
                   />
@@ -187,7 +205,7 @@ function MarqueeRow({
   logos,
   reverse = false,
 }: {
-  logos: PartnerLogo[];
+  logos: ResolvedPartnerLogo[];
   reverse?: boolean;
 }) {
   if (logos.length === 0) return null;
@@ -201,11 +219,15 @@ function MarqueeRow({
       >
         {logos.map((logo, i) => (
           <div
-            key={`${logo.src}-${i}`}
+            key={`${logo.src.src}-${i}`}
             className="mx-8 flex h-24 w-32 items-center justify-center lg:mx-10"
           >
             <img
-              src={logo.src}
+              src={logo.src.src}
+              srcSet={logo.src.srcSet}
+              sizes={logo.src.sizes}
+              loading="lazy"
+              decoding="async"
               alt=""
               className="max-h-full max-w-full object-contain"
             />

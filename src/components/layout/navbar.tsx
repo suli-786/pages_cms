@@ -12,14 +12,8 @@ import {
 
 import { UmmahMark, UmmahWordmark } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
+import { NAV_LINKS } from '@/consts';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Events', href: '/#event' },
-  { label: 'Partner With Us', href: '/#partners' },
-  { label: 'About', href: '/#vision' },
-];
 
 const CTA = { label: 'Get Tickets', href: '/#contact' };
 
@@ -57,7 +51,7 @@ function Navbar({ pathname = '/' }: { pathname?: string }) {
     href === '/'
       ? pathname === '/'
       : pathname === href || pathname.startsWith(href + '/');
-  const activeHref = navItems.find((item) => isActive(item.href))?.href;
+  const activeHref = NAV_LINKS.find((item) => isActive(item.href))?.href;
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const delta = y - lastY.current;
@@ -196,7 +190,7 @@ function Navbar({ pathname = '/' }: { pathname?: string }) {
               className="hidden items-center md:flex"
               onMouseLeave={() => setHovered(null)}
             >
-              {navItems.map((item) => {
+              {NAV_LINKS.map((item) => {
                 const active = isActive(item.href);
                 const highlighted = (hovered ?? activeHref) === item.href;
                 return (
@@ -311,7 +305,7 @@ function Navbar({ pathname = '/' }: { pathname?: string }) {
 
               <nav aria-label="Mobile" className="mt-8">
                 <ul className="flex flex-col">
-                  {navItems.map((item) => {
+                  {NAV_LINKS.map((item) => {
                     const active = isActive(item.href);
                     return (
                       <li key={item.label}>

@@ -6,19 +6,24 @@
 //
 // Pro blocks adapted into the template's design:
 //   hero.tsx              ← @shadcnblocks/hero272
-//   about.tsx             ← @shadcnblocks/feature288
+//   vision.tsx            ← @shadcnblocks/feature288
 //   conference-intro.tsx  ← @shadcnblocks/feature71 (includes Why Attend)
 //   partners.tsx          ← @shadcnblocks/logos20
-import About from '@/components/sections/about';
 import ConferenceIntro from '@/components/sections/conference-intro';
 import Contact from '@/components/sections/contact';
 import Cta from '@/components/sections/cta';
 import Hero from '@/components/sections/hero';
 import Partners from '@/components/sections/partners';
-import Team from '@/components/sections/team';
+import Speakers from '@/components/sections/speakers';
+import Vision from '@/components/sections/vision';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
-import { home } from '@/lib/home';
+import { home as rawHome } from '@/lib/home';
+import { resolveHomeImages } from '@/lib/images';
 import { site } from '@/lib/site';
+
+// Optimize every CMS image path (resize + WebP + srcset) at build time; the
+// sections receive plain optimized props — see src/lib/images.ts.
+const home = await resolveHomeImages(rawHome);
 ---
 
 <DefaultLayout>
@@ -32,13 +37,17 @@ import { site } from '@/lib/site';
   }
 
   <!-- Vision → large centered statement with hover photo previews -->
-  {home.vision.visible && <About content={home.vision} client:visible />}
+  {home.vision.visible && <Vision content={home.vision} client:visible />}
 
   <!-- Conference intro + Why Attend → header, photo tiles, benefit cells -->
   {home.conference.visible && <ConferenceIntro content={home.conference} />}
 
   <!-- Speakers → even card grid -->
-  {home.speakers.visible && <Team content={home.speakers} client:visible />}
+  {
+    home.speakers.visible && (
+      <Speakers content={home.speakers} client:visible />
+    )
+  }
 
   <!-- Our Partners → counter-scrolling logo rows -->
   {home.partners.visible && <Partners content={home.partners} />}

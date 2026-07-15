@@ -6,7 +6,7 @@ import { MoveRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 import SectionHeader from '@/components/elements/section-header';
-import type { Speaker, SpeakersContent } from '@/lib/home';
+import type { ResolvedSpeaker, ResolvedSpeakersContent } from '@/lib/images';
 import { cn } from '@/lib/utils';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -48,9 +48,9 @@ function FramedCta({ label, href }: { label: string; href: string }) {
   );
 }
 
-function Team({ content }: { content: SpeakersContent }) {
+function Speakers({ content }: { content: ResolvedSpeakersContent }) {
   const { heading, description, cta, items = [] } = content;
-  const speakers = items.filter((p) => p.portrait);
+  const speakers = items.filter((p) => p.portrait.src);
 
   return (
     <section
@@ -94,7 +94,7 @@ function MemberCard({
   index,
   className,
 }: {
-  p: Speaker;
+  p: ResolvedSpeaker;
   index: number;
   className?: string;
 }) {
@@ -117,8 +117,17 @@ function MemberCard({
         className,
       )}
     >
+      {/* lazy: below the fold, and it stops React 19's SSR from preloading
+          every portrait at top priority. Absolutely positioned + CSS-sized,
+          so width/height are CLS hints only. */}
       <motion.img
-        src={p.portrait}
+        src={p.portrait.src}
+        srcSet={p.portrait.srcSet}
+        sizes={p.portrait.sizes}
+        width={p.portrait.width}
+        height={p.portrait.height}
+        loading="lazy"
+        decoding="async"
         alt={p.name}
         animate={{ scale: hovered ? 1.04 : 1 }}
         transition={{ duration: 0.3, ease: EASE }}
@@ -164,4 +173,4 @@ function MemberCard({
   );
 }
 
-export default Team;
+export default Speakers;

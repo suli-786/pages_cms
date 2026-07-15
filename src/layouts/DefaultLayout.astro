@@ -27,8 +27,9 @@ const pathname = Astro.url.pathname;
     >
       Skip to main content
     </a>
-    <StyleGlideProvider client:only="react" />
-    <Navbar pathname={pathname} client:load />
+    {/* Dev-only theming overlay — never shipped to production visitors. */}
+    {import.meta.env.DEV && <StyleGlideProvider client:only="react" />}
+    <Navbar pathname={pathname} client:idle />
     <main id="main" tabindex="-1" class="relative flex-1 outline-none">
       <slot />
     </main>

@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useFakeSubmit } from '@/hooks/use-fake-submit';
 import type { ContactContent } from '@/lib/home';
 import { cn } from '@/lib/utils';
 
@@ -60,13 +61,11 @@ const FUNCTIONS = [
   },
 ];
 
-const EMAIL = 'hello@ummahtech.org';
+const EMAIL = 'hello@ummahtech.net';
 
 const ERROR_MESSAGE = 'Something went wrong. Please try again in a moment.';
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
-
-type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 function Contact({ content }: { content: ContactContent }) {
   const { heading, description, successMessage } = content;
@@ -152,29 +151,16 @@ const fieldClass =
   'h-14 rounded-xl border-0 bg-muted shadow-none placeholder:text-foreground/35 placeholder:text-xs placeholder:tracking-[0.18em] placeholder:uppercase';
 
 function ContactForm({ successMessage }: { successMessage: string }) {
-  const [status, setStatus] = useState<Status>('idle');
   const [about, setAbout] = useState(FUNCTIONS[0].value);
-  const busy = status === 'submitting';
+  const { status, busy, onSubmit } = useFakeSubmit({
+    onSuccess: (form) => {
+      form.reset();
+      setAbout(FUNCTIONS[0].value);
+    },
+  });
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const form = e.currentTarget;
-        const email = String(new FormData(form).get('email') ?? '');
-        setStatus('submitting');
-        window.setTimeout(() => {
-          if (email.toLowerCase().includes('fail')) {
-            setStatus('error');
-          } else {
-            setStatus('success');
-            form.reset();
-            setAbout(FUNCTIONS[0].value);
-          }
-        }, 1200);
-      }}
-      className="flex flex-col gap-2.5"
-    >
+    <form onSubmit={onSubmit} className="flex flex-col gap-2.5">
       {status === 'success' && <Banner tone="success">{successMessage}</Banner>}
       {status === 'error' && <Banner tone="error">{ERROR_MESSAGE}</Banner>}
 

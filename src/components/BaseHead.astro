@@ -3,7 +3,8 @@
 // all pages through the use of the <BaseHead /> component.
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
-import { SITE_METADATA } from '../consts';
+
+import { SITE_METADATA, THEME_COLOR } from '../consts';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
@@ -25,13 +26,7 @@ const imageURL = new URL(finalImage, Astro.site);
 <meta name="author" content={SITE_METADATA.authors[0].name} />
 <meta name="creator" content={SITE_METADATA.creator} />
 <meta name="publisher" content={SITE_METADATA.publisher} />
-
-<!-- Theme Script -->
-<script is:inline>
-  const savedTheme = localStorage.getItem('theme');
-  const initialTheme = savedTheme || 'light';
-  document.documentElement.classList.toggle('dark', initialTheme === 'dark');
-</script>
+<meta name="theme-color" content={THEME_COLOR} />
 
 <!-- Favicon -->
 {

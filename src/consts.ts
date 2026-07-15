@@ -2,6 +2,19 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_NAME = 'Ummah Tech';
+
+// Browser-chrome brand colour — keep in sync with theme_color in
+// public/favicon/site.webmanifest.
+export const THEME_COLOR = '#13144d';
+
+// Primary navigation — one list shared by the navbar and the footer's
+// "Explore" column so the two can't drift apart.
+export const NAV_LINKS = [
+  { label: 'Home', href: '/' },
+  { label: 'Events', href: '/#event' },
+  { label: 'Partner With Us', href: '/#partners' },
+  { label: 'About', href: '/#vision' },
+];
 export const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
 export const SITE_DESCRIPTION =
   'The annual Ummah Tech Conference brings together Muslim founders, technologists and innovators. 7 November 2026, Johannesburg, South Africa.';
@@ -62,6 +75,7 @@ export const SITE_METADATA = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ['/og-image.jpg'],
-    creator: '@ummahtech',
+    // Matches the real X profile (settings.json → x.com/ummah_tech).
+    creator: '@ummah_tech',
   },
 };

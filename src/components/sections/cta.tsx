@@ -7,7 +7,7 @@ import { MoveRight } from 'lucide-react';
 import { CornerBrackets } from '@/components/elements/corner-brackets';
 import { renderEmphasis } from '@/components/elements/emphasis';
 import { Button } from '@/components/ui/button';
-import type { FinalCtaContent } from '@/lib/home';
+import type { ResolvedFinalCtaContent } from '@/lib/images';
 
 // Final CTA — the countdown finale. Skeleton from @shadcnblocks/cta46 (an
 // edge-to-edge photo with a vignette that spotlights centred copy), countdown
@@ -101,16 +101,24 @@ function Countdown({ date }: { date: string }) {
   );
 }
 
-function Cta({ content }: { content: FinalCtaContent }) {
+function Cta({ content }: { content: ResolvedFinalCtaContent }) {
   const { eyebrow, heading, body, cta, image, date } = content;
 
   return (
     <section className="dark text-foreground relative isolate overflow-hidden">
       {/* Full-bleed backdrop: photo under an indigo scrim plus a radial
-          vignette, so the centred copy clears contrast on any image. */}
+          vignette, so the centred copy clears contrast on any image.
+          lazy: far below the fold; absolutely positioned, so width/height
+          are CLS hints only. */}
       {image.src && (
         <img
           src={image.src}
+          srcSet={image.srcSet}
+          sizes={image.sizes}
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
           alt={image.alt}
           aria-hidden
           className="absolute inset-0 -z-20 size-full object-cover"

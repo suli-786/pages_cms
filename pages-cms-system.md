@@ -81,6 +81,7 @@ Editor-facing notes for the Ummah Tech homepage (`Homepage` in the CMS sidebar):
 - **Hero photo grid.** Nine images fill the 3×3 wall; more than nine cycle on a timer.
 - **Social links.** Entered once under *Site settings → Social links* and shown as icons in the hero and the footer.
 - **Uploads are renamed.** Media config uses `rename: safe` + images only, so filenames like `photo (1).jpg` become slugs automatically.
+- **Uploads are optimized at build time.** Media lives in `src/assets/images` (not `public/`); content still stores `/images/...` paths, and `src/lib/images.ts` maps them onto resized WebP renditions with srcset during the build. A path pointing at a missing file fails the build with the offending path. If the media browser looks stale after files were moved via git, use its cache refresh.
 - **Cleared fields are safe.** Emptying an optional field or list hides that piece; only clearing the hero Title (required) or structurally breaking the file fails the build — with a field-path error message.
 
 Developer contract: `.pages.yml` mirrors the zod schema in `src/lib/home.ts` — change both together. See [pages-cms-best-practices.md](pages-cms-best-practices.md) for the wider Pages CMS research.

@@ -113,7 +113,7 @@ const paragraphsOf = (text: string) =>
 const BLOCK_TYPE =
   'text-2xl leading-snug font-semibold tracking-tight text-balance md:text-3xl lg:text-4xl';
 
-function About({ content }: { content: VisionContent }) {
+function Vision({ content }: { content: VisionContent }) {
   const { heading, statement, highlights = [] } = content;
 
   const paragraphs = paragraphsOf(statement);
@@ -150,4 +150,4 @@ function About({ content }: { content: VisionContent }) {
   );
 }
 
-export default About;
+export default Vision;

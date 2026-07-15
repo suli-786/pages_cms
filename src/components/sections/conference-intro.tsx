@@ -6,13 +6,13 @@
 import { ArrowRight } from 'lucide-react';
 
 import { CornerBrackets } from '@/components/elements/corner-brackets';
-import type { ConferenceContent } from '@/lib/home';
-import { cn } from '@/lib/utils';
+import type {
+  ResolvedConferenceContent,
+  ResolvedConferenceTile,
+} from '@/lib/images';
+import { cn, isExternal } from '@/lib/utils';
 
-/** Only real URLs open in a new tab — a placeholder `#` must not. */
-const isExternal = (href: string) => /^https?:\/\//.test(href);
-
-function ConferenceIntro({ content }: { content: ConferenceContent }) {
+function ConferenceIntro({ content }: { content: ResolvedConferenceContent }) {
   const { tagline, heading, body, tiles = [], benefits = [] } = content;
 
   const [tileOne, tileTwo] = tiles.filter((t) => t.image.src);
@@ -80,7 +80,7 @@ function PhotoTile({
   tile,
   wide,
 }: {
-  tile: NonNullable<ConferenceContent['tiles'][number]>;
+  tile: ResolvedConferenceTile;
   wide: string;
 }) {
   // The `whatsapp` CMS token is already resolved to a real URL by lib/home.ts.
@@ -88,8 +88,16 @@ function PhotoTile({
 
   const inner = (
     <>
+      {/* lazy: below the fold; absolutely positioned + CSS-sized, so
+          width/height are CLS hints only. */}
       <img
         src={image.src}
+        srcSet={image.srcSet}
+        sizes={image.sizes}
+        width={image.width}
+        height={image.height}
+        loading="lazy"
+        decoding="async"
         alt={image.alt}
         className="absolute h-full w-full object-cover object-center"
       />

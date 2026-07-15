@@ -1,23 +1,25 @@
 {
-  "name": "verdict-astro-template",
+  "name": "ummah-tech-site",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "author": "Shadcnblocks.com",
+  "author": "Ummah Tech",
+  "engines": {
+    "node": ">=22.12"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "check": "astro check",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
     "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\""
   },
   "dependencies": {
-    "@astrojs/mdx": "5.0.2",
     "@astrojs/react": "5.0.1",
     "@astrojs/sitemap": "3.7.1",
     "@styleglide/kit-view-provider": "0.0.8",
-    "@tailwindcss/typography": "0.5.20",
     "@tailwindcss/vite": "4.1.18",
     "astro": "6.0.6",
     "class-variance-authority": "0.7.1",

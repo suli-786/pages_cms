@@ -1,25 +1,20 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import { Loader2, MoveUpRight } from 'lucide-react';
 
-import { SocialGlyph, socialLabel } from '@/components/elements/social-icons';
+import { SocialLinks } from '@/components/elements/social-links';
 import { UmmahMark, UmmahWordmark } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { NAV_LINKS } from '@/consts';
+import { useFakeSubmit } from '@/hooks/use-fake-submit';
 import type { SocialLink } from '@/lib/site';
-import { cn } from '@/lib/utils';
+import { cn, isExternal } from '@/lib/utils';
 
 const STATEMENT =
   'A growing community nurturing collaboration, innovation and skills among Muslim technologists — for the benefit of the Ummah and humanity.';
-
-const EXPLORE_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Events', href: '/#event' },
-  { label: 'Partner With Us', href: '/#partners' },
-  { label: 'About', href: '/#vision' },
-];
 
 function Footer({
   socials = [],
@@ -31,7 +26,7 @@ function Footer({
   // Falls back to `#` until the invite URL is set in Site settings — same
   // placeholder behaviour as the hero and conference WhatsApp buttons.
   const connectLinks = [
-    { label: 'hello@ummahtech.org', href: 'mailto:hello@ummahtech.org' },
+    { label: 'hello@ummahtech.net', href: 'mailto:hello@ummahtech.net' },
     { label: 'WhatsApp community', href: whatsapp || '#' },
     { label: 'Get tickets', href: '/#contact' },
   ];
@@ -53,28 +48,12 @@ function Footer({
             <p className="text-foreground/60 max-w-xs text-sm leading-relaxed">
               {STATEMENT}
             </p>
-            {socials.length > 0 && (
-              <ul className="flex flex-wrap items-center gap-2">
-                {socials.map((s) => (
-                  <li key={s.platform}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={socialLabel(s.platform)}
-                      className="border-foreground/15 text-foreground/70 hover:border-accent hover:bg-accent/10 hover:text-foreground focus-visible:ring-ring grid size-9 place-items-center rounded-full border transition-colors outline-none focus-visible:ring-2"
-                    >
-                      <SocialGlyph platform={s.platform} className="size-4" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
+            {socials.length > 0 && <SocialLinks socials={socials} size="sm" />}
           </div>
 
           <FooterColumn label="Explore">
             <ul className="space-y-3 text-sm">
-              {EXPLORE_LINKS.map((l) => (
+              {NAV_LINKS.map((l) => (
                 <li key={l.label}>
                   <FooterLink href={l.href}>{l.label}</FooterLink>
                 </li>
@@ -107,27 +86,14 @@ function Footer({
   );
 }
 
-// Compact one-field signup. Mirrors the main form's submit behaviour
-// (src/components/sections/contact.tsx) — wire both when a backend exists.
+// Compact one-field signup. Shares the placeholder submit with the main form
+// (src/hooks/use-fake-submit.ts) — wire both when a backend exists.
 function NewsletterForm() {
-  const [status, setStatus] = useState<
-    'idle' | 'submitting' | 'success' | 'error'
-  >('idle');
-  const busy = status === 'submitting';
+  const { status, busy, onSubmit } = useFakeSubmit();
   const locked = busy || status === 'success';
 
   return (
-    <form
-      className="mt-5"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const email = String(new FormData(e.currentTarget).get('email') ?? '');
-        setStatus('submitting');
-        window.setTimeout(() => {
-          setStatus(email.toLowerCase().includes('fail') ? 'error' : 'success');
-        }, 1200);
-      }}
-    >
+    <form className="mt-5" onSubmit={onSubmit}>
       <label htmlFor="footer-email" className="sr-only">
         Email address
       </label>
@@ -186,11 +152,12 @@ function FooterColumn({
 }
 
 function FooterLink({ href, children }: { href: string; children: ReactNode }) {
-  const external = /^https?:\/\//.test(href);
   return (
     <a
       href={href}
-      {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      {...(isExternal(href)
+        ? { target: '_blank', rel: 'noopener noreferrer' }
+        : {})}
       className="group text-foreground/65 hover:text-foreground relative inline-flex w-fit transition-colors"
     >
       {children}
