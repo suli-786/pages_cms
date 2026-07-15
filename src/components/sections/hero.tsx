@@ -120,9 +120,16 @@ function Hero({
                   {community.body}
                 </p>
               )}
-              <div className="flex flex-wrap items-center gap-3">
+              {/* One row on every screen: below sm the buttons split the row
+                  50/50 with tighter padding/type; from sm they return to their
+                  natural width. Labels must stay short enough for ~150px. */}
+              <div className="flex items-center gap-2 sm:gap-3">
                 {primaryCta.label && primaryCta.href && (
-                  <Button size="lg" asChild>
+                  <Button
+                    size="lg"
+                    className="flex-1 px-3 text-[13px] sm:flex-none sm:px-6 sm:text-sm"
+                    asChild
+                  >
                     <a href={primaryCta.href}>
                       {primaryCta.label}
                       <MoveRight
@@ -133,7 +140,12 @@ function Hero({
                   </Button>
                 )}
                 {hasCommunity && community.cta.label && communityHref && (
-                  <Button size="lg" variant="outline" asChild>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="flex-1 px-3 text-[13px] sm:flex-none sm:px-6 sm:text-sm"
+                    asChild
+                  >
                     <a
                       href={communityHref}
                       {...(isExternal(communityHref)
