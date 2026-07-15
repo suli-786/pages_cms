@@ -73,7 +73,7 @@
   "conference": {
     "visible": true,
     "heading": "Ummah Tech Conference ",
-    "body": "Where Builders Meet\n\n\nEvery year, Muslim founders, technologists, creatives and innovators come together to exchange ideas, challenge assumptions and build meaningful relationships around a shared purpose: building technology guided by faith, purpose and service.\n\n\nBecause great civilizations were never built in isolation.",
+    "body": "\n\n\nEvery year, Muslim founders, technologists, creatives and innovators come together to exchange ideas, challenge assumptions and build meaningful relationships around a shared purpose: building technology guided by faith, purpose and service.\n\n\nBecause great civilizations were never built in isolation.",
     "tiles": [
       {
         "image": {
@@ -103,7 +103,7 @@
       {
         "category": "Perspective",
         "title": "Challenge Your Thinking",
-        "body": "Hear from leaders building at the intersection of technology, faith and impact, and leave asking better questions than you arrived with."
+        "body": "Hear from leaders building at the intersection of technology, faith and impact, and leave with fresh perspectives that challenge your assumptions and expand your thinking."
       },
       {
         "category": "Networking",
@@ -112,8 +112,8 @@
       },
       {
         "category": "Momentum",
-        "title": "Leave With Direction",
-        "body": "Walk away with fresh ideas, practical insights and renewed clarity about your role in shaping the future."
+        "title": "Leave with Direction",
+        "body": "To Step Into Your Role\n\nLeave with practical insights and renewed clarity about the unique role you can play in shaping the future.\n"
       }
     ]
   },
