@@ -2,7 +2,7 @@
   "hero": {
     "visible": true,
     "eyebrow": "Ummah Tech Conference 2026",
-    "title": "We're building *what's worth inheriting.* Be part of it.",
+    "title": "We're building *a future worth inheriting.* Be part of it.",
     "eventDetails": [
       {
         "label": "Date",
@@ -18,7 +18,6 @@
       "href": "#contact"
     },
     "community": {
-      "body": "Ticket sales open soon. Join our WhatsApp community to hear it first — along with speaker announcements and everything else as it happens.",
       "cta": {
         "label": "Join the community",
         "href": "whatsapp"
@@ -26,7 +25,6 @@
     },
     "socialsLabel": "Stay connected",
     "gallery": [
-      "/images/Home-carousal-logo/1-2.svg",
       "/images/Home-carousal-logo/2.svg",
       "/images/Home-carousal-logo/3.svg",
       "/images/Home-carousal-logo/5.svg",
@@ -73,8 +71,8 @@
   },
   "conference": {
     "visible": true,
-    "heading": "Why should we build?",
-    "body": "Every year, Muslim founders, technologists, creatives and innovators come together at Ummah Tech's annual flagship conference to explore a bigger question than what can we build?",
+    "heading": "Ummah Tech Conference ",
+    "body": "Where Builders Meet\nEvery year, Muslim founders, technologists, creatives and innovators come together to exchange ideas, challenge assumptions and build meaningful relationships around a shared purpose: building technology guided by faith, purpose and service.\nBecause great civilizations were never built in isolation.",
     "tiles": [
       {
         "image": {
@@ -229,8 +227,7 @@
   "finalCta": {
     "visible": true,
     "eyebrow": "7 November 2026 · Johannesburg",
-    "heading": "Be part of *what's worth inheriting.*",
-    "body": "",
+    "heading": "Be part of *building a future worth inheriting.*",
     "date": "2026-11-07",
     "cta": {
       "label": "Get Tickets",
