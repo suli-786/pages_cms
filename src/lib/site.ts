@@ -1,7 +1,7 @@
-// Site-wide branding edited via Pages CMS (src/content/settings.json).
-// `logo` is an image path; when empty the SVG mark + site name are shown instead.
-// `socials` is entered once here and read by the hero (and, later, the footer) —
-// the same cross-feed idea as speakers/partners in home.ts.
+// Site-wide links edited via Pages CMS (src/content/settings.json): the
+// WhatsApp community URL and the social links, each entered once and read by
+// the hero and the footer. (Branding is hardcoded — the navbar/footer lockup
+// lives in components/layout/logo.tsx.)
 //
 // Mirrors the `settings` block in .pages.yml — change both together. Parsing is
 // forgiving for the reason described in home.ts: editors can clear any optional
@@ -32,14 +32,9 @@ const socialsSchema = z.preprocess(
 );
 
 const settingsSchema = z.object({
-  logo: z
-    .string()
-    .nullish()
-    .transform((v) => v ?? ''),
-  siteName: z.string(),
   // The single WhatsApp community URL. Any link field set to the token
   // `whatsapp` resolves to this at parse time (the `link` schema in home.ts),
-  // so it is entered once.
+  // so it is entered once. The footer also links it directly when set.
   whatsapp: z
     .string()
     .nullish()

@@ -27,7 +27,7 @@ components:
     label: Button
     fields:
       - { name: label, label: Label, type: string }
-      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #newsletter to jump to a section, or the word whatsapp to use the WhatsApp community link from Site settings.' }
+      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #contact to jump to a section, or the word whatsapp to use the WhatsApp community link from Site settings.' }
   picture:
     type: object
     label: Image
@@ -216,61 +216,66 @@ content:
                 }
 
       - name: finalCta
-        label: 6. Final CTA
+        label: 6. Final CTA (countdown)
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: eyebrow, label: Eyebrow, type: string }
-          - { name: heading, label: Heading, type: string }
-          - { name: body, label: Body, type: text }
+          - {
+              name: eyebrow,
+              label: Eyebrow,
+              type: string,
+              description: 'The date · venue line shown inside the corner brackets, e.g. "7 November 2026 · Johannesburg".',
+            }
+          - {
+              name: heading,
+              label: Heading,
+              type: string,
+              description: 'The big closing statement. Wrap words in *asterisks* to emphasise them.',
+            }
+          - { name: body, label: 'Body (optional)', type: text }
+          - {
+              name: date,
+              label: Conference date,
+              type: date,
+              description: 'The countdown counts down to this date. Leave empty to hide the countdown.',
+            }
           - { name: cta, label: Button, component: cta }
-          - { name: image, label: Image, component: picture }
+          - {
+              name: image,
+              label: Background photo,
+              type: object,
+              component: picture,
+              description: 'Full-width photo behind the whole section (a dark tint is applied on top).',
+            }
 
-      - name: newsletter
-        label: 7. Newsletter
+      - name: contact
+        label: 7. Contact
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: badge, label: Badge, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
-          - { name: formEyebrow, label: Form eyebrow, type: string }
-          - { name: formHeading, label: Form heading, type: string }
-          - { name: successMessage, label: Success message, type: text }
-          - name: perksCard
-            label: Perks card
-            type: object
-            fields:
-              - { name: eyebrow, label: Eyebrow, type: string }
-              - { name: heading, label: Heading, type: string }
-              - { name: perks, label: Perks, type: string, list: true }
+          - {
+              name: successMessage,
+              label: Success message,
+              type: text,
+              description: 'Shown after the form is sent. The four enquiry types (Contact / Speaker / Volunteer / Partner) are fixed — ask a developer to change them.',
+            }
 
   # ------------------------------------------------------------ Site settings
-  # Branding shared across every page (src/content/settings.json): the logo and
-  # site name feed the navbar and footer; the social links feed the hero.
+  # Site-wide links (src/content/settings.json): the WhatsApp community URL and
+  # the social links, entered once and shown in the hero and footer. Branding
+  # (logo lockup) is part of the design, not editable content.
   - name: settings
     label: Site settings
     type: file
     path: src/content/settings.json
     fields:
       - {
-          name: logo,
-          label: Logo,
-          type: image,
-          description: 'Shown in the header and footer. Use a transparent PNG or SVG. Leave empty to fall back to the default mark + site name.',
-        }
-      - {
-          name: siteName,
-          label: Site name,
-          type: string,
-          required: true,
-          description: 'Brand text shown next to / instead of the logo.',
-        }
-      - {
           name: whatsapp,
           label: WhatsApp community link,
           type: string,
-          description: 'The WhatsApp community invite URL. Entered once here and used by every "Join the WhatsApp community" link on the site (the hero and the conference section). Leave empty until you have the invite link.',
+          description: 'The WhatsApp community invite URL. Entered once here and used by every WhatsApp link on the site (hero, conference section and footer). Leave empty until you have the invite link — the footer link hides itself meanwhile.',
         }
       - name: socials
         label: Social links
@@ -279,7 +284,7 @@ content:
           collapsible:
             collapsed: true
             summary: '{fields.platform}'
-        description: 'Shown as icons in the hero. Entered once here so it can be reused elsewhere on the site. A row with no link is ignored.'
+        description: 'Shown as icons in the hero and the footer. Entered once here so the whole site uses the same list. A row with no link is ignored.'
         fields:
           - name: platform
             label: Platform

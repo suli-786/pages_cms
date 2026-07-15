@@ -43,13 +43,9 @@ import { site } from '@/lib/site';
   <!-- Our Partners → counter-scrolling logo rows -->
   {home.partners.visible && <Partners content={home.partners} />}
 
-  <!-- Final CTA -->
-  {home.finalCta.visible && <Cta content={home.finalCta} />}
+  <!-- Final CTA → full-bleed countdown finale -->
+  {home.finalCta.visible && <Cta content={home.finalCta} client:visible />}
 
-  <!-- Newsletter / lead-capture form -->
-  {
-    home.newsletter.visible && (
-      <Contact content={home.newsletter} client:visible />
-    )
-  }
+  <!-- Contact — one form, four functions (contact / speaker / volunteer / partner) -->
+  {home.contact.visible && <Contact content={home.contact} client:visible />}
 </DefaultLayout>

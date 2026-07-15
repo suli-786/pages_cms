@@ -32,6 +32,6 @@ const pathname = Astro.url.pathname;
     <main id="main" tabindex="-1" class="relative flex-1 outline-none">
       <slot />
     </main>
-    <Footer logo={site.logo} siteName={site.siteName} />
+    <Footer socials={site.socials} whatsapp={site.whatsapp} client:visible />
   </body>
 </html>

@@ -62,11 +62,11 @@ function FramedLogo({ tier, logo }: { tier: string; logo: PartnerLogo }) {
     <li className="relative p-10 md:p-12">
       <span
         aria-hidden
-        className="border-foreground/25 absolute top-0 right-0 size-16 border-t border-r md:size-20"
+        className="border-accent absolute top-0 right-0 size-16 border-t-2 border-r-2 md:size-20"
       />
       <span
         aria-hidden
-        className="border-foreground/25 absolute bottom-0 left-0 size-16 border-b border-l md:size-20"
+        className="border-accent absolute bottom-0 left-0 size-16 border-b-2 border-l-2 md:size-20"
       />
       <span aria-hidden className={cn(cornerWord, 'top-0 left-0')}>
         {tier}
@@ -124,9 +124,8 @@ function Partners({ content }: { content: PartnersContent }) {
 
       {(headline.length > 0 || supporting.length > 0) && (
         <div className="container mt-12 md:mt-16">
-          {/* One centred band: headline frames first, then supporting — side
-              by side where they fit, stacking on narrow screens. */}
-          <div className="flex flex-wrap items-center justify-center gap-x-14 gap-y-10">
+          {/* Stacked tiers: the headline frame(s) on top, supporting under. */}
+          <div className="flex flex-col items-center gap-y-10 md:gap-y-12">
             {headline.length > 0 && (
               <ul
                 aria-label="Headline partners"

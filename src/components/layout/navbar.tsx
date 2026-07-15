@@ -21,7 +21,7 @@ const navItems = [
   { label: 'About', href: '/#vision' },
 ];
 
-const CTA = { label: 'Get Tickets', href: '/#newsletter' };
+const CTA = { label: 'Get Tickets', href: '/#contact' };
 
 // Hardcoded Ummah Tech lockup: brand mark + wordmark. Both SVGs are decorative
 // here — the wrapping link carries the accessible name. The wordmark inherits

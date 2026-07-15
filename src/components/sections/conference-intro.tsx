@@ -5,6 +5,7 @@
 
 import { ArrowRight } from 'lucide-react';
 
+import { CornerBrackets } from '@/components/elements/corner-brackets';
 import type { ConferenceContent } from '@/lib/home';
 import { cn } from '@/lib/utils';
 
@@ -45,9 +46,13 @@ function ConferenceIntro({ content }: { content: ConferenceContent }) {
                 className="border-border bg-muted flex flex-col gap-3 rounded-lg border p-6 lg:p-8"
               >
                 {benefit.category && (
-                  <p className="text-primary flex items-center gap-2.5 text-xs font-medium tracking-wider uppercase">
-                    <span aria-hidden className="bg-accent h-px w-5" />
-                    {benefit.category}
+                  <p className="text-primary flex text-xs font-medium tracking-wider uppercase">
+                    <CornerBrackets
+                      className="px-2.5 py-2"
+                      cornerClassName="size-2"
+                    >
+                      {benefit.category}
+                    </CornerBrackets>
                   </p>
                 )}
                 {benefit.title && (

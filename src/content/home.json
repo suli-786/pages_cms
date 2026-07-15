@@ -15,7 +15,7 @@
     ],
     "primaryCta": {
       "label": "Get Tickets",
-      "href": "#newsletter"
+      "href": "#contact"
     },
     "community": {
       "body": "Ticket sales open soon. Join our WhatsApp community to hear it first — along with speaker announcements and everything else as it happens.",
@@ -124,7 +124,7 @@
     "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
     "cta": {
       "label": "Interested in speaking?",
-      "href": "#newsletter"
+      "href": "#contact"
     },
     "items": [
       {
@@ -228,35 +228,23 @@
   },
   "finalCta": {
     "visible": true,
-    "eyebrow": "Upcoming conference",
-    "heading": "See you in Johannesburg.",
-    "body": "Ummah Tech Conference 2026 — 7 November 2026, Johannesburg, South Africa. Save the date; ticket sales open soon.",
+    "eyebrow": "7 November 2026 · Johannesburg",
+    "heading": "Be part of *what's worth inheriting.*",
+    "body": "",
+    "date": "2026-11-07",
     "cta": {
-      "label": "Book your Seat",
-      "href": "#newsletter"
+      "label": "Get Tickets",
+      "href": "#contact"
     },
     "image": {
       "src": "/images/other/02.jpg",
       "alt": "Ummah Tech Conference 2026 — Johannesburg, South Africa"
     }
   },
-  "newsletter": {
+  "contact": {
     "visible": true,
-    "badge": "Newsletter",
-    "heading": "Join the mailing list.",
-    "description": "Be the first to know. Get conference updates, speaker announcements and ticket news straight to your inbox.",
-    "formEyebrow": "No spam, unsubscribe anytime",
-    "formHeading": "Sign up for conference updates.",
-    "successMessage": "Thanks — you're on the list. We'll be in touch with conference updates and ticket news.",
-    "perksCard": {
-      "eyebrow": "Stay in the loop",
-      "heading": "Never miss an update.",
-      "perks": [
-        "Speaker announcements",
-        "Early ticket access",
-        "Programme & venue updates",
-        "News from the community"
-      ]
-    }
+    "heading": "Get in touch.",
+    "description": "Questions, speaking, volunteering or partnership — one form for all of it. Tell us what you're reaching out about and it reaches the right person.",
+    "successMessage": "Thanks — we've got your message and we'll get back to you soon."
   }
 }

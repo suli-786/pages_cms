@@ -139,22 +139,17 @@ const finalCtaSchema = z.object({
   eyebrow: str,
   heading: str,
   body: str,
+  // Conference date (YYYY-MM-DD) the countdown counts to; empty hides it.
+  date: str,
   cta: ctaSchema,
   image: mediaSchema,
 });
 
-const newsletterSchema = z.object({
+const contactSchema = z.object({
   visible,
-  badge: str,
   heading: str,
   description: str,
-  formEyebrow: str,
-  formHeading: str,
   successMessage: str,
-  perksCard: z
-    .object({ eyebrow: str, heading: str, perks: strList })
-    .nullish()
-    .transform((v) => v ?? { eyebrow: '', heading: '', perks: [] }),
 });
 
 const homeSchema = z.object({
@@ -164,7 +159,7 @@ const homeSchema = z.object({
   speakers: speakersSchema,
   partners: partnersSchema,
   finalCta: finalCtaSchema,
-  newsletter: newsletterSchema,
+  contact: contactSchema,
 });
 
 export type CtaLink = z.infer<typeof ctaSchema>;
@@ -177,7 +172,7 @@ export type SpeakersContent = z.infer<typeof speakersSchema>;
 export type PartnerLogo = z.infer<typeof partnerLogoSchema>;
 export type PartnersContent = z.infer<typeof partnersSchema>;
 export type FinalCtaContent = z.infer<typeof finalCtaSchema>;
-export type NewsletterContent = z.infer<typeof newsletterSchema>;
+export type ContactContent = z.infer<typeof contactSchema>;
 export type HomeContent = z.infer<typeof homeSchema>;
 
 const parsed = homeSchema.safeParse(data);

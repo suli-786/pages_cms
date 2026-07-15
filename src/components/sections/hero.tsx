@@ -1,10 +1,12 @@
 'use client';
 
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CalendarDays, MapPin, MoveRight, type LucideIcon } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
+import { CornerBrackets } from '@/components/elements/corner-brackets';
+import { renderEmphasis } from '@/components/elements/emphasis';
 import { SocialGlyph, socialLabel } from '@/components/elements/social-icons';
 import { Button } from '@/components/ui/button';
 import type { HeroContent } from '@/lib/home';
@@ -23,19 +25,6 @@ const detailIcons: LucideIcon[] = [CalendarDays, MapPin];
 
 /** Only real URLs open in a new tab — a placeholder `#` must not. */
 const isExternal = (href: string) => /^https?:\/\//.test(href);
-
-/** Renders `*text*` markers as emphasized words (documented in .pages.yml). */
-function renderEmphasis(text: string) {
-  return text.split(/\*([^*]+)\*/g).map((part, i) =>
-    i % 2 === 1 ? (
-      <em key={i} className="text-foreground italic">
-        {part}
-      </em>
-    ) : (
-      <Fragment key={i}>{part}</Fragment>
-    ),
-  );
-}
 
 function Hero({
   content,
@@ -76,9 +65,10 @@ function Hero({
             <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
               <h1 className="max-w-3xl">
                 {eyebrow && (
-                  <span className="text-accent font-text font-weight-text mb-6 flex items-center gap-3 text-sm tracking-tight">
-                    <span aria-hidden className="bg-accent h-px w-8" />
-                    {eyebrow}
+                  <span className="mb-7 flex">
+                    <CornerBrackets className="text-accent font-text font-weight-text px-3.5 py-2.5 text-sm tracking-tight">
+                      {eyebrow}
+                    </CornerBrackets>
                   </span>
                 )}
                 <span className="text-foreground/60 block text-4xl tracking-tight text-balance md:text-5xl lg:text-6xl">
