@@ -11,6 +11,7 @@ import { SocialGlyph, socialLabel } from '@/components/elements/social-icons';
 import { Button } from '@/components/ui/button';
 import type { HeroContent } from '@/lib/home';
 import type { SocialLink } from '@/lib/site';
+import { cn } from '@/lib/utils';
 
 // Adapted from @shadcnblocks/hero272: a split layout with a stacked, divided
 // left column and a nine-cell photo grid that rotates on a timer. The three
@@ -225,7 +226,14 @@ function PhotoGrid({ gallery }: { gallery: string[] }) {
                   key={`${cell}-${src}`}
                   src={src}
                   alt=""
-                  className="absolute inset-0 size-full object-cover"
+                  // Photos crop to fill; SVG mosaic tiles must map edge-to-edge
+                  // instead — cells go non-square at many viewports, and cover
+                  // would crop each tile differently, breaking the assembled
+                  // logo's seams. Uniform stretch keeps them aligned.
+                  className={cn(
+                    'absolute inset-0 size-full',
+                    src.endsWith('.svg') ? 'object-fill' : 'object-cover',
+                  )}
                   initial={
                     reducedMotion ? { opacity: 1 } : { rotateY: 15, opacity: 0 }
                   }
