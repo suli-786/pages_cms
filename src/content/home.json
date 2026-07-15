@@ -34,7 +34,16 @@
       "/images/speakers/7.png",
       "/images/speakers/11.png",
       "/images/speakers/14.png",
-      "/images/speakers/2.png"
+      "/images/speakers/2.png",
+      "/images/Home-carousal-logo/1-2.svg",
+      "/images/Home-carousal-logo/2.svg",
+      "/images/Home-carousal-logo/3.svg",
+      "/images/Home-carousal-logo/5.svg",
+      "/images/Home-carousal-logo/4.svg",
+      "/images/Home-carousal-logo/6.svg",
+      "/images/Home-carousal-logo/7.svg",
+      "/images/Home-carousal-logo/8.svg",
+      "/images/Home-carousal-logo/9.svg"
     ]
   },
   "vision": {
@@ -44,34 +53,26 @@
     "highlights": [
       {
         "phrase": "what we're building for",
-        "image": "/images/other/o1.jpg",
-        "href": ""
+        "image": "/images/other/o1.jpg"
       },
       {
         "phrase": "built with purpose",
-        "image": "/images/other/03.jpg",
-        "href": ""
+        "image": "/images/other/03.jpg"
       },
       {
         "phrase": "challenge assumptions",
-        "image": "/images/other/02.jpg",
-        "href": ""
+        "image": "/images/other/02.jpg"
       },
       {
-        "phrase": "guided by faith, purpose and service",
-        "image": "",
-        "href": ""
+        "phrase": "guided by faith, purpose and service"
       },
       {
-        "phrase": "what's worth inheriting",
-        "image": "",
-        "href": ""
+        "phrase": "what's worth inheriting"
       }
     ]
   },
   "conference": {
     "visible": true,
-    "tagline": "",
     "heading": "Why should we build?",
     "body": "Every year, Muslim founders, technologists, creatives and innovators come together at Ummah Tech's annual flagship conference to explore a bigger question than what can we build?",
     "tiles": [
@@ -172,56 +173,56 @@
       {
         "src": "/images/partners/Ashraful aid logo.png",
         "alt": "Ashraful Aid",
-        "href": "#",
-        "tier": "headline"
+        "tier": "headline",
+        "href": "#"
       },
       {
         "src": "/images/partners/Awqaf logo.png",
         "alt": "Awqaf SA",
-        "href": "#",
-        "tier": "supporting"
+        "tier": "supporting",
+        "href": "#"
       },
       {
         "src": "/images/partners/1.png",
         "alt": "Partner 3",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/10.png",
         "alt": "Partner 4",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/4.png",
         "alt": "Partner 5",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/7.png",
         "alt": "Partner 6",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/9.png",
         "alt": "Partner 7",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/6.png",
         "alt": "Partner 8",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       },
       {
         "src": "/images/partners/5.png",
         "alt": "Partner 9",
-        "href": "#",
-        "tier": "regular"
+        "tier": "regular",
+        "href": "#"
       }
     ]
   },
