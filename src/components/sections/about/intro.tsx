@@ -20,8 +20,11 @@ function Intro({ content }: { content: IntroContent }) {
       className="scroll-mt-24 overflow-hidden pt-28 pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20"
     >
       <div className="container max-w-4xl">
+        {/* px/py so the bracket arms clear the glyphs — the brackets are
+            absolutely positioned to the wrapper's edges, so without padding
+            they sit on top of the text. Same values as the CTA eyebrow. */}
         {eyebrow && (
-          <CornerBrackets className="text-muted-foreground mb-8 inline-block font-mono text-xs tracking-[0.18em] uppercase">
+          <CornerBrackets className="text-muted-foreground mb-8 inline-block px-3.5 py-2.5 font-mono text-xs tracking-[0.18em] uppercase">
             {eyebrow}
           </CornerBrackets>
         )}
