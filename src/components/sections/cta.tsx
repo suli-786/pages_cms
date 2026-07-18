@@ -7,7 +7,9 @@ import { MoveRight } from 'lucide-react';
 import { CornerBrackets } from '@/components/elements/corner-brackets';
 import { renderEmphasis } from '@/components/elements/emphasis';
 import { Button } from '@/components/ui/button';
+import type { CtaLink } from '@/lib/content';
 import type { ResolvedFinalCtaContent } from '@/lib/images';
+import { isExternal } from '@/lib/utils';
 
 // Final CTA — the countdown finale. Skeleton from @shadcnblocks/cta46 (an
 // edge-to-edge photo with a vignette that spotlights centred copy), countdown
@@ -101,8 +103,15 @@ function Countdown({ date }: { date: string }) {
   );
 }
 
-function Cta({ content }: { content: ResolvedFinalCtaContent }) {
-  const { eyebrow, heading, body, cta, image, date } = content;
+/**
+ * Shared by the homepage's final CTA and the About page's closing "join"
+ * section. `secondaryCta` is optional: the homepage has one ask, About has two
+ * (join the community, or speak/volunteer/partner).
+ */
+type CtaSectionContent = ResolvedFinalCtaContent & { secondaryCta?: CtaLink };
+
+function Cta({ content }: { content: CtaSectionContent }) {
+  const { eyebrow, heading, body, cta, image, date, secondaryCta } = content;
 
   return (
     <section className="dark text-foreground relative isolate overflow-hidden">
@@ -159,15 +168,36 @@ function Cta({ content }: { content: ResolvedFinalCtaContent }) {
         <Countdown date={date} />
 
         {cta.label && cta.href && (
-          <Button size="lg" className="h-13 px-8" asChild>
-            <a href={cta.href}>
-              {cta.label}
-              <MoveRight
-                aria-hidden
-                className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"
-              />
-            </a>
-          </Button>
+          <div className="flex flex-col items-center gap-5">
+            <Button size="lg" className="h-13 px-8" asChild>
+              <a
+                href={cta.href}
+                {...(isExternal(cta.href)
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                {cta.label}
+                <MoveRight
+                  aria-hidden
+                  className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"
+                />
+              </a>
+            </Button>
+
+            {/* Secondary ask sits after the primary so it can't peel readers
+                off before the main conversion. */}
+            {secondaryCta?.label && secondaryCta.href && (
+              <a
+                href={secondaryCta.href}
+                className="text-foreground/85 hover:text-foreground focus-visible:ring-ring rounded-sm text-sm underline underline-offset-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                {...(isExternal(secondaryCta.href)
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
+              >
+                {secondaryCta.label}
+              </a>
+            )}
+          </div>
         )}
       </div>
     </section>

@@ -59,7 +59,7 @@ export type ResolvedMedia = ResolvedImage & { alt: string };
  * Output widths + the `sizes` attribute for one usage. Widths above the
  * source's intrinsic width are dropped (never upscale); widths are ascending.
  */
-type Policy = { widths: number[]; sizes?: string };
+export type Policy = { widths: number[]; sizes?: string };
 
 // Rendered sizes derived from the actual layout (container maxes out at
 // 1432px): hero gallery cell = half container / 3 cols ≈ 233px; speaker cards
@@ -131,12 +131,12 @@ export async function resolveImage(
 }
 
 /** Single small rendition as a bare URL (vision hover previews). */
-async function resolveUrl(path: string, width: number): Promise<string> {
+export async function resolveUrl(path: string, width: number): Promise<string> {
   const resolved = await resolveImage(path, { widths: [width] });
   return resolved.src;
 }
 
-const resolveMedia = async (
+export const resolveMedia = async (
   media: { src: string; alt: string },
   policy: Policy,
 ): Promise<ResolvedMedia> => ({

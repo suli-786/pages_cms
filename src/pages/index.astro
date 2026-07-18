@@ -26,7 +26,9 @@ import { site } from '@/lib/site';
 const home = await resolveHomeImages(rawHome);
 ---
 
-<DefaultLayout>
+<!-- darkHero: the hero is a `.dark` full-bleed band, so the navbar uses its
+     light-on-dark treatment at scroll-top. -->
+<DefaultLayout darkHero>
   <!-- Hero → statement, date/venue, ticket CTA, WhatsApp community invite,
        social links, rotating photo grid. Social links are cross-fed from Site
        settings so the CMS holds that list once. -->

@@ -1,0 +1,167 @@
+{
+  "intro": {
+    "visible": true,
+    "eyebrow": "About Ummah Tech",
+    "title": "More than a conference — *a movement.*",
+    "body": "Ummah Tech is a movement of Muslim technologists, founders and creatives, growing out of South Africa. Around an annual conference and roundtables through the year, we create spaces where builders come together to share ideas, learn from one another, and develop technology rooted in Islamic values — and take on the challenges facing our communities and the wider world.\n\nOur mission is to nurture collaboration, inspire innovation and build skills among Muslims in the technology sector, for the benefit of the Ummah and humanity."
+  },
+  "story": {
+    "visible": true,
+    "label": "Our story",
+    "heading": "The story so far",
+    "body": "It started with a single day. On 23 November 2024, the first Ummah Tech Conference gathered Muslim technologists, founders and innovators in Johannesburg — attendees ranging from tech entrepreneurs to seasoned professionals, with talks aimed at empowering the Ummah and society through technology.\n\nIn 2025 the conference returned, designed to be more than an event: to begin conversations and provide the soil from which beneficial projects grow. Between conferences, the work carried on — in roundtable discussions and a growing year-round community.\n\nToday the conference is our annual flagship, held in November and rotating between Johannesburg and Cape Town. The next edition is 7 November 2026 in Johannesburg — but the story was never only about one day a year.",
+    "cta": {
+      "label": "See the conference",
+      "href": "/#event"
+    },
+    "photos": [
+      {
+        "src": "/images/other/o1.jpg",
+        "alt": "A talk in progress at the Ummah Tech Conference"
+      },
+      {
+        "src": "/images/other/03.jpg",
+        "alt": "Attendees networking between sessions"
+      },
+      {
+        "src": "/images/other/02.jpg",
+        "alt": "The audience during a keynote in Johannesburg"
+      }
+    ]
+  },
+  "why": {
+    "visible": true,
+    "heading": "Why we exist",
+    "lead": "Muslim technologists are many — but too often we have lacked organisational cohesion. That is the gap Ummah Tech was built to close. And the need is not abstract:",
+    "items": [
+      {
+        "icon": "building-2",
+        "title": "Big Tech is displacing public institutions",
+        "body": "And exploiting user data."
+      },
+      {
+        "icon": "cpu",
+        "title": "Algorithms, including AI, are shaping behaviour and values",
+        "body": "And even undermining faith and social cohesion."
+      },
+      {
+        "icon": "mic-off",
+        "title": "Platforms censor voices",
+        "body": "Pro-Palestinian narratives are suppressed."
+      },
+      {
+        "icon": "server",
+        "title": "The Ummah remains dependent on providers with unethical business practices",
+        "body": "Microsoft among them."
+      }
+    ],
+    "closing": "Recent events — the Gaza conflict — have shown both the challenges Muslim tech professionals face and the power of networked communities to build solutions. Two urgent questions drive our work: how do we secure our independence? How do we ensure technology serves humanity, not just profit?\n\nUmmah Tech exists to answer them — together."
+  },
+  "faith": {
+    "visible": true,
+    "heading": "Rooted in faith",
+    "lead": "Allah, all praises and glory be to Him, commands us:",
+    "quote": {
+      "text": "Cooperate with one another in goodness and righteousness, and do not cooperate in sin and transgression. And be mindful of Allah. Surely Allah is severe in punishment.",
+      "attribution": "Qur'an 5:2"
+    },
+    "body": "This is our foundational verse, and our tradition shows what such cooperation can build. The Prophet (peace be upon him) established an independent market in Medina to safeguard ethical business practice and Muslim independence — the precedent for our own pursuit of technological independence. And the Constitution of Madinah stands as an enduring example of faith as the organising principle of a civilisation.\n\nWe build in that lineage."
+  },
+  "beliefs": {
+    "visible": true,
+    "label": "Our propositions",
+    "heading": "What we stand for",
+    "lead": "Six propositions shape what we build and how we build it.",
+    "items": [
+      {
+        "title": "Collaboration for the good of the Ummah and society.",
+        "body": "Bringing the best minds, skills and values-aligned people together sparks impactful projects, initiatives and businesses — rooted in the Qur'anic command to cooperate in goodness and righteousness (5:2)."
+      },
+      {
+        "title": "Bridging faith and collective action.",
+        "body": "Closing the gap between individual faith and collective solidarity — building unity, managing diversity, and working to prevent tragedies like Gaza through coordinated technological and social solutions."
+      },
+      {
+        "title": "Technological independence.",
+        "body": "Striving for independence in technology to secure the Ummah's future."
+      },
+      {
+        "title": "Servant leadership for humanity.",
+        "body": "As the Ummah of the Prophet (peace be upon him), we are called to serve humanity — what affects others affects us too."
+      },
+      {
+        "title": "Rethinking progress.",
+        "body": "Progress measured beyond GDP and consumption: justice, poverty reduction, morality and flourishing communities."
+      },
+      {
+        "title": "Values-based technology design.",
+        "body": "Technology is not neutral. We design and deploy it consciously, embedding Islamic values in its foundations."
+      }
+    ]
+  },
+  "values": {
+    "visible": true,
+    "heading": "Our values",
+    "lead": "Our foundation is built upon Islamic principles that guide how we innovate, collaborate and serve.",
+    "items": [
+      {
+        "icon": "heart",
+        "title": "_Niyyah_ (sincere intention)",
+        "body": "Every action is driven by a pure, purposeful intention to benefit the Ummah and humanity."
+      },
+      {
+        "icon": "users",
+        "title": "Serving the Ummah and humanity",
+        "body": "Our work addresses the real challenges the Ummah faces and inspires technology that uplifts communities."
+      },
+      {
+        "icon": "scale",
+        "title": "Ethics and integrity",
+        "body": "We uphold Islamic morals and ensure the technology we build is rooted in justice and fairness."
+      },
+      {
+        "icon": "handshake",
+        "title": "Collaboration and empowerment",
+        "body": "We believe in the strength of unity, fostering relationships that empower individuals and organisations."
+      },
+      {
+        "icon": "lightbulb",
+        "title": "Creativity and innovation",
+        "body": "We encourage futuristic thinking, keeping Muslim technologists at the forefront of global tech."
+      },
+      {
+        "icon": "network",
+        "title": "Connecting and serving",
+        "body": "We are committed to bridging gaps, building networks and serving the needs of the Ummah."
+      }
+    ]
+  },
+  "team": {
+    "visible": true,
+    "heading": "Who's behind Ummah Tech",
+    "body": "We operate as a non-sectarian organisation: every Muslim working in — or moving towards — technology has a place here, and our work is offered for the benefit of all.\n\nWe're putting together proper introductions — names, roles and faces — and will publish them here. Until then, the best way to meet the team is in person: at a roundtable, or in Johannesburg on 7 November 2026.",
+    "cta": {
+      "label": "",
+      "href": ""
+    }
+  },
+  "join": {
+    "visible": true,
+    "eyebrow": "The conference happens once a year. The community doesn't stop.",
+    "heading": "Find your people. *Build what's worth inheriting.*",
+    "body": "If you're a Muslim technologist, founder, creative or innovator — or on your way to becoming one — you belong here. The WhatsApp community is where it stays alive between conferences: roundtables, collaborations, and the road to Ummah Tech Conference 2026 on 7 November in Johannesburg.",
+    "date": "",
+    "cta": {
+      "label": "Join the community",
+      "href": "whatsapp"
+    },
+    "secondaryCta": {
+      "label": "Speak, volunteer or partner",
+      "href": "/#contact"
+    },
+    "image": {
+      "src": "/images/other/02.jpg",
+      "alt": "Attendees at the Ummah Tech Conference in Johannesburg"
+    }
+  }
+}

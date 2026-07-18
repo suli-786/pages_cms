@@ -35,7 +35,21 @@ function Brand({
   );
 }
 
-function Navbar({ pathname = '/' }: { pathname?: string }) {
+/**
+ * `darkHero` — whether this page opens with a dark full-bleed band. It controls
+ * the light-on-dark nav treatment at scroll-top, so it must match the first
+ * section: set it on a page whose hero is a `.dark` island (the homepage),
+ * leave it off for pages that open on the page background (About). Getting it
+ * wrong renders the nav links near-invisible, and which way that fails depends
+ * on the active palette — hence a prop rather than a pathname check.
+ */
+function Navbar({
+  pathname = '/',
+  darkHero = false,
+}: {
+  pathname?: string;
+  darkHero?: boolean;
+}) {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -46,7 +60,7 @@ function Navbar({ pathname = '/' }: { pathname?: string }) {
   const menuCloseRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const wasMenuOpen = useRef(false);
-  const isDarkHero = pathname === '/';
+  const isDarkHero = darkHero;
   const isActive = (href: string) =>
     href === '/'
       ? pathname === '/'

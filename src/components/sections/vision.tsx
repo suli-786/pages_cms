@@ -2,6 +2,12 @@
 
 import { Fragment } from 'react';
 
+import {
+  EMPHASIS_PATTERN,
+  emphasisClass,
+  unwrapEmphasis,
+} from '@/components/elements/emphasis';
+import { paragraphsOf } from '@/components/elements/prose';
 import { LinkPreview } from '@/components/ui/link-preview';
 import type { VisionContent } from '@/lib/home';
 
@@ -80,32 +86,25 @@ function renderSegments(
   );
 }
 
-/** `*text*` emphasis first, then highlight phrases within each run. */
+/**
+ * Emphasis markers first, then highlight phrases within each run. Splits on the
+ * shared EMPHASIS_PATTERN so this stays in step with renderEmphasis — the two
+ * used to be independent copies of the same parser and silently diverged.
+ */
 function renderRich(text: string, highlights: Highlight[], keyPrefix: string) {
-  return text.split(/\*([^*]+)\*/g).map((part, i) =>
-    i % 2 === 1 ? (
-      <em key={`${keyPrefix}-${i}`} className="text-foreground italic">
-        {renderSegments(part, highlights, `${keyPrefix}-${i}`)}
+  return text.split(EMPHASIS_PATTERN).map((part, i) => {
+    const className = emphasisClass(part);
+    return className ? (
+      <em key={`${keyPrefix}-${i}`} className={className}>
+        {renderSegments(unwrapEmphasis(part), highlights, `${keyPrefix}-${i}`)}
       </em>
     ) : (
       <Fragment key={`${keyPrefix}-${i}`}>
         {renderSegments(part, highlights, `${keyPrefix}-${i}`)}
       </Fragment>
-    ),
-  );
+    );
+  });
 }
-
-/** Blank line → new paragraph. Single newline → line break inside a paragraph. */
-const paragraphsOf = (text: string) =>
-  text
-    .split(/\n\s*\n/)
-    .map((p) =>
-      p
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean),
-    )
-    .filter((p) => p.length > 0);
 
 // One type scale for the whole section. The hierarchy comes from contrast, not
 // size: the heading and the highlighted phrases sit in full colour against

@@ -13,7 +13,7 @@ export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Events', href: '/#event' },
   { label: 'Partner With Us', href: '/#partners' },
-  { label: 'About', href: '/#vision' },
+  { label: 'About', href: '/about' },
 ];
 export const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
 export const SITE_DESCRIPTION =

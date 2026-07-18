@@ -9,9 +9,11 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** Set on pages whose first section is a dark full-bleed band — see navbar.tsx. */
+  darkHero?: boolean;
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, darkHero = false } = Astro.props;
 const pathname = Astro.url.pathname;
 ---
 
@@ -29,7 +31,7 @@ const pathname = Astro.url.pathname;
     </a>
     {/* Dev-only theming overlay — never shipped to production visitors. */}
     {import.meta.env.DEV && <StyleGlideProvider client:only="react" />}
-    <Navbar pathname={pathname} client:idle />
+    <Navbar pathname={pathname} darkHero={darkHero} client:idle />
     <main id="main" tabindex="-1" class="relative flex-1 outline-none">
       <slot />
     </main>
