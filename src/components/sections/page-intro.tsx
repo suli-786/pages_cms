@@ -1,17 +1,23 @@
 import { CornerBrackets } from '@/components/elements/corner-brackets';
 import { renderEmphasis } from '@/components/elements/emphasis';
 import { Prose } from '@/components/elements/prose';
-import type { IntroContent } from '@/lib/about';
 
-// About intro — bespoke, following the hero's opening band: mono eyebrow inside
-// corner brackets, then the statement. No registry block fits "brand statement,
-// no photo, no CTA", and the idiom already exists in hero.tsx.
+// Page intro — the opening band shared by the inner pages (About, Partner):
+// mono eyebrow inside corner brackets, the page's only h1, prose body. The
+// idiom follows hero.tsx band 1; promoted out of sections/about/ once the
+// Partner page needed the identical shape.
 //
-// This carries the page's only h1. Padding clears the fixed navbar (same values
-// as hero.tsx) — section-padding alone is not enough. Deliberately NOT a `.dark`
-// band: the navbar only switches to light text on the homepage, so a dark first
+// Padding clears the fixed navbar (same values as hero.tsx) — section-padding
+// alone is not enough. Deliberately NOT a `.dark` band: the navbar only
+// switches to light text when the page passes darkHero, so a dark first
 // section here would render the nav links nearly invisible at scroll-top.
-function Intro({ content }: { content: IntroContent }) {
+export type PageIntroContent = {
+  eyebrow: string;
+  title: string;
+  body: string;
+};
+
+function PageIntro({ content }: { content: PageIntroContent }) {
   const { eyebrow, title, body } = content;
 
   return (
@@ -43,4 +49,4 @@ function Intro({ content }: { content: IntroContent }) {
   );
 }
 
-export default Intro;
+export default PageIntro;

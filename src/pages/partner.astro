@@ -1,0 +1,54 @@
+---
+// Partner page — Ummah Tech. Solely for sponsors and partner organisations.
+// All copy comes from src/content/partner.json (edited via Pages CMS); each
+// section renders from its `content` prop and can be toggled with its "Show
+// section" switch (`visible`).
+//
+// Pro blocks adapted into the template's design:
+//   why.tsx           ← @shadcnblocks/feature203
+//   reach.tsx         ← @shadcnblocks/stats8
+//   tiers.tsx         ← @shadcnblocks/pricing57 (prices + toggle deleted by design)
+//   partner-wall.tsx  ← @shadcnblocks/logos28 (grouped by tier; hidden while empty)
+//   contact.tsx       ← @shadcnblocks/cta3
+// The intro reuses the shared page-intro band (promoted from the About page).
+//
+// Every section is static — no client: directives; this page ships no
+// page-specific JavaScript beyond the shared navbar and footer.
+import PageIntro from '@/components/sections/page-intro';
+import Contact from '@/components/sections/partner/contact';
+import PartnerWall from '@/components/sections/partner/partner-wall';
+import Reach from '@/components/sections/partner/reach';
+import Tiers from '@/components/sections/partner/tiers';
+import Why from '@/components/sections/partner/why';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { resolvePartnerImages } from '@/lib/images-partner';
+import { partner as rawPartner } from '@/lib/partner';
+
+// Optimize every CMS image path (partner logos) at build time — see
+// src/lib/images-partner.ts.
+const partner = await resolvePartnerImages(rawPartner);
+---
+
+<DefaultLayout
+  title="Partner With Us — Ummah Tech"
+  description="Partner with Ummah Tech: put your organisation behind South Africa's community of Muslim technologists, founders and creatives — three partnership tiers around the annual conference and a year-round community."
+>
+  <!-- Intro → eyebrow, statement. Carries the page's h1. -->
+  {partner.intro.visible && <PageIntro content={partner.intro} />}
+
+  <!-- Why partner → the four pillars as icon cards -->
+  {partner.why.visible && <Why content={partner.why} />}
+
+  <!-- Who you reach → audience + credibility facts (NPC, flagship, 2026) -->
+  {partner.reach.visible && <Reach content={partner.reach} />}
+
+  <!-- Partnership tiers → three cards, no prices; prospectus by email -->
+  {partner.tiers.visible && <Tiers content={partner.tiers} />}
+
+  <!-- Current partners by tier → renders nothing until the first partner
+       is added in the CMS -->
+  {partner.partners.visible && <PartnerWall content={partner.partners} />}
+
+  <!-- Start the conversation → email primary, contact form secondary -->
+  {partner.contact.visible && <Contact content={partner.contact} />}
+</DefaultLayout>

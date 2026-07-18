@@ -17,12 +17,12 @@
 // page-specific JavaScript beyond the shared navbar and footer.
 import Beliefs from '@/components/sections/about/beliefs';
 import Faith from '@/components/sections/about/faith';
-import Intro from '@/components/sections/about/intro';
 import Story from '@/components/sections/about/story';
 import Team from '@/components/sections/about/team';
 import Values from '@/components/sections/about/values';
 import Why from '@/components/sections/about/why';
 import Cta from '@/components/sections/cta';
+import PageIntro from '@/components/sections/page-intro';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { about as rawAbout } from '@/lib/about';
 import { resolveAboutImages } from '@/lib/images-about';
@@ -37,7 +37,7 @@ const about = await resolveAboutImages(rawAbout);
   description="Ummah Tech is a movement of Muslim technologists, founders and creatives growing out of South Africa, building technology rooted in Islamic values."
 >
   <!-- Intro → eyebrow, mission statement. Carries the page's h1. -->
-  {about.intro.visible && <Intro content={about.intro} />}
+  {about.intro.visible && <PageIntro content={about.intro} />}
 
   <!-- Our story → 2024 to today, with a staggered photo grid -->
   {about.story.visible && <Story content={about.story} />}

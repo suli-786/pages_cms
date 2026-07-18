@@ -14,7 +14,7 @@ export const SITE_NAME = 'Ummah Tech';
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Events', href: '/#event' },
-  { label: 'Partner With Us', href: '/#partners' },
+  { label: 'Partner With Us', href: '/partner' },
   { label: 'About', href: '/about' },
 ];
 export const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
