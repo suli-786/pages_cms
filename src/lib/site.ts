@@ -1,7 +1,7 @@
-// Site-wide links edited via Pages CMS (src/content/settings.json): the
-// WhatsApp community URL and the social links, each entered once and read by
-// the hero and the footer. (Branding is hardcoded — the navbar/footer lockup
-// lives in components/layout/logo.tsx.)
+// Site-wide settings edited via Pages CMS (src/content/settings.json): the
+// colour palette, the WhatsApp community URL and the social links, each entered
+// once and read across the site. (The logo lockup is still hardcoded — it lives
+// in components/layout/logo.tsx and is artwork, not colour tokens.)
 //
 // Mirrors the `settings` block in .pages.yml — change both together. Parsing is
 // forgiving for the reason described in home.ts: editors can clear any optional
@@ -10,6 +10,7 @@ import { z } from 'astro/zod';
 
 import { SOCIAL_PLATFORMS } from '@/components/elements/social-icons';
 import data from '@/content/settings.json';
+import { DEFAULT_PALETTE_ID, PALETTE_IDS, type PaletteId } from '@/lib/theme';
 
 /**
  * A social link is only useful once it has a URL, so rows the editor added but
@@ -32,6 +33,20 @@ const socialsSchema = z.preprocess(
 );
 
 const settingsSchema = z.object({
+  // Colour palette chosen in Pages CMS, resolved by src/lib/theme.ts. Fail-soft
+  // on purpose: missing, null, or an id a developer has since removed all land
+  // on the brand default. The safeParse below THROWS on a mismatch, and that
+  // throw sits in an import graph reached by hydrated components — so a bad
+  // value here would take the whole site down for an admin who cannot revert a
+  // commit or read a build log. A palette is decoration; it must never be the
+  // thing that breaks a build.
+  palette: z.preprocess(
+    (v) =>
+      typeof v === 'string' && (PALETTE_IDS as readonly string[]).includes(v)
+        ? v
+        : DEFAULT_PALETTE_ID,
+    z.enum(PALETTE_IDS as unknown as [PaletteId, ...PaletteId[]]),
+  ),
   // The single WhatsApp community URL. Any link field set to the token
   // `whatsapp` resolves to this at parse time (the `link` schema in home.ts),
   // so it is entered once. The footer also links it directly when set.

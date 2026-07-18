@@ -4,6 +4,7 @@ import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import { StyleGlideProvider } from '@/components/providers/styleglide-provider';
 import { site } from '@/lib/site';
+import { getPalette } from '@/lib/theme';
 
 interface Props {
   title?: string;
@@ -15,10 +16,15 @@ interface Props {
 
 const { title, description, image, darkHero = false } = Astro.props;
 const pathname = Astro.url.pathname;
+
+// The admin's Pages CMS palette choice reaches the DOM here and nowhere else.
+// Build-time, so there is no runtime JS and no flash of the wrong colour. The
+// default palette's class is '', which class:list drops.
+const palette = getPalette(site.palette);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class:list={[palette.htmlClass]}>
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>

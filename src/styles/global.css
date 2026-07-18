@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
+/* Alternative palettes, chosen by the admin in Pages CMS. CSS requires
+   @import to precede other rules, so this lands BEFORE :root below — which is
+   exactly why themes.css overrides by specificity rather than by order. */
+@import './themes.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -68,6 +72,11 @@
   }
 }
 
+/* These two blocks ARE the Midnight Indigo palette, and the per-property
+   fallback for any token an alternative palette does not redeclare.
+   Alternative palettes live in ./themes.css and override by specificity, not
+   order. If you edit a hex here and the site does not change, check which
+   palette src/content/settings.json selects. */
 :root {
   /* Brand palette — Midnight Indigo #13144D · Cornflower #5B82FC · Spring Aqua #06E3A7
      · Electric Lime #1BDB00 · Mist #F4F5F7 · Black #000000. Contrast-verified for WCAG AA. */

@@ -88,7 +88,47 @@ Developer contract: `.pages.yml` mirrors the zod schema in `src/lib/home.ts` —
 
 ---
 
-## 8. Sources (verified 2026-06-19)
+## 8. Colour palette (Site settings → Colour palette)
+
+The admin can re-colour the whole site from Pages CMS by picking a named palette. Pages CMS has **no `color` field type** (14 built-ins, none of them a colour picker, and a custom field type would mean self-hosting off `app.pagescms.org`), so the field is a `select` of developer-authored palettes and the intelligence lives in our code.
+
+**Three-way contract — all three must agree, `npm run check` asserts it:**
+
+| File | Holds |
+| --- | --- |
+| `.pages.yml` | the `palette` select's `{value, label}` options |
+| `src/lib/theme.ts` | `PALETTES` — id, label, `<html>` class, browser-chrome colour |
+| `src/styles/themes.css` | the `.theme-<id>` rule **pair** (the actual colours) |
+
+Adding a palette is three edits in that order (author the CSS first, run the contrast checklist in the `themes.css` header). Getting two of three right renders the default palette while emitting the new one's `theme-color` — silent and plausible-looking. `scripts/check-palettes.mjs` exists to catch exactly that.
+
+**Why specificity, not injection order.** Astro appends its stylesheet as the *last* child of `<head>`, after every authored tag — the `<Font>` block at the end of `BaseHead.astro` still lands before it in `dist/index.html`. So nothing can be injected "after" `global.css` to win on order. Palettes override with `:root.theme-x` (0,2,0) against `global.css`'s `:root` (0,1,0).
+
+**Why every palette needs two rule blocks.** `.dark` is *not* a dark-mode toggle here — there is no toggle anywhere in `src/`. It is a static per-section island on four elements:
+
+- `src/components/sections/hero.tsx:52`
+- `src/components/sections/cta.tsx:108`
+- `src/components/layout/footer.tsx:35`
+- `src/components/layout/navbar.tsx:143` (added/removed at runtime on scroll)
+
+`global.css` `:root` declares 32 variables and `.dark` redeclares **31 of them directly on those elements**. Inheritance is only consulted when the cascade produced no declared value for an element, so a value set on `<html>` — at any specificity, including an inline `style` attribute — never reaches them. Omit the `.dark` half and the hero, final CTA, footer and scrolled navbar keep the previous colours. This presents as *"half the homepage didn't change"* and is the single most likely authoring bug.
+
+**What a colour change does NOT touch.** CSS custom properties cannot reach inside an `<img>`, so these need a designer, not a CMS field:
+
+- the favicon set and `public/logo/favicon.svg`
+- `public/og-image.jpg` (the social share card)
+- `src/components/layout/logo.tsx` — the mark's `fill="#5b82fc"` is deliberately fixed so it cannot disagree with the favicon artwork
+- the photo scrims (`bg-black/60` and their paired `text-white`) — fixed on purpose; they sit on editor-uploaded photos of unknown brightness, and the scrim and its text are a matched pair
+
+**The hero mosaic used to be on that list and no longer is.** The nine tiles in `src/assets/images/Home-carousal-logo/` each carried an opaque `<rect … fill="#0b0c2e"/>` background, which rendered as a navy panel on any palette whose background was not that exact navy. The rect has been removed, so the tiles are transparent and sit on whatever `--background` is active. This was a no-op for Midnight Indigo — the hero's background *is* `#0b0c2e`, the colour the rect was painting — and verified by screenshot before and after. The remaining art is Spring Aqua and Mist, which read on both a white and a black canvas. **Keep new tile uploads transparent** or the panel comes back.
+
+**Decision ladder — don't re-litigate this from scratch.** A one-off change is a developer editing ~63 hex declarations in `global.css` (≈10 min). A palette dropdown is ≈0.5–1 day. Free-text hex entry plus a derivation engine and contrast auto-repair is ≈3 days *and* permanent ownership of colour maths whose bugs are invisible by nature. A real colour picker needs a self-hosted Pages CMS. Presets were chosen because they are the only route that keeps the WCAG AA guarantee the palette comments in `global.css` document.
+
+**Verifying a palette change:** always against `npm run build && npm run preview`, never `npm run dev` — `@styleglide/kit-view-provider` (dev-only) writes custom properties as inline styles on `<html>`, which beat any stylesheet rule.
+
+---
+
+## 9. Sources (verified 2026-06-19)
 
 - **`.pages.yml` structure (media, content, collection/file types, fields), reads per repo/branch:** pagescms.org/docs/configuration ("Overview"); pagescms.org/docs/configuration/media (media sources).
 - **Git-native (no content DB), reads file on open, commits on Save, GitHub App install + sign-in:** pagescms.org/docs ("Introduction"); css-tricks.com/using-pages-cms-for-static-site-content-management (the `input`/`output` note and the Save→commit behaviour).

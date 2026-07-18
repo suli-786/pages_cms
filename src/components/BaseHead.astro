@@ -4,9 +4,16 @@
 import '@/styles/global.css';
 import { Font } from 'astro:assets';
 
-import { SITE_METADATA, THEME_COLOR } from '../consts';
+import { SITE_METADATA } from '../consts';
+
+import { site } from '@/lib/site';
+import { getPalette } from '@/lib/theme';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+// Browser-chrome colour follows the palette chosen in Pages CMS. Build-time,
+// which is fine: a CMS save already triggers a rebuild.
+const palette = getPalette(site.palette);
 
 const { title, description, image } = Astro.props;
 const finalTitle = title || SITE_METADATA.title.default;
@@ -26,7 +33,7 @@ const imageURL = new URL(finalImage, Astro.site);
 <meta name="author" content={SITE_METADATA.authors[0].name} />
 <meta name="creator" content={SITE_METADATA.creator} />
 <meta name="publisher" content={SITE_METADATA.publisher} />
-<meta name="theme-color" content={THEME_COLOR} />
+<meta name="theme-color" content={palette.themeColor} />
 
 <!-- Favicon -->
 {

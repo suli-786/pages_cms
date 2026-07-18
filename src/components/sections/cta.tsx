@@ -136,10 +136,17 @@ function Cta({ content }: { content: CtaSectionContent }) {
       {/* 65% scrim keeps the photo readable while full-Mist text still clears
           4.5:1 even over a pure-white photo region; the vignette only darkens
           the far edges. Text opacities below are chosen against that worst
-          case — don't lower them without redoing the contrast math. */}
+          case — don't lower them without redoing the contrast math.
+
+          --background, not a literal: this div is inside the `dark` island
+          opened above, so the token already resolves to the selected palette's
+          dark canvas. The contrast promise holds across palettes because
+          src/styles/themes.css requires every palette's dark --background to
+          sit under 0.03 relative luminance. If color-mix is unsupported the
+          vignette drops and the flat 65% scrim still renders. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[#0b0c2e]/65 [background-image:radial-gradient(ellipse_at_center,transparent_0%,rgb(11_12_46/0.5)_80%)]"
+        className="bg-background/65 absolute inset-0 -z-10 [background-image:radial-gradient(ellipse_at_center,transparent_0%,color-mix(in_srgb,var(--background)_50%,transparent)_80%)]"
       />
 
       <div className="container flex flex-col items-center gap-10 py-28 text-center md:gap-12 md:py-36 lg:py-44">

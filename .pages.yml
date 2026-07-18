@@ -7,7 +7,10 @@
 # Every homepage section has a "Show section" switch: turning it off hides the
 # section on the site but keeps its content, so it can be switched back on.
 #
-# This file mirrors the zod schema in src/lib/home.ts — change both together.
+# This file mirrors the zod schemas in src/lib/home.ts and src/lib/site.ts —
+# change them together. The `palette` field below is a three-way contract:
+# .pages.yml values <-> PALETTES in src/lib/theme.ts <-> .theme-<id> rule pairs
+# in src/styles/themes.css. `npm run check` asserts all three agree.
 
 media:
   # Uploads live under src/ so Astro's image pipeline optimizes them at build
@@ -515,14 +518,26 @@ content:
             }
 
   # ------------------------------------------------------------ Site settings
-  # Site-wide links (src/content/settings.json): the WhatsApp community URL and
-  # the social links, entered once and shown in the hero and footer. Branding
-  # (logo lockup) is part of the design, not editable content.
+  # Site-wide settings (src/content/settings.json): the colour palette, the
+  # WhatsApp community URL and the social links, entered once and used across
+  # the site. The logo lockup is artwork, not editable content.
   - name: settings
     label: Site settings
     type: file
     path: src/content/settings.json
     fields:
+      # Mirrors PALETTES in src/lib/theme.ts and the .theme-<id> rule pairs in
+      # src/styles/themes.css. Adding an option here without the other two does
+      # nothing visible — `npm run check` catches it.
+      - name: palette
+        label: Colour palette
+        type: select
+        default: indigo
+        options:
+          values:
+            - { value: indigo, label: 'Midnight Indigo — current brand' }
+            - { value: black, label: 'Black — blue and teal on black' }
+        description: 'Changes the colour of the whole site at once — buttons, links, headings, and the hero, call-to-action and footer bands. Every option has been checked for readability, so any choice is safe and you can always switch back to Midnight Indigo. See them side by side at /theme-preview before you save. The site updates a few minutes after saving. Please note: the browser tab icon and the social-share image (the picture shown when someone shares a link) are picture files, not colours, so they stay as they are until a designer supplies new versions.'
       - {
           name: whatsapp,
           label: WhatsApp community link,
