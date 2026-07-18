@@ -3,9 +3,11 @@
 
 export const SITE_NAME = 'Ummah Tech';
 
-// Browser-chrome brand colour — keep in sync with theme_color in
-// public/favicon/site.webmanifest.
-export const THEME_COLOR = '#13144d';
+// The browser-chrome colour now follows the selected palette and lives in
+// src/lib/theme.ts (PALETTES[].themeColor), read by BaseHead.astro. It is
+// deliberately NOT re-exported from here: this module is imported by the
+// hydrated navbar and footer, and src/lib/site.ts throws at module scope, so
+// re-exporting would drag zod and settings.json into two client bundles.
 
 // Primary navigation — one list shared by the navbar and the footer's
 // "Explore" column so the two can't drift apart.

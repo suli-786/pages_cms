@@ -1,0 +1,165 @@
+/* Alternative colour palettes, selected by the admin in Pages CMS
+   (Site settings -> Colour palette). Imported by ./global.css.
+
+   ---------------------------------------------------------------- HOW IT WORKS
+   `global.css` uses `@theme inline`, so every Tailwind colour utility emits
+   `var(--primary)` rather than a baked hex. Redeclare the custom property and
+   the whole site re-themes — no Tailwind rebuild, no runtime JS.
+
+   The selected palette's id becomes a class on <html> in DefaultLayout.astro.
+
+   ------------------------------------------------------- WHY SPECIFICITY, NOT ORDER
+   Astro appends its stylesheet as the LAST child of <head>, after every
+   authored tag — verified in dist/index.html, where the <Font> block from
+   BaseHead.astro (the literal last line of that file) still lands before the
+   stylesheet link. So nothing can be injected "after" global.css to win on
+   order. `:root.theme-x` is (0,2,0) and beats `:root` (0,1,0) whatever the
+   order. Each rule is written with two selector forms: `:root.theme-x` covers
+   the live site and cannot be collapsed by a minifier (its two simple
+   selectors differ); `.theme-x.theme-x` covers the <div class="theme-x">
+   samples on /theme-preview.
+
+   ------------------------------------------------ WHY EVERY PRESET HAS TWO HALVES
+   `.dark` in this repo is NOT a dark-mode toggle. There is no toggle, no
+   data-theme, no prefers-color-scheme anywhere in src/. It is a static
+   per-section island on four elements:
+
+     src/components/sections/hero.tsx:52     <section className="dark …">
+     src/components/sections/cta.tsx:108     <section className="dark …">
+     src/components/layout/footer.tsx:35     <footer  className="dark …">
+     src/components/layout/navbar.tsx:143    (isDarkHero || scrolled) && 'dark'
+
+   global.css `:root` declares 32 variables and `.dark` redeclares 31 of them
+   DIRECTLY ON THOSE ELEMENTS. Per CSS Cascade §6/§7.2 inheritance is consulted
+   only when the cascade produced no declared value for an element — so a value
+   set on <html>, at ANY specificity including an inline style attribute, never
+   reaches <section class="dark">. Omit the second half and the hero, final CTA,
+   footer and scrolled navbar silently keep the old colours. That is the single
+   most likely authoring bug here and it presents as "half the page didn't
+   change". `npm run check` fails if a half is missing.
+
+   ------------------------------------------------------------ AUTHORING CHECKLIST
+   1. Presets are PARTIAL. Anything not redeclared falls through to global.css
+      per-property, which is deliberate. Never redeclare:
+        --destructive  the only oklch token, live at contact.tsx:280 and
+                       footer.tsx:127. Error red is not a branding decision.
+        --radius       geometry, not colour.
+        --chart-1..5 and the eight --sidebar-*  — all 13 have zero usages in
+                       src/. A control with no visible effect is its own bug.
+      A palette built on a WHITE canvas can also leave --background/
+      --foreground/--card/--popover out of the first block and inherit white
+      from global.css. A palette that recolours the whole page (see Black
+      below) must declare them.
+   2. Every preset declares BOTH halves.
+   3. Dark --background relative luminance < 0.03. Load-bearing, not cosmetic:
+      the photo scrims stay black under every preset (see checklist item 4),
+      and cta.tsx's tokenised scrim relies on this to keep the contrast promise
+      in the comment at cta.tsx:127-130.
+   4. --accent must clear 3:1 against #000000 in BOTH halves. speakers.tsx:169
+      puts a bg-accent rule inside a from-black/95 gradient and cta.tsx draws
+      accent corner brackets over a fixed dark scrim. Those scrims stay black
+      whatever the palette, so this is invisible if you only check the light
+      sections.
+   5. Also: --foreground on --background >= 7:1 both halves; --muted-foreground
+      >= 4.5:1 on BOTH --background and --muted; --primary-foreground on
+      --primary >= 4.5:1; --accent-foreground on --accent >= 4.5:1; --ring
+      >= 3:1 on --background (applied globally via @layer base in global.css,
+      so a weak ring degrades focus visibility site-wide — WCAG 2.2 SC 2.4.7
+      and 1.4.11).
+   6. On a LIGHT-canvas palette the two halves invert — never paste one set
+      into both. --primary is the dark brand ink in the first block but a
+      near-white anchor in the .dark block, with --primary-foreground swapped
+      to match, and --card/--popover flip white -> brand ink. Two hand-tuned
+      sets is the requirement there.
+      On an ALL-DARK palette (Black) the two halves are legitimately the same:
+      the bands are not a separate visual mode. Both blocks are still written
+      out — see the note above the .dark block.
+   7. NO .theme-indigo block. global.css IS the Midnight Indigo preset and the
+      fallback for anything a preset omits. Duplicating it creates two sources
+      of truth that will drift.
+
+   Adding a palette is three edits, in this order:
+     1. author both halves here and run the checklist above
+     2. add the row to PALETTES in src/lib/theme.ts
+     3. add the {value,label} to the `palette` select in .pages.yml
+   `npm run check` asserts all three agree. */
+
+/* -------------------------------------------------------------------- Black */
+/* Black canvas throughout, Mist for elements and text, the two existing brand
+   accents carrying the colour: Cornflower #5B82FC and Spring Aqua #06E3A7.
+   No new colours are introduced.
+
+   WHICH ACCENT GOES WHERE. Aqua is --accent (the recurring structural marks:
+   corner brackets, the date/venue icons, section rules, the speaker hover) and
+   Cornflower is --ring (focus only). Two reasons, in this order:
+   1. Legibility. On black, aqua is 12.6:1 and cornflower 6.0:1 — on the lifted
+      card surface, 10.9:1 against 5.3:1. The bracket motif is this site's
+      signature device and it is drawn in hairlines, so it needs the stronger
+      of the two or it disappears.
+   2. Cohesion. The hero mosaic is aqua. With cornflower on the eyebrow and
+      icons, the hero read as two competing colours; with aqua, the brackets,
+      the icons and the giant logo are one through-line. Cornflower still
+      appears in the navbar and footer logo mark, so it reads as a deliberate
+      second note rather than a clash — and keeping it for focus states makes
+      focus visibly different from every other accent on the page.
+
+   This palette does NOT need the artwork redrawn. The logo mark is hardcoded
+   Cornflower (logo.tsx:16) and the hero mosaic tiles are Spring Aqua on Mist,
+   both of which read correctly on black. The tiles used to carry an opaque
+   #0b0c2e background rect, which showed as a navy panel here; that rect has
+   been removed so they are transparent and sit on whatever --background the
+   palette sets. That was a no-op for Midnight Indigo, whose hero background is
+   #0b0c2e — the exact colour the rect was painting.
+
+   Unlike a light palette, this one DOES redeclare --background/--foreground/
+   --card/--popover in the first block, because the whole page is black rather
+   than only the bands. Surfaces are separated by a lift of ~1.1-1.2:1 plus the
+   existing --border, which is how the card in conference-intro.tsx:46 reads
+   (bg-muted + border-border). Measured ratios are noted per line. */
+
+:root.theme-black,
+.theme-black.theme-black {
+  --background: #000000;
+  --foreground: #f4f5f7; /* Mist — 19.3:1 on black */
+  --card: #10151e; /* lifted 1.15:1 off the canvas */
+  --card-foreground: #f4f5f7; /* 16.8:1 on card */
+  --popover: #10151e;
+  --popover-foreground: #f4f5f7;
+  --primary: #f4f5f7; /* white elements — Mist buttons, black label */
+  --primary-foreground: #000000; /* 19.3:1 on primary */
+  --secondary: #191f2b; /* lifted 1.27:1 */
+  --secondary-foreground: #f4f5f7; /* 15.1:1 */
+  --muted: #191f2b;
+  --muted-foreground: #9aa3b8; /* 8.3:1 on canvas, 6.5:1 on muted */
+  --accent: #06e3a7; /* Spring Aqua — 12.6:1 on black, 10.9:1 on card (item 4) */
+  --accent-foreground: #04120d; /* 11.8:1 on accent — dark text only */
+  --border: #ffffff2e; /* ~18% white — hairlines have to survive a black canvas */
+  --input: #ffffff3d; /* ~24% white */
+  --ring: #5b82fc; /* Cornflower — 6.0:1, distinct from the aqua accent */
+}
+
+/* MANDATORY second half — hero, final CTA, footer, scrolled navbar.
+   Identical to the block above by design: the whole page is one black canvas,
+   so the bands are not a separate visual mode. It still has to be written out,
+   because .dark declares these tokens directly on those four elements and a
+   value set on <html> never reaches them. */
+:root.theme-black .dark,
+.theme-black.theme-black .dark {
+  --background: #000000;
+  --foreground: #f4f5f7;
+  --card: #10151e;
+  --card-foreground: #f4f5f7;
+  --popover: #10151e;
+  --popover-foreground: #f4f5f7;
+  --primary: #f4f5f7; /* NOT inverted here — the light half is already dark */
+  --primary-foreground: #000000;
+  --secondary: #191f2b;
+  --secondary-foreground: #f4f5f7;
+  --muted: #191f2b;
+  --muted-foreground: #9aa3b8;
+  --accent: #06e3a7;
+  --accent-foreground: #04120d;
+  --border: #ffffff2e;
+  --input: #ffffff3d;
+  --ring: #5b82fc;
+}

@@ -12,7 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "check": "astro check",
+    "check": "astro check && node scripts/check-palettes.mjs",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
     "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\""
   },

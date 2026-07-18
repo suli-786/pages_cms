@@ -1,0 +1,196 @@
+---
+// Side-by-side preview of every colour palette, for the admin to look at
+// BEFORE committing a change in Pages CMS, and for developers authoring a new
+// palette in src/styles/themes.css.
+//
+// Pages CMS has no colour picker, no swatch rendering and no live preview
+// (upstream PR #336 is still open), so without this page the only way to see a
+// palette is to commit it to main and wait for a Cloudflare rebuild. This page
+// is built from the identical CSS rules the live site uses, so it cannot drift.
+//
+// It deliberately does NOT use DefaultLayout. Two reasons:
+//  1. <html> must carry NO palette class. If it did, the root rule would tie at
+//     (0,3,0) with each sample's own rule on the nested dark panels and resolve
+//     by document order — every dark panel would render the same colours.
+//  2. The navbar/footer would drag the site-wide palette into every sample.
+//
+// noindex: this is an internal tool, not a page for visitors.
+import '@/styles/global.css';
+import { PALETTES } from '@/lib/theme';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Colour palette preview — Ummah Tech</title>
+  </head>
+  <body class="bg-background text-foreground">
+    <div class="container flex flex-col gap-4 py-12">
+      <header class="flex flex-col gap-3">
+        <h1 class="text-3xl md:text-4xl">Colour palettes</h1>
+        <p class="text-muted-foreground max-w-2xl">
+          Every palette that can be chosen in Pages CMS under <strong
+            >Site settings &rarr; Colour palette</strong
+          >. Each is shown as it appears on light sections and on the dark bands
+          (the hero, the final call-to-action and the footer).
+        </p>
+        <p class="text-muted-foreground max-w-2xl text-sm">
+          The browser tab icon and the social-share image are picture files
+          rather than colours, so they stay as they are in every palette until a
+          designer supplies new versions. Neither appears on the page itself.
+        </p>
+      </header>
+
+      {
+        PALETTES.map((p) => (
+          <section
+            class="flex flex-col gap-3 pt-8"
+            aria-labelledby={`p-${p.id}`}
+          >
+            <h2 id={`p-${p.id}`} class="text-2xl">
+              {p.label}
+              <span class="text-muted-foreground font-text ml-2 font-mono text-sm font-normal">
+                {p.id}
+              </span>
+            </h2>
+
+            {/* Each sample wraps itself in the palette class, exactly as
+                <html> does on the live site. The default palette's class is
+                '', which correctly yields the global.css values. */}
+            <div class:list={[p.htmlClass, 'grid gap-4 md:grid-cols-2']}>
+              {/* LIGHT — how most of the page reads. */}
+              <div class="bg-background text-foreground border-border rounded-lg border p-6">
+                <h3 class="text-xl">Light sections</h3>
+                <p class="mt-2">
+                  Body copy in the default text colour, with an{' '}
+                  <a href="#" class="text-accent underline">
+                    accent link
+                  </a>{' '}
+                  inside it.
+                </p>
+                <p class="text-muted-foreground mt-2 text-sm">
+                  Secondary copy in the muted colour.
+                </p>
+                <hr class="border-border my-4" />
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm">
+                    Primary button
+                  </span>
+                  <span class="bg-secondary text-secondary-foreground rounded-md px-4 py-2 text-sm">
+                    Secondary
+                  </span>
+                  <span class="bg-accent text-accent-foreground rounded-md px-4 py-2 text-sm">
+                    Accent
+                  </span>
+                </div>
+                <label class="mt-4 block">
+                  <span class="text-muted-foreground text-sm">
+                    Focus this field to check the focus ring
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Focus me"
+                    class="border-input ring-ring mt-1 w-full rounded-md border px-3 py-2 outline-none focus:ring-2"
+                  />
+                </label>
+              </div>
+
+              {/* DARK — mirrors hero.tsx:52 and footer.tsx:35 exactly, so the
+                  island path is exercised here and not only in production. */}
+              <div class="dark bg-background text-foreground border-border rounded-lg border p-6">
+                <h3 class="text-xl">Dark bands (hero, CTA, footer)</h3>
+                <p class="mt-2">
+                  Body copy in the default text colour, with an{' '}
+                  <a href="#" class="text-accent underline">
+                    accent link
+                  </a>{' '}
+                  inside it.
+                </p>
+                <p class="text-muted-foreground mt-2 text-sm">
+                  Secondary copy in the muted colour.
+                </p>
+                <hr class="border-border my-4" />
+                <div class="flex flex-wrap items-center gap-3">
+                  <span class="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm">
+                    Primary button
+                  </span>
+                  <span class="bg-secondary text-secondary-foreground rounded-md px-4 py-2 text-sm">
+                    Secondary
+                  </span>
+                  <span class="bg-accent text-accent-foreground rounded-md px-4 py-2 text-sm">
+                    Accent
+                  </span>
+                </div>
+                <label class="mt-4 block">
+                  <span class="text-muted-foreground text-sm">
+                    Focus this field to check the focus ring
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Focus me"
+                    class="border-input ring-ring mt-1 w-full rounded-md border px-3 py-2 outline-none focus:ring-2"
+                  />
+                </label>
+
+                {/* Accent over near-black: speakers.tsx:169 puts a bg-accent
+                    rule inside a from-black/95 gradient, and the photo scrims
+                    stay black under every palette. Easy to miss otherwise. */}
+                <div class="mt-4 rounded-md bg-black p-4">
+                  <p class="text-sm text-white">
+                    Accent over a photo scrim (stays black in every palette):
+                  </p>
+                  <span class="bg-accent text-accent-foreground mt-2 inline-block rounded px-3 py-1 text-sm">
+                    Must stay legible
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Swatches, both halves. */}
+            <div class:list={[p.htmlClass, 'grid gap-4 md:grid-cols-2']}>
+              <div class="bg-background flex flex-wrap gap-2 rounded-lg p-2">
+                {['primary', 'accent', 'muted-foreground', 'border'].map(
+                  (t) => (
+                    <span class="border-border text-muted-foreground flex items-center gap-2 rounded border px-2 py-1 font-mono text-xs">
+                      <span
+                        class:list={[
+                          'size-4 rounded-sm',
+                          t === 'primary' && 'bg-primary',
+                          t === 'accent' && 'bg-accent',
+                          t === 'muted-foreground' && 'bg-muted-foreground',
+                          t === 'border' && 'bg-border',
+                        ]}
+                      />
+                      {t}
+                    </span>
+                  ),
+                )}
+              </div>
+              <div class="dark bg-background flex flex-wrap gap-2 rounded-lg p-2">
+                {['primary', 'accent', 'muted-foreground', 'border'].map(
+                  (t) => (
+                    <span class="border-border text-muted-foreground flex items-center gap-2 rounded border px-2 py-1 font-mono text-xs">
+                      <span
+                        class:list={[
+                          'size-4 rounded-sm',
+                          t === 'primary' && 'bg-primary',
+                          t === 'accent' && 'bg-accent',
+                          t === 'muted-foreground' && 'bg-muted-foreground',
+                          t === 'border' && 'bg-border',
+                        ]}
+                      />
+                      {t}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </body>
+</html>
