@@ -139,18 +139,14 @@
   "team": {
     "visible": true,
     "heading": "Who's behind Ummah Tech",
-    "body": "We operate as a non-sectarian organisation: every Muslim working in — or moving towards — technology has a place here, and our work is offered for the benefit of all.\n\nWe're putting together proper introductions — names, roles and faces — and will publish them here. Until then, the best way to meet the team is in person: at a roundtable, or in Johannesburg on 7 November 2026.",
-    "cta": {
-      "label": "",
-      "href": ""
-    }
+    "body": "We operate as a non-sectarian organisation: every Muslim working in — or moving towards — technology has a place here, and our work is offered for the benefit of all.\n\nWe're putting together proper introductions — names, roles and faces — and will publish them here. Until then, the best way to meet the team is in person: at a roundtable, or in Johannesburg on 7 November 2026."
   },
   "join": {
     "visible": true,
     "eyebrow": "The conference happens once a year. The community doesn't stop.",
     "heading": "Find your people. *Build what's worth inheriting.*",
     "body": "If you're a Muslim technologist, founder, creative or innovator — or on your way to becoming one — you belong here. The WhatsApp community is where it stays alive between conferences: roundtables, collaborations, and the road to Ummah Tech Conference 2026 on 7 November in Johannesburg.",
-    "date": "",
+    "date": "2026-07-19",
     "cta": {
       "label": "Join the community",
       "href": "whatsapp"
@@ -160,7 +156,7 @@
       "href": "/#contact"
     },
     "image": {
-      "src": "/images/other/02.jpg",
+      "src": "/images/other/group-photo1.jpg",
       "alt": "Attendees at the Ummah Tech Conference in Johannesburg"
     }
   }
