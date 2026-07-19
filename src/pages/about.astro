@@ -5,23 +5,22 @@
 // section's "Show section" switch in the CMS (`visible`).
 //
 // Pro blocks adapted into the template's design:
-//   story.tsx    ← @shadcnblocks/about6
+//   story.tsx    ← @shadcnblocks/timeline14 (scroll-driven milestone timeline)
 //   why.tsx      ← @shadcnblocks/feature76
-//   beliefs.tsx  ← @shadcnblocks/feature362
-//   values.tsx   ← @shadcnblocks/feature26
-// intro / faith / team are bespoke (no registry block fits a brand statement,
-// a scripture pull-quote, or an honest "team coming soon"); the closing join
-// section reuses the homepage's cta.tsx.
+//   beliefs.tsx  ← @shadcnblocks/feature207 (carries the merged propositions + values)
+// The intro and the closing join (heading + WhatsApp call over a reveal grid
+// of community photos) are bespoke; team is a plain photo wall (hidden while
+// empty); contact reuses the homepage form. The foundational verse lives in
+// the global footer (moved from the removed "Rooted in faith" section).
 //
-// The closing join section (cta.tsx, countdown state) is the page's only
-// client: island — every other section is static.
+// Client: islands — the story timeline (scroll observer), the join reveal
+// grid and the contact form; every other section is static.
 import Beliefs from '@/components/sections/about/beliefs';
-import Faith from '@/components/sections/about/faith';
+import Join from '@/components/sections/about/join';
 import Story from '@/components/sections/about/story';
 import Team from '@/components/sections/about/team';
-import Values from '@/components/sections/about/values';
 import Why from '@/components/sections/about/why';
-import Cta from '@/components/sections/cta';
+import Contact from '@/components/sections/contact';
 import PageIntro from '@/components/sections/page-intro';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { about as rawAbout } from '@/lib/about';
@@ -39,24 +38,27 @@ const about = await resolveAboutImages(rawAbout);
   <!-- Intro → bracketed mission statement. Carries the page's h1. -->
   {about.intro.visible && <PageIntro content={about.intro} />}
 
-  <!-- Our story → 2024 to today, with a staggered photo grid -->
-  {about.story.visible && <Story content={about.story} />}
+  <!-- Our story → dated milestones as a scroll-driven timeline -->
+  {about.story.visible && <Story content={about.story} client:visible />}
 
   <!-- Why we exist → the challenges, as a bordered column band -->
   {about.why.visible && <Why content={about.why} />}
 
-  <!-- Rooted in faith → Qur'an 5:2 in a corner-bracket frame -->
-  {about.faith.visible && <Faith content={about.faith} />}
-
-  <!-- What we stand for → six numbered propositions, sticky heading -->
+  <!-- What we stand for → numbered proposition rows (merged with the former
+       values section) -->
   {about.beliefs.visible && <Beliefs content={about.beliefs} />}
 
-  <!-- Our values → six icon-led values -->
-  {about.values.visible && <Values content={about.values} />}
-
-  <!-- Who's behind Ummah Tech → interim copy until real bios land -->
+  <!-- Who's behind Ummah Tech → photo wall; hidden until photos are added -->
   {about.team.visible && <Team content={about.team} />}
 
-  <!-- Join → the closing conversion, shared with the homepage's final CTA -->
-  {about.join.visible && <Cta content={about.join} client:visible />}
+  <!-- Join → the closing conversion: message + WhatsApp call over a reveal
+       grid of community photos -->
+  {about.join.visible && <Join content={about.join} client:visible />}
+
+  <!-- Contact → the homepage's shared form section, all four enquiry types -->
+  {
+    about.contact.visible && (
+      <Contact content={about.contact} client:visible />
+    )
+  }
 </DefaultLayout>

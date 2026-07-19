@@ -15,6 +15,7 @@ import { z } from 'astro/zod';
 import { DEFAULT_ICON, ICON_NAMES } from '@/components/elements/icon';
 import data from '@/content/about.json';
 import {
+  contactSchema,
   ctaSchema,
   enumOr,
   introSchema,
@@ -31,71 +32,53 @@ import {
  */
 const iconName = enumOr(ICON_NAMES, DEFAULT_ICON);
 
+/** Timeline milestones (timeline14 in story.tsx) — one dated beat each. */
 export const storySchema = z.object({
   visible,
-  label: str,
   heading: str,
-  body: str,
-  cta: ctaSchema,
-  photos: list(mediaSchema),
+  milestones: list(
+    z.object({ date: str, title: str, body: str, image: mediaSchema }),
+  ),
 });
 
 export const whySchema = z.object({
   visible,
   heading: str,
-  lead: str,
   items: list(z.object({ icon: iconName, title: str, body: str })),
-  closing: str,
 });
 
-export const faithSchema = z.object({
-  visible,
-  heading: str,
-  lead: str,
-  quote: z
-    .object({ text: str, attribution: str })
-    .nullish()
-    .transform((v) => v ?? { text: '', attribution: '' }),
-  body: str,
-});
-
+/**
+ * What we stand for — the merged propositions + values list (user decision,
+ * 2026-07-20: the former separate values section repeated what the intro
+ * mission, the faith verse and these propositions already say).
+ */
 export const beliefsSchema = z.object({
   visible,
-  label: str,
   heading: str,
   lead: str,
   items: list(z.object({ title: str, body: str })),
 });
 
-export const valuesSchema = z.object({
-  visible,
-  heading: str,
-  lead: str,
-  items: list(z.object({ icon: iconName, title: str, body: str })),
-});
-
+/** A plain photo wall — hidden by team.tsx while the list is empty. */
 export const teamSchema = z.object({
   visible,
   heading: str,
-  body: str,
-  cta: ctaSchema,
+  photos: list(mediaSchema),
 });
 
 /**
- * The closing CTA. Deliberately the same shape as the homepage's finalCta so it
- * renders through the shared components/sections/cta.tsx, plus an optional
- * secondary link (this page has two asks: join, or speak/volunteer/partner).
+ * The closing "join the community" section (components/sections/about/join.tsx)
+ * — heading, body, the WhatsApp call and a secondary link, above a reveal grid
+ * of community photos. Its own component since 2026-07-20 (was the shared
+ * cta.tsx countdown band).
  */
 export const joinSchema = z.object({
   visible,
-  eyebrow: str,
   heading: str,
   body: str,
-  // Countdown target (YYYY-MM-DD); empty hides the countdown.
-  date: str,
   cta: ctaSchema,
   secondaryCta: ctaSchema,
-  image: mediaSchema,
+  photos: list(mediaSchema),
 });
 
 const aboutSchema = z.object({
@@ -103,18 +86,18 @@ const aboutSchema = z.object({
   intro: introSchema,
   story: storySchema,
   why: whySchema,
-  faith: faithSchema,
   beliefs: beliefsSchema,
-  values: valuesSchema,
   team: teamSchema,
   join: joinSchema,
+  // The shared contact section (one form, four enquiry types) — schema and
+  // ContactContent type live in lib/content; the section component is
+  // components/sections/contact.tsx, same as the homepage and Partner page.
+  contact: contactSchema,
 });
 
 export type StoryContent = z.infer<typeof storySchema>;
 export type WhyContent = z.infer<typeof whySchema>;
-export type FaithContent = z.infer<typeof faithSchema>;
 export type BeliefsContent = z.infer<typeof beliefsSchema>;
-export type ValuesContent = z.infer<typeof valuesSchema>;
 export type TeamContent = z.infer<typeof teamSchema>;
 export type JoinContent = z.infer<typeof joinSchema>;
 export type AboutContent = z.infer<typeof aboutSchema>;

@@ -1,20 +1,24 @@
+import { renderEmphasis } from '@/components/elements/emphasis';
 import type { BeliefsContent } from '@/lib/about';
 
-// What we stand for — adapted from @shadcnblocks/feature362: a sticky left
-// column (label, heading, intro) beside a grid of bordered cards. The block
-// ships an icon tile per card; here that becomes a mono numeric index, because
-// the copy asserts "six propositions" and numbering them honours that without
-// asking an editor to pick six icons.
+// What we stand for — adapted from @shadcnblocks/feature207 (user pick,
+// 2026-07-20, replacing the feature362 card grid: five cards in a three-column
+// grid left a permanent hole, and equal boxes flattened what should read as
+// doctrine): numbered full-width rows between hairline rules, title beside
+// body from md up. The block's <Separator /> becomes the site's
+// border-y/divide-y rules (no ui/separator in this repo) and its overline
+// slot is dropped (no eyebrows — user decision, 2026-07-19). Carries the
+// merged propositions + values (user decision, 2026-07-20).
 //
-// An <ol> — these are numbered and their order is meaningful, so the numbering
-// comes from real list semantics rather than only a rendered glyph.
+// An <ol> because the order is meaningful, and the numerals are real text —
+// Tailwind preflight strips list markers, and Safari/VoiceOver drops list
+// semantics entirely for unstyled lists, so the visible "01" is the only
+// numbering many screen-reader users get.
 //
-// Deliberately structured to contrast with the values section that follows it
-// (six items there too): bordered cards + sticky column + numbers here,
-// borderless icon rows there, so the two don't read as one undifferentiated
-// wall of twelve.
+// Titles run through renderEmphasis so Arabic terms carry _underscore_
+// italics on first use, per the brand voice guide (`_Niyyah_`).
 function Beliefs({ content }: { content: BeliefsContent }) {
-  const { label, heading, lead, items } = content;
+  const { heading, lead, items } = content;
   const propositions = items.filter((i) => i.title);
 
   return (
@@ -23,51 +27,45 @@ function Beliefs({ content }: { content: BeliefsContent }) {
       className="section-padding scroll-mt-24 overflow-hidden"
     >
       <div className="container">
-        <div className="grid items-start gap-12 lg:grid-cols-3 lg:gap-16">
-          <div className="flex flex-col gap-5 lg:sticky lg:top-28">
-            {label && (
-              <p className="text-muted-foreground font-mono text-xs tracking-[0.18em] uppercase">
-                {label}
-              </p>
-            )}
-            {heading && (
-              <h2 className="text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl">
-                {heading}
-              </h2>
-            )}
-            {lead && (
-              <p className="text-muted-foreground leading-relaxed text-pretty">
-                {lead}
-              </p>
-            )}
-          </div>
-
-          {propositions.length > 0 && (
-            <ol className="grid gap-6 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3">
-              {propositions.map((item, i) => (
-                <li
-                  key={i}
-                  className="border-border flex flex-col gap-3 rounded-lg border p-5"
-                >
-                  <span
-                    className="text-muted-foreground font-mono text-xs tracking-[0.18em]"
-                    aria-hidden="true"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <h3 className="font-medium tracking-tight text-pretty">
-                    {item.title}
-                  </h3>
-                  {item.body && (
-                    <p className="text-muted-foreground text-sm leading-relaxed text-pretty">
-                      {item.body}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ol>
+        <div className="max-w-3xl">
+          {heading && (
+            <h2 className="text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl">
+              {heading}
+            </h2>
+          )}
+          {lead && (
+            <p className="text-muted-foreground mt-6 leading-relaxed text-pretty">
+              {lead}
+            </p>
           )}
         </div>
+
+        {propositions.length > 0 && (
+          <ol className="divide-border border-border mt-12 divide-y border-y md:mt-14">
+            {propositions.map((item, i) => (
+              <li key={i} className="py-8">
+                <div className="flex gap-4 md:items-center">
+                  <span className="text-muted-foreground mt-0.5 font-mono md:mt-0">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {/* flex-1, unlike the block: without it the grid shrinks to
+                      its content, so every row computes its own column split
+                      and the bodies start at a different x per row. */}
+                  <div className="grid flex-1 items-center gap-3 md:grid-cols-2 md:gap-8">
+                    <h3 className="text-2xl tracking-tight text-pretty">
+                      {renderEmphasis(item.title)}
+                    </h3>
+                    {item.body && (
+                      <p className="text-muted-foreground leading-relaxed text-pretty">
+                        {item.body}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </section>
   );

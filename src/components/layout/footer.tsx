@@ -13,8 +13,13 @@ import { useFakeSubmit } from '@/hooks/use-fake-submit';
 import type { SocialLink } from '@/lib/site';
 import { cn, isExternal } from '@/lib/utils';
 
-const STATEMENT =
-  'A growing community nurturing collaboration, innovation and skills among Muslim technologists — for the benefit of the Ummah and humanity.';
+// The site's foundational verse — moved here from the About page's removed
+// "Rooted in faith" section (user decision, 2026-07-20) so it stands under
+// every page, set in the quote treatment that section established: accent
+// quote bar, text face, mono citation.
+const VERSE =
+  'Cooperate with one another in goodness and righteousness, and do not cooperate in sin and transgression. And be mindful of Allah. Surely Allah is severe in punishment.';
+const VERSE_CITATION = "Qur'an 5:2";
 
 function Footer({
   socials = [],
@@ -32,9 +37,9 @@ function Footer({
   ];
 
   return (
-    <footer className="dark bg-background text-foreground pt-16 pb-10 md:pt-24 md:pb-14">
+    <footer className="dark bg-background text-foreground pt-14 pb-8 md:pt-20 md:pb-10">
       <div className="container">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.5fr] lg:gap-10">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.5fr]">
           {/* Brand — same lockup as the navbar */}
           <div className="flex flex-col gap-6">
             <a
@@ -45,10 +50,16 @@ function Footer({
               <UmmahMark aria-hidden className="h-9 w-auto" />
               <UmmahWordmark aria-hidden className="h-[18px] w-auto" />
             </a>
-            <p className="text-foreground/60 max-w-xs text-sm leading-relaxed">
-              {STATEMENT}
-            </p>
-            {socials.length > 0 && <SocialLinks socials={socials} size="sm" />}
+            <figure className="max-w-sm">
+              <blockquote className="border-accent border-s-2 ps-4">
+                <p className="font-text text-foreground/80 text-sm leading-relaxed text-pretty">
+                  {VERSE}
+                </p>
+              </blockquote>
+              <figcaption className="text-foreground/55 mt-2.5 ps-4 font-mono text-[10px] tracking-[0.18em] uppercase">
+                <cite className="not-italic">{VERSE_CITATION}</cite>
+              </figcaption>
+            </figure>
           </div>
 
           <FooterColumn label="Explore">
@@ -80,7 +91,7 @@ function Footer({
           </FooterColumn>
         </div>
 
-        <Baseline />
+        <Baseline socials={socials} />
       </div>
     </footer>
   );
@@ -169,17 +180,19 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
   );
 }
 
-function Baseline() {
+// The legal line + socials (user decision, 2026-07-20: socials replaced the
+// location line down here, and the NPC registration sits with the copyright
+// so one line carries both the notice and the registered entity). The
+// registration number is verbatim from the 2024 partner proposal
+// (working/content-triage.md #8) and this footer is its single published
+// location on the site.
+function Baseline({ socials = [] }: { socials?: SocialLink[] }) {
   return (
-    <div className="border-foreground/12 text-foreground/70 mt-16 flex flex-col gap-3 border-t pt-6 text-xs sm:flex-row sm:items-center sm:justify-between md:mt-20">
-      <span>© 2026 Ummah Tech</span>
-      <span className="flex items-center gap-2">
-        <span
-          aria-hidden
-          className="bg-accent size-1.5 animate-pulse rounded-full"
-        />
-        Johannesburg &amp; Cape Town, South Africa
+    <div className="border-foreground/12 mt-10 flex flex-col gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between md:mt-12">
+      <span className="text-foreground/70 text-xs">
+        © 2026 Ummah Tech NPC · 2024/095025/08
       </span>
+      {socials.length > 0 && <SocialLinks socials={socials} size="sm" />}
     </div>
   );
 }

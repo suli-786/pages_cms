@@ -1,5 +1,4 @@
 import { Icon } from '@/components/elements/icon';
-import { Prose } from '@/components/elements/prose';
 import type { WhyContent } from '@/lib/about';
 
 // Why we exist — adapted from @shadcnblocks/feature76: a horizontal band of
@@ -7,28 +6,24 @@ import type { WhyContent } from '@/lib/about';
 // guide lines on wide layouts. The rules echo the hero's divide-x idiom, which
 // is why this block was chosen over the numbered alternatives — these are four
 // simultaneous conditions, not a sequence, so nothing here is numbered.
+// The block's framing paragraphs before and after the band were removed
+// (user decision, 2026-07-19): the section is the heading and the four
+// conditions, each self-contained.
 //
 // Rendered as a <ul> because it is a list of items; the block's plain divs
 // carry no semantics.
 function Why({ content }: { content: WhyContent }) {
-  const { heading, lead, items, closing } = content;
+  const { heading, items } = content;
   const challenges = items.filter((i) => i.title);
 
   return (
     <section id="why" className="section-padding scroll-mt-24 overflow-hidden">
       <div className="relative container">
-        <div className="max-w-3xl">
-          {heading && (
-            <h2 className="text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl">
-              {heading}
-            </h2>
-          )}
-          <Prose
-            text={lead}
-            className="mt-8 space-y-6"
-            paragraphClassName="text-muted-foreground leading-relaxed text-pretty"
-          />
-        </div>
+        {heading && (
+          <h2 className="max-w-3xl text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl">
+            {heading}
+          </h2>
+        )}
 
         {challenges.length > 0 && (
           <div className="relative mt-16 md:mt-20">
@@ -58,12 +53,6 @@ function Why({ content }: { content: WhyContent }) {
             <div className="bg-border absolute bottom-0 end-0 start-0 h-px" />
           </div>
         )}
-
-        <Prose
-          text={closing}
-          className="mt-14 max-w-3xl space-y-6 md:mt-16"
-          paragraphClassName="text-muted-foreground leading-relaxed text-pretty"
-        />
       </div>
     </section>
   );
