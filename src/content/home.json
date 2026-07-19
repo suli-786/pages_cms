@@ -37,12 +37,12 @@
       "/images/other/o1.jpg",
       "/images/other/02.jpg",
       "/images/other/03.jpg",
-      "/images/speakers/1.png",
-      "/images/speakers/5.png",
-      "/images/speakers/7.png",
-      "/images/speakers/11.png",
-      "/images/speakers/14.png",
-      "/images/speakers/2.png"
+      "/images/other/coffee-break.jpg",
+      "/images/other/prayingtogerther.jpg",
+      "/images/other/women-team.jpg",
+      "/images/other/paneldiscussion.jpg",
+      "/images/other/speaerandteam.jpg",
+      "/images/other/speakroom.jpg"
     ]
   },
   "vision": {
@@ -86,7 +86,7 @@
       },
       {
         "image": {
-          "src": "/images/other/o1.jpg",
+          "src": "/images/other/speakroom.jpg",
           "alt": "A talk in progress at the Ummah Tech Conference"
         },
         "caption": "Stay in the loop",
@@ -148,7 +148,7 @@
         "name": "Speaker Name",
         "role": "Managing Director, Company",
         "theme": "Fintech",
-        "portrait": "/images/speakers/11.png"
+        "portrait": "/images/speakers/11sp.png"
       },
       {
         "name": "Speaker Name",
@@ -161,6 +161,38 @@
         "role": "Community Lead, Ummah Tech",
         "theme": "Community",
         "portrait": "/images/speakers/2.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/12.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/15.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/16.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/3.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/4.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/6.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/8sp.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/9sp.png"
       }
     ]
   },
@@ -222,6 +254,18 @@
         "alt": "Partner 9",
         "tier": "regular",
         "href": "#"
+      },
+      {
+        "src": "/images/partners/2.png",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/3.png",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/8.png",
+        "tier": "regular"
       }
     ]
   },
