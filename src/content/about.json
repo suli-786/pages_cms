@@ -13,8 +13,8 @@
         "title": "The first conference",
         "body": "On 23 November 2024, the first Ummah Tech Conference gathered Muslim technologists, founders and innovators in Johannesburg, with talks on empowering the Ummah and society through technology.",
         "image": {
-          "src": "/images/other/o1.jpg",
-          "alt": "A talk in progress at the first Ummah Tech Conference"
+          "src": "/images/other/paneldiscussion.jpg",
+          "alt": "A panel discussion at the first Ummah Tech Conference"
         }
       },
       {
@@ -22,8 +22,8 @@
         "title": "The conference returns",
         "body": "The second edition set out to be more than an event: conversations that continue, projects that begin, and a community that keeps growing between conferences.",
         "image": {
-          "src": "/images/other/03.jpg",
-          "alt": "Attendees networking between sessions in 2025"
+          "src": "/images/other/networking.jpg",
+          "alt": "Attendees networking between sessions"
         }
       },
       {
@@ -31,7 +31,7 @@
         "title": "The next edition",
         "body": "The conference becomes an annual flagship, rotating between Johannesburg and Cape Town. The next edition takes place in Johannesburg on 7 November 2026.",
         "image": {
-          "src": "/images/other/02.jpg",
+          "src": "/images/other/group-photo1.jpg",
           "alt": "The Ummah Tech community gathered in Johannesburg"
         }
       }
@@ -93,7 +93,16 @@
   "team": {
     "visible": true,
     "heading": "Who's behind Ummah Tech",
-    "photos": []
+    "photos": [
+      {
+        "src": "/images/other/women-team.jpg",
+        "alt": "Members of the Ummah Tech team"
+      },
+      {
+        "src": "/images/other/speaerandteam.jpg",
+        "alt": "Speakers and the organising team"
+      }
+    ]
   },
   "join": {
     "visible": true,
@@ -109,28 +118,28 @@
     },
     "photos": [
       {
-        "src": "/images/other/02.jpg",
-        "alt": "The Ummah Tech community gathered in Johannesburg"
+        "src": "/images/other/group-photo1.jpg",
+        "alt": "The Ummah Tech community together in Johannesburg"
       },
       {
-        "src": "/images/speakers/1.png",
-        "alt": "PLACEHOLDER — swap for a community photo"
+        "src": "/images/other/coffee-break.jpg",
+        "alt": "Conversations over coffee between sessions"
       },
       {
-        "src": "/images/other/o1.jpg",
-        "alt": "A talk in progress at the conference"
+        "src": "/images/other/prayingtogerther.jpg",
+        "alt": "Attendees praying together at the conference"
       },
       {
-        "src": "/images/speakers/5.png",
-        "alt": "PLACEHOLDER — swap for a community photo"
+        "src": "/images/other/speakroom.jpg",
+        "alt": "A talk in progress in the main room"
       },
       {
-        "src": "/images/other/03.jpg",
-        "alt": "Attendees networking between sessions"
+        "src": "/images/other/women-team.jpg",
+        "alt": "Members of the Ummah Tech community"
       },
       {
-        "src": "/images/speakers/7.png",
-        "alt": "PLACEHOLDER — swap for a community photo"
+        "src": "/images/other/tickey-area.jpg",
+        "alt": "The registration and welcome area"
       }
     ]
   },
