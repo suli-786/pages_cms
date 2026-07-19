@@ -64,6 +64,25 @@ export const strList = z.preprocess(
   z.array(z.string()),
 );
 
+/**
+ * Closed-vocabulary select with a forgiving fallback: anything unrecognised
+ * (a cleared select, a value a developer has since removed) lands on
+ * `fallback` rather than failing the build. Pass the same const array that
+ * drives the matching `select` in .pages.yml, so the vocabulary has one
+ * source per field (e.g. ICON_NAMES, PARTNER_TIERS).
+ */
+export const enumOr = <T extends string>(
+  values: readonly T[],
+  fallback: NoInfer<T>,
+) =>
+  z.preprocess(
+    (v) =>
+      typeof v === 'string' && (values as readonly string[]).includes(v)
+        ? v
+        : fallback,
+    z.enum(values as unknown as [T, ...T[]]),
+  );
+
 /** Mirrors the `cta` component in .pages.yml. */
 export const ctaSchema = z
   .object({ label: str, href: link })
@@ -76,8 +95,60 @@ export const mediaSchema = z
   .nullish()
   .transform((v) => v ?? { src: '', alt: '' });
 
+/**
+ * The shared page-intro band (components/sections/page-intro.tsx) used by the
+ * inner pages (About, Partner). Declared inline in each page's .pages.yml
+ * block rather than as a `components:` group, because the editor help text
+ * differs per page. `title` is deliberately strict: it is `required` in
+ * .pages.yml, it renders the page's only h1, and a page without a title is a
+ * broken build.
+ */
+export const introSchema = z.object({
+  visible,
+  title: z.string(),
+  body: str,
+});
+
+/**
+ * The shared contact section (components/sections/contact.tsx) — one form,
+ * four enquiry types — rendered on the homepage and the Partner page.
+ * Promoted from lib/home.ts once the Partner page reused the section.
+ */
+export const contactSchema = z.object({
+  visible,
+  heading: str,
+  description: str,
+  successMessage: str,
+});
+
+/**
+ * The shared partners section (components/sections/partners.tsx): framed
+ * spotlights for the headline/supporting display tiers, the counter-scrolling
+ * marquee for regular. Rendered on the homepage (previous partners) and the
+ * Partner page (current partners — hidden there while the list is empty).
+ * Promoted from lib/home.ts once the Partner page reused the section.
+ */
+export const partnerLogoSchema = z.object({
+  src: str,
+  alt: str,
+  href: link,
+  // Anything unrecognised (cleared select, legacy items) lands in `regular`.
+  tier: enumOr(['headline', 'supporting', 'regular'], 'regular'),
+});
+
+export const partnersSchema = z.object({
+  visible,
+  heading: str,
+  description: str,
+  items: list(partnerLogoSchema),
+});
+
 export type CtaLink = z.infer<typeof ctaSchema>;
 export type Media = z.infer<typeof mediaSchema>;
+export type IntroContent = z.infer<typeof introSchema>;
+export type ContactContent = z.infer<typeof contactSchema>;
+export type PartnerLogo = z.infer<typeof partnerLogoSchema>;
+export type PartnersContent = z.infer<typeof partnersSchema>;
 
 /**
  * Parse a content JSON file against its schema, or fail the build with the

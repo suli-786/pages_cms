@@ -14,13 +14,12 @@
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
 
+import type { Media, PartnerLogo, PartnersContent } from '@/lib/content';
 import type {
   ConferenceContent,
   FinalCtaContent,
   HeroContent,
   HomeContent,
-  PartnerLogo,
-  PartnersContent,
   Speaker,
   SpeakersContent,
 } from '@/lib/home';
@@ -75,7 +74,10 @@ const POLICIES = {
     widths: [280, 560, 840],
     sizes: '(min-width: 1024px) 268px, (min-width: 768px) 24vw, 32vw',
   },
-  partnerFrame: { widths: [160, 320], sizes: '(min-width: 768px) 160px, 128px' },
+  partnerFrame: {
+    widths: [160, 320],
+    sizes: '(min-width: 768px) 160px, 128px',
+  },
   partnerMarquee: { widths: [128, 256], sizes: '128px' },
   tile: {
     widths: [480, 720, 1080],
@@ -85,7 +87,8 @@ const POLICIES = {
 } satisfies Record<string, Policy>;
 
 /** '/images/foo/bar.png' → '/src/assets/images/foo/bar.png' */
-const toKey = (path: string) => '/src/assets/images/' + path.slice('/images/'.length);
+const toKey = (path: string) =>
+  '/src/assets/images/' + path.slice('/images/'.length);
 
 export async function resolveImage(
   path: string,
@@ -137,12 +140,29 @@ export async function resolveUrl(path: string, width: number): Promise<string> {
 }
 
 export const resolveMedia = async (
-  media: { src: string; alt: string },
+  media: Media,
   policy: Policy,
 ): Promise<ResolvedMedia> => ({
   ...(await resolveImage(media.src, policy)),
   alt: media.alt,
 });
+
+/**
+ * Resolve one partners-section logo list (the shared section from
+ * lib/content.ts) with the tier-appropriate policy — framed spotlight sizes
+ * for headline/supporting, marquee sizes for regular. Used by both page
+ * resolvers (home here, partner in lib/images-partner.ts).
+ */
+export const resolvePartnerLogos = (items: PartnerLogo[]) =>
+  Promise.all(
+    items.map(async (p) => ({
+      ...p,
+      src: await resolveImage(
+        p.src,
+        p.tier === 'regular' ? POLICIES.partnerMarquee : POLICIES.partnerFrame,
+      ),
+    })),
+  );
 
 // ------------------------------------------------------------------ overlays
 // Pure type overlays on the zod-inferred content types from lib/home.ts (which
@@ -199,17 +219,7 @@ export async function resolveHomeImages(
           portrait: await resolveImage(s.portrait, POLICIES.speaker),
         })),
       ),
-      Promise.all(
-        home.partners.items.map(async (p) => ({
-          ...p,
-          src: await resolveImage(
-            p.src,
-            p.tier === 'regular'
-              ? POLICIES.partnerMarquee
-              : POLICIES.partnerFrame,
-          ),
-        })),
-      ),
+      resolvePartnerLogos(home.partners.items),
       Promise.all(
         home.conference.tiles.map(async (t) => ({
           ...t,

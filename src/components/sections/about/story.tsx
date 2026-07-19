@@ -1,9 +1,7 @@
-import { MoveRight } from 'lucide-react';
-
+import { CtaButton } from '@/components/elements/cta-button';
 import { Prose } from '@/components/elements/prose';
-import { Button } from '@/components/ui/button';
 import type { ResolvedStoryContent } from '@/lib/images-about';
-import { cn, isExternal } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 // Our story — adapted from @shadcnblocks/about6: story copy in one column, a
 // staggered photo grid in the other. The block's six-photo double-stack is
@@ -55,22 +53,7 @@ function Story({ content }: { content: ResolvedStoryContent }) {
               paragraphClassName="text-muted-foreground leading-relaxed text-pretty"
             />
 
-            {cta.label && cta.href && (
-              <Button variant="outline" className="mt-10" asChild>
-                <a
-                  href={cta.href}
-                  {...(isExternal(cta.href)
-                    ? { target: '_blank', rel: 'noopener noreferrer' }
-                    : {})}
-                >
-                  {cta.label}
-                  <MoveRight
-                    className="transition-transform group-hover/button:translate-x-0.5"
-                    data-icon="inline-end"
-                  />
-                </a>
-              </Button>
-            )}
+            <CtaButton variant="outline" className="mt-10" cta={cta} />
           </div>
 
           {shots.length > 0 && (

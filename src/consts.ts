@@ -1,7 +1,10 @@
 // Place any global data in this file.
 // You can import this data from anywhere in your site by using the `import` keyword.
 
-export const SITE_NAME = 'Ummah Tech';
+// Only used by SITE_METADATA below — deliberately not exported; import
+// SITE_METADATA (or read site settings via src/lib/site.ts) instead of these
+// raw strings.
+const SITE_NAME = 'Ummah Tech';
 
 // The browser-chrome colour now follows the selected palette and lives in
 // src/lib/theme.ts (PALETTES[].themeColor), read by BaseHead.astro. It is
@@ -17,8 +20,8 @@ export const NAV_LINKS = [
   { label: 'Partner With Us', href: '/partner' },
   { label: 'About', href: '/about' },
 ];
-export const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
-export const SITE_DESCRIPTION =
+const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
+const SITE_DESCRIPTION =
   'The annual Ummah Tech Conference brings together Muslim founders, technologists and innovators. 7 November 2026, Johannesburg, South Africa.';
 
 export const SITE_METADATA = {

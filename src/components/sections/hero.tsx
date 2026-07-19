@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-import { CalendarDays, MapPin, MoveRight, type LucideIcon } from 'lucide-react';
+import { CalendarDays, MapPin, type LucideIcon } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { CornerBrackets } from '@/components/elements/corner-brackets';
+import { CtaButton } from '@/components/elements/cta-button';
 import { renderEmphasis } from '@/components/elements/emphasis';
 import { SocialGlyph } from '@/components/elements/social-icons';
 import { SocialLinks } from '@/components/elements/social-links';
@@ -113,21 +114,11 @@ function Hero({
                   50/50 with tighter padding/type; from sm they return to their
                   natural width. Labels must stay short enough for ~150px. */}
               <div className="flex items-center gap-2 sm:gap-3">
-                {primaryCta.label && primaryCta.href && (
-                  <Button
-                    size="lg"
-                    className="flex-1 px-3 text-[13px] sm:flex-none sm:px-6 sm:text-sm"
-                    asChild
-                  >
-                    <a href={primaryCta.href}>
-                      {primaryCta.label}
-                      <MoveRight
-                        aria-hidden
-                        className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"
-                      />
-                    </a>
-                  </Button>
-                )}
+                <CtaButton
+                  size="lg"
+                  className="flex-1 px-3 text-[13px] sm:flex-none sm:px-6 sm:text-sm"
+                  cta={primaryCta}
+                />
                 {hasCommunity && community.cta.label && communityHref && (
                   <Button
                     size="lg"

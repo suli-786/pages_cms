@@ -1,7 +1,6 @@
 {
   "intro": {
     "visible": true,
-    "eyebrow": "Partner With Us",
     "title": "Put your brand *where the builders are.*",
     "body": "Ummah Tech is a movement of Muslim technologists, founders and creatives, growing out of South Africa — an annual flagship conference and a year-round community of roundtables in between.\n\nPartnership places your organisation inside that network: on stage, on the venue floor and across our channels — alongside a movement that builds with purpose. Here is what partnering looks like, and how to start the conversation."
   },
@@ -31,88 +30,99 @@
       }
     ]
   },
-  "reach": {
+  "partners": {
     "visible": true,
-    "heading": "Who you reach",
-    "body": "Around 200 attendees joined Ummah Tech 2025 — engineers, designers, business owners and startup founders, tech entrepreneurs to seasoned professionals. A dense room of builders and decision-makers, not a trade-show hall.\n\nBehind that audience stands an institution, not a one-off event:",
-    "facts": [
-      {
-        "label": "Registered non-profit",
-        "value": "Ummah Tech NPC · 2024/095025/08"
-      },
-      {
-        "label": "Annual flagship",
-        "value": "The Ummah Tech Conference — first held in Johannesburg, November 2024; rotating between Johannesburg and Cape Town"
-      },
-      {
-        "label": "Year-round community",
-        "value": "Roundtables and collaboration continue between conferences"
-      },
-      {
-        "label": "Next edition",
-        "value": "7 November 2026 · Johannesburg"
-      }
-    ]
+    "heading": "Our 2026 partners",
+    "description": "The organisations partnering with Ummah Tech 2026, at every tier.",
+    "items": []
   },
   "tiers": {
     "visible": true,
     "heading": "Partnership tiers",
     "lead": "Three tiers, scaled by prominence. Each includes everything in the tier below it, and complimentary tickets come with all three.",
-    "items": [
+    "groups": [
       {
-        "name": "Platinum",
-        "code": "Headline",
-        "tagline": "The lead partner of the conference.",
-        "benefits": [
-          "Speaker slot or panel discussion",
-          "Lanyard branding",
-          "Premium placement at the venue"
+        "heading": "Allocation",
+        "rows": [
+          {
+            "label": "Slots available",
+            "platinum": "1",
+            "gold": "3",
+            "silver": "6"
+          },
+          {
+            "label": "Free tickets",
+            "platinum": "8",
+            "gold": "4",
+            "silver": "2"
+          }
         ]
       },
       {
-        "name": "Gold",
-        "code": "Partner",
-        "tagline": "A visible presence at the event and in the run-up to it.",
-        "benefits": [
-          "Placement at the venue",
-          "Propose a topic and speaker",
-          "Branding on the ticketing website",
-          "Branding on social media posts"
-        ]
-      },
-      {
-        "name": "Silver",
-        "code": "Exhibitor",
-        "tagline": "The foundation every tier builds on.",
-        "benefits": [
-          "Exhibition table",
-          "Branding on the event website",
-          "Partnership announcement across social media and the WhatsApp community"
+        "heading": "Benefits",
+        "rows": [
+          {
+            "label": "Speaker slot or panel discussion",
+            "platinum": "yes",
+            "gold": "",
+            "silver": ""
+          },
+          {
+            "label": "Lanyard branding",
+            "platinum": "yes",
+            "gold": "",
+            "silver": ""
+          },
+          {
+            "label": "Placement at the venue",
+            "platinum": "Premium",
+            "gold": "yes",
+            "silver": ""
+          },
+          {
+            "label": "Propose a topic and speaker",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": ""
+          },
+          {
+            "label": "Branding on the ticketing website",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": ""
+          },
+          {
+            "label": "Branding on social media posts",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": ""
+          },
+          {
+            "label": "Branding on the event website",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": "yes"
+          },
+          {
+            "label": "Partnership announcement — social media & WhatsApp",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": "yes"
+          },
+          {
+            "label": "Exhibition table",
+            "platinum": "yes",
+            "gold": "yes",
+            "silver": "yes"
+          }
         ]
       }
-    ],
-    "note": "The tiers are a starting point, not a limit — we're open to discussing partnership shapes beyond them.",
-    "cta": {
-      "label": "Request the partnership prospectus",
-      "href": "mailto:hello@ummahtech.net?subject=Partnership%20prospectus"
-    },
-    "ctaCaption": "We'll send it over with current tiers, pricing and availability."
-  },
-  "partners": {
-    "visible": true,
-    "heading": "Our 2026 partners",
-    "lead": "The organisations partnering with Ummah Tech 2026, at every tier.",
-    "items": []
+    ]
   },
   "contact": {
     "visible": true,
-    "heading": "Start the *conversation.*",
-    "body": "Tell us who you are and what you have in mind, and we'll come back with the prospectus and a proposal shaped around it.\n\nEvery partnership advances one mission: to nurture collaboration, inspire innovation and build skills among Muslims in the technology sector, for the benefit of the Ummah and humanity. We'd be glad to build it with you.",
-    "email": "hello@ummahtech.net",
-    "formCta": {
-      "label": "Use the contact form",
-      "href": "/#contact"
-    },
-    "formNote": "Choose \"Partner With Us\" — it reaches the same team."
+    "heading": "Start the conversation.",
+    "description": "Tell us who you are and what you have in mind, and we'll come back with the prospectus and a proposal shaped around it.",
+    "successMessage": "Thanks — we've got your message and we'll come back to you with the prospectus."
   }
 }

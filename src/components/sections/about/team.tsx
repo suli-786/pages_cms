@@ -1,9 +1,7 @@
-import { MoveRight } from 'lucide-react';
-
+import { CtaButton } from '@/components/elements/cta-button';
 import { Prose } from '@/components/elements/prose';
-import { Button } from '@/components/ui/button';
 import type { TeamContent } from '@/lib/about';
-import { cn, isExternal } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 // Who's behind Ummah Tech — bespoke and deliberately minimal.
 //
@@ -34,22 +32,7 @@ function Team({ content }: { content: TeamContent }) {
           paragraphClassName="text-muted-foreground leading-relaxed text-pretty"
         />
 
-        {cta.label && cta.href && (
-          <Button variant="outline" className="mt-10" asChild>
-            <a
-              href={cta.href}
-              {...(isExternal(cta.href)
-                ? { target: '_blank', rel: 'noopener noreferrer' }
-                : {})}
-            >
-              {cta.label}
-              <MoveRight
-                className="transition-transform group-hover/button:translate-x-0.5"
-                data-icon="inline-end"
-              />
-            </a>
-          </Button>
-        )}
+        <CtaButton variant="outline" className="mt-10" cta={cta} />
       </div>
     </section>
   );

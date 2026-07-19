@@ -2,11 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
-import { MoveRight } from 'lucide-react';
-
 import { CornerBrackets } from '@/components/elements/corner-brackets';
+import { CtaButton } from '@/components/elements/cta-button';
 import { renderEmphasis } from '@/components/elements/emphasis';
-import { Button } from '@/components/ui/button';
 import type { CtaLink } from '@/lib/content';
 import type { ResolvedFinalCtaContent } from '@/lib/images';
 import { isExternal } from '@/lib/utils';
@@ -176,20 +174,7 @@ function Cta({ content }: { content: CtaSectionContent }) {
 
         {cta.label && cta.href && (
           <div className="flex flex-col items-center gap-5">
-            <Button size="lg" className="h-13 px-8" asChild>
-              <a
-                href={cta.href}
-                {...(isExternal(cta.href)
-                  ? { target: '_blank', rel: 'noopener noreferrer' }
-                  : {})}
-              >
-                {cta.label}
-                <MoveRight
-                  aria-hidden
-                  className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5"
-                />
-              </a>
-            </Button>
+            <CtaButton size="lg" className="h-13 px-8" cta={cta} />
 
             {/* Secondary ask sits after the primary so it can't peel readers
                 off before the main conversion. */}

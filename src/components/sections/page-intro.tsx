@@ -1,24 +1,21 @@
-import { CornerBrackets } from '@/components/elements/corner-brackets';
 import { renderEmphasis } from '@/components/elements/emphasis';
 import { Prose } from '@/components/elements/prose';
+import type { IntroContent } from '@/lib/content';
 
 // Page intro — the opening band shared by the inner pages (About, Partner):
-// mono eyebrow inside corner brackets, the page's only h1, prose body. The
-// idiom follows hero.tsx band 1; promoted out of sections/about/ once the
-// Partner page needed the identical shape.
+// the page's only h1 framed by the viewfinder corner brackets, then the prose
+// body. The bracket treatment copies the homepage contact headline (no
+// eyebrow — user decision, 2026-07-19: the brackets belong on the heading).
+// Promoted out of sections/about/ once the Partner page needed the identical
+// shape. Content is typed by the shared introSchema in lib/content.ts, which
+// both page schemas reuse.
 //
 // Padding clears the fixed navbar (same values as hero.tsx) — section-padding
 // alone is not enough. Deliberately NOT a `.dark` band: the navbar only
 // switches to light text when the page passes darkHero, so a dark first
 // section here would render the nav links nearly invisible at scroll-top.
-export type PageIntroContent = {
-  eyebrow: string;
-  title: string;
-  body: string;
-};
-
-function PageIntro({ content }: { content: PageIntroContent }) {
-  const { eyebrow, title, body } = content;
+function PageIntro({ content }: { content: IntroContent }) {
+  const { title, body } = content;
 
   return (
     <section
@@ -26,18 +23,24 @@ function PageIntro({ content }: { content: PageIntroContent }) {
       className="scroll-mt-24 overflow-hidden pt-28 pb-14 md:pt-36 md:pb-16 lg:pt-40 lg:pb-20"
     >
       <div className="container max-w-4xl">
-        {/* px/py so the bracket arms clear the glyphs — the brackets are
-            absolutely positioned to the wrapper's edges, so without padding
-            they sit on top of the text. Same values as the CTA eyebrow. */}
-        {eyebrow && (
-          <CornerBrackets className="text-muted-foreground mb-8 inline-block px-3.5 py-2.5 font-mono text-xs tracking-[0.18em] uppercase">
-            {eyebrow}
-          </CornerBrackets>
-        )}
-
-        <h1 className="text-foreground/60 text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl lg:text-6xl">
-          {renderEmphasis(title)}
-        </h1>
+        {/* Same bracket geometry as the homepage contact headline: w-fit so
+            the frame hugs the text, pr-6 so the top-right arm clears the last
+            glyph, and a smaller left poke on mobile — at -left-4 the bracket
+            lands on the viewport edge (the heading sits flush to the
+            container's gutter) and the section's overflow-hidden clips it. */}
+        <div className="relative w-fit">
+          <h1 className="text-foreground/60 pr-6 text-4xl leading-[1.05] font-light tracking-tight text-balance md:text-5xl lg:text-6xl">
+            {renderEmphasis(title)}
+          </h1>
+          <span
+            aria-hidden
+            className="border-accent absolute -top-3 -right-1 size-5 border-t-2 border-r-2"
+          />
+          <span
+            aria-hidden
+            className="border-accent absolute -bottom-3 -left-2 size-5 border-b-2 border-l-2 md:-left-4"
+          />
+        </div>
 
         <Prose
           text={body}

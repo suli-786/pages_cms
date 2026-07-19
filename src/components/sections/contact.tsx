@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useFakeSubmit } from '@/hooks/use-fake-submit';
-import type { ContactContent } from '@/lib/home';
+import type { ContactContent } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
 // Contact — adapted from @shadcnblocks/contact18: a two-column block with
@@ -34,6 +34,13 @@ import { cn } from '@/lib/utils';
 // corner device (speakers CTA / partner frames), the form keeps the codebase's
 // hand-rolled submit pattern (no react-hook-form/zod), and one shared form
 // serves four functions via the "reaching out about" select below.
+//
+// Rendered on the homepage and the Partner page (each with its own CMS copy —
+// contactSchema in lib/content.ts). `defaultFunction` preselects the enquiry
+// type for pages with an obvious one; `functions` narrows the list to a
+// per-page subset (the Partner page passes 'partner' and shows only Contact
+// Us + Partner With Us — sponsors aren't here to apply). The homepage keeps
+// all four.
 const FUNCTIONS = [
   {
     value: 'contact',
@@ -67,8 +74,22 @@ const ERROR_MESSAGE = 'Something went wrong. Please try again in a moment.';
 
 const EASE_OUT = [0.23, 1, 0.32, 1] as const;
 
-function Contact({ content }: { content: ContactContent }) {
+function Contact({
+  content,
+  defaultFunction,
+  functions,
+}: {
+  content: ContactContent;
+  defaultFunction?: string;
+  functions?: string[];
+}) {
   const { heading, description, successMessage } = content;
+  // A filter that matches nothing (typo, stale value) falls back to the full
+  // list rather than rendering an empty form select.
+  const requested = functions
+    ? FUNCTIONS.filter((f) => functions.includes(f.value))
+    : FUNCTIONS;
+  const shown = requested.length > 0 ? requested : FUNCTIONS;
 
   return (
     <section
@@ -109,7 +130,7 @@ function Contact({ content }: { content: ContactContent }) {
             )}
 
             <ul className="space-y-5">
-              {FUNCTIONS.map((f) => (
+              {shown.map((f) => (
                 <li key={f.value} className="flex items-center gap-4">
                   <span className="bg-accent/10 text-accent flex size-9 shrink-0 items-center justify-center rounded-md">
                     <f.icon
@@ -142,7 +163,11 @@ function Contact({ content }: { content: ContactContent }) {
 
           {/* Right — the shared form */}
           <div className="w-full lg:max-w-xl lg:pl-10">
-            <ContactForm successMessage={successMessage} />
+            <ContactForm
+              successMessage={successMessage}
+              defaultFunction={defaultFunction}
+              functions={shown}
+            />
           </div>
         </div>
       </div>
@@ -153,12 +178,24 @@ function Contact({ content }: { content: ContactContent }) {
 const fieldClass =
   'h-14 rounded-xl border-0 bg-muted shadow-none placeholder:text-foreground/35 placeholder:text-xs placeholder:tracking-[0.18em] placeholder:uppercase';
 
-function ContactForm({ successMessage }: { successMessage: string }) {
-  const [about, setAbout] = useState(FUNCTIONS[0].value);
+function ContactForm({
+  successMessage,
+  defaultFunction,
+  functions,
+}: {
+  successMessage: string;
+  defaultFunction?: string;
+  functions: typeof FUNCTIONS;
+}) {
+  // An unknown value would render an empty select trigger — fall back.
+  const initial = functions.some((f) => f.value === defaultFunction)
+    ? (defaultFunction as string)
+    : functions[0].value;
+  const [about, setAbout] = useState(initial);
   const { status, busy, onSubmit } = useFakeSubmit({
     onSuccess: (form) => {
       form.reset();
-      setAbout(FUNCTIONS[0].value);
+      setAbout(initial);
     },
   });
 
@@ -181,7 +218,7 @@ function ContactForm({ successMessage }: { successMessage: string }) {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {FUNCTIONS.map((f) => (
+          {functions.map((f) => (
             <SelectItem key={f.value} value={f.value}>
               {f.label}
             </SelectItem>

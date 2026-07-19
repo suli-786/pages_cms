@@ -6,39 +6,35 @@
 // which documents the forgiving-parse philosophy these rely on.
 import { z } from 'astro/zod';
 
-import {
-  DEFAULT_ICON,
-  ICON_NAMES,
-  type IconName,
-} from '@/components/elements/icon';
+import { DEFAULT_ICON, ICON_NAMES } from '@/components/elements/icon';
 import data from '@/content/partner.json';
 import {
-  ctaSchema,
-  link,
+  contactSchema,
+  enumOr,
+  introSchema,
   list,
-  mediaSchema,
   parseContent,
+  partnersSchema,
   str,
-  strList,
   visible,
 } from '@/lib/content';
 
 /** Same posture as lib/about.ts — unknown/cleared icon lands on the default. */
-const iconName = z.preprocess(
-  (v) =>
-    typeof v === 'string' && (ICON_NAMES as readonly string[]).includes(v)
-      ? v
-      : DEFAULT_ICON,
-  z.enum(ICON_NAMES as unknown as [IconName, ...IconName[]]),
-);
+const iconName = enumOr(ICON_NAMES, DEFAULT_ICON);
 
-export const partnerIntroSchema = z.object({
-  visible,
-  eyebrow: str,
-  // Required in .pages.yml; the page's only h1.
-  title: z.string(),
-  body: str,
-});
+/**
+ * The partner-tier vocabulary, highest first — the fixed columns of the tiers
+ * comparison matrix (tiers.tsx): `name` heads the column, `badge` is its mono
+ * micro-label, and the cell fields in partnerTiersSchema are keyed by `value`.
+ * (Display tiers of the partners section — headline/supporting/regular — are
+ * a separate vocabulary owned by the shared partnersSchema in lib/content.)
+ */
+export const PARTNER_TIERS = [
+  { value: 'platinum', name: 'Platinum', badge: 'Headline', label: 'Platinum — Headline' },
+  { value: 'gold', name: 'Gold', badge: 'Partner', label: 'Gold — Partner' },
+  { value: 'silver', name: 'Silver', badge: 'Exhibitor', label: 'Silver — Exhibitor' },
+] as const;
+export type PartnerTier = (typeof PARTNER_TIERS)[number]['value'];
 
 export const partnerWhySchema = z.object({
   visible,
@@ -46,82 +42,46 @@ export const partnerWhySchema = z.object({
   items: list(z.object({ icon: iconName, title: str, body: str })),
 });
 
-export const partnerReachSchema = z.object({
-  visible,
-  heading: str,
-  body: str,
-  facts: list(z.object({ label: str, value: str })),
-});
-
+/**
+ * The tier comparison matrix (tiers.tsx). Columns are the fixed PARTNER_TIERS
+ * vocabulary above — not CMS data — so each row carries one cell per tier by
+ * name. A cell is '' (not included), a tick word ("yes"), or short text shown
+ * as-is ("1", "8", "Premium"). No prices by standing decision: current
+ * pricing travels in the prospectus reply.
+ */
 export const partnerTiersSchema = z.object({
   visible,
   heading: str,
   lead: str,
-  items: list(
+  groups: list(
     z.object({
-      name: str,
-      // The deck's tier subtitle (Headline / Partner / Exhibitor) — rendered
-      // as the card's mono plan-id badge.
-      code: str,
-      tagline: str,
-      benefits: strList,
-    }),
-  ),
-  note: str,
-  cta: ctaSchema,
-  ctaCaption: str,
-});
-
-/**
- * Current partners, grouped by tier in the section component. The whole
- * section renders nothing while the list is empty — an empty "current
- * partners" wall on a sponsor page is anti-social-proof (user decision,
- * 2026-07-18). Deliberately a different enum from the homepage wall's
- * headline/supporting/regular: different page, different data (the homepage
- * wall shows previous partners, which never appear here).
- */
-export const partnerWallSchema = z.object({
-  visible,
-  heading: str,
-  lead: str,
-  items: list(
-    z.object({
-      name: str,
-      logo: mediaSchema,
-      href: link,
-      tier: z.preprocess(
-        (v) => (v === 'platinum' || v === 'gold' ? v : 'silver'),
-        z.enum(['platinum', 'gold', 'silver']),
+      heading: str,
+      rows: list(
+        z.object({ label: str, platinum: str, gold: str, silver: str }),
       ),
     }),
   ),
 });
 
-export const partnerContactSchema = z.object({
-  visible,
-  heading: str,
-  body: str,
-  email: str,
-  formCta: ctaSchema,
-  formNote: str,
-});
-
 const partnerSchema = z.object({
-  intro: partnerIntroSchema,
+  // The shared intro band — schema and IntroContent type live in lib/content.
+  intro: introSchema,
   why: partnerWhySchema,
-  reach: partnerReachSchema,
+  // The shared partners section (components/sections/partners.tsx), same
+  // design as the homepage's but holding the CURRENT partners — previous
+  // partners never appear here (user decision, 2026-07-18). partner.astro
+  // hides the whole section while the list is empty: an empty "current
+  // partners" section on a sponsor page is anti-social-proof.
+  partners: partnersSchema,
   tiers: partnerTiersSchema,
-  partners: partnerWallSchema,
-  contact: partnerContactSchema,
+  // The shared contact section (one form, four enquiry types) — schema and
+  // ContactContent type live in lib/content; the section component is
+  // components/sections/contact.tsx, same as the homepage.
+  contact: contactSchema,
 });
 
-export type PartnerIntroContent = z.infer<typeof partnerIntroSchema>;
 export type PartnerWhyContent = z.infer<typeof partnerWhySchema>;
-export type PartnerReachContent = z.infer<typeof partnerReachSchema>;
 export type PartnerTiersContent = z.infer<typeof partnerTiersSchema>;
-export type PartnerWallContent = z.infer<typeof partnerWallSchema>;
-export type PartnerWallEntry = PartnerWallContent['items'][number];
-export type PartnerContactContent = z.infer<typeof partnerContactSchema>;
 export type PartnerContent = z.infer<typeof partnerSchema>;
 
 export const partner: PartnerContent = parseContent(

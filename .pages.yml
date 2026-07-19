@@ -34,13 +34,23 @@ components:
     label: Button
     fields:
       - { name: label, label: Label, type: string }
-      - { name: href, label: Link, type: string, description: 'Use #vision, #event, #speakers, #partners or #contact to jump to a section, or the word whatsapp to use the WhatsApp community link from Site settings.' }
+      - {
+          name: href,
+          label: Link,
+          type: string,
+          description: 'A page like /partner, a section anchor on the page the button appears on (homepage sections: #vision, #event, #speakers, #partners, #contact), or the word whatsapp to use the WhatsApp community link from Site settings.',
+        }
   picture:
     type: object
     label: Image
     fields:
       - { name: src, label: Image, type: image }
-      - { name: alt, label: Alt text, type: string, description: 'Describe the image for screen readers and search engines.' }
+      - {
+          name: alt,
+          label: Alt text,
+          type: string,
+          description: 'Describe the image for screen readers and search engines.',
+        }
 
 content:
   # ----------------------------------------------------------------- Homepage
@@ -137,7 +147,12 @@ content:
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: tagline, label: Tagline, type: string, description: 'Small uppercase line above the heading. Leave empty to hide it.' }
+          - {
+              name: tagline,
+              label: Tagline,
+              type: string,
+              description: 'Small uppercase line above the heading. Leave empty to hide it.',
+            }
           - { name: heading, label: Heading, type: string, required: true }
           - { name: body, label: Body, type: text }
           - name: tiles
@@ -151,7 +166,12 @@ content:
             fields:
               - { name: image, component: picture }
               - { name: caption, label: Caption, type: string }
-              - { name: href, label: Link, type: string, description: 'A section anchor (e.g. #speakers) or the word whatsapp to use the WhatsApp community link from Site settings.' }
+              - {
+                  name: href,
+                  label: Link,
+                  type: string,
+                  description: 'A section anchor (e.g. #speakers) or the word whatsapp to use the WhatsApp community link from Site settings.',
+                }
               - { name: linkLabel, label: Link label, type: string }
           - name: benefits
             label: Why attend (cards)
@@ -162,7 +182,12 @@ content:
                 summary: '{fields.title}'
             description: 'Four look best. Each card is a category, a title and a short paragraph, e.g. "Community · Find Your People · Building can be lonely…".'
             fields:
-              - { name: category, label: Category, type: string, description: 'Small label above the title, e.g. "Community".' }
+              - {
+                  name: category,
+                  label: Category,
+                  type: string,
+                  description: 'Small label above the title, e.g. "Community".',
+                }
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
@@ -283,12 +308,6 @@ content:
         fields:
           - { name: visible, component: visible }
           - {
-              name: eyebrow,
-              label: Eyebrow,
-              type: string,
-              description: 'Small line above the title.',
-            }
-          - {
               name: title,
               label: Title,
               type: string,
@@ -388,11 +407,7 @@ content:
         fields:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
-          - {
-              name: lead,
-              label: Line above the quote,
-              type: text,
-            }
+          - { name: lead, label: Line above the quote, type: text }
           - name: quote
             label: Quotation
             type: object
@@ -403,7 +418,7 @@ content:
                   name: attribution,
                   label: Attribution,
                   type: string,
-                  description: 'e.g. Qur''an 5:2',
+                  description: "e.g. Qur'an 5:2",
                 }
           - {
               name: body,
@@ -531,7 +546,6 @@ content:
         type: object
         fields:
           - { name: visible, component: visible }
-          - { name: eyebrow, label: Eyebrow, type: string }
           - {
               name: title,
               label: Title,
@@ -583,30 +597,47 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
-      - name: reach
-        label: 3. Who you reach
+      # The same partners section as the homepage (framed spotlights +
+      # scrolling row), here holding the CURRENT partners. Mirrors the shared
+      # partnersSchema in src/lib/content.ts.
+      - name: partners
+        label: 3. Current partners
         type: object
         fields:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
-          - {
-              name: body,
-              label: Body,
-              type: text,
-              description: 'The audience description, including attendance numbers. Leave a blank line between paragraphs.',
-            }
-          - name: facts
-            label: Credibility facts
+          - { name: description, label: Description, type: text }
+          - name: items
+            label: Partner logos
             type: object
             list:
               collapsible:
                 collapsed: true
-                summary: '{fields.label}'
-            description: 'Shown as labelled columns — e.g. Registered non-profit / Ummah Tech NPC · 2024/095025/08. Four look best.'
+                summary: '{fields.alt}'
+            description: 'The whole section stays hidden on the site until the first partner is added here. Headline and Supporting logos get a square framed spotlight (labelled by tier), Regular logos scroll in the marquee — e.g. Platinum → Headline, Gold → Supporting, Silver → Regular. Order within the list is the order within each tier.'
             fields:
-              - { name: label, label: Label, type: string }
-              - { name: value, label: Value, type: string }
+              - { name: src, label: Logo, type: image }
+              - { name: alt, label: Name / alt text, type: string }
+              - name: tier
+                label: Tier
+                type: select
+                default: regular
+                options:
+                  values:
+                    - { value: headline, label: Headline }
+                    - { value: supporting, label: Supporting }
+                    - { value: regular, label: Regular }
+              - {
+                  name: href,
+                  label: Website (optional),
+                  type: string,
+                  description: 'Headline and Supporting logos become links when this is a full URL. The scrolling Regular logos are never clickable.',
+                }
 
+      # A comparison matrix. The three tier columns (Platinum / Gold / Silver)
+      # are fixed — they mirror PARTNER_TIERS in src/lib/partner.ts; only the
+      # rows are edited here. No prices on purpose — current pricing goes in
+      # the prospectus you email to interested organisations.
       - name: tiers
         label: 4. Partnership tiers
         type: object
@@ -614,94 +645,45 @@ content:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
           - { name: lead, label: Intro paragraph, type: text }
-          - name: items
-            label: Tiers
+          - name: groups
+            label: Comparison rows
             type: object
             list:
               collapsible:
                 collapsed: true
-                summary: '{fields.name}'
-            description: 'Highest tier first. No prices here on purpose — current pricing goes in the prospectus you email to interested organisations.'
+                summary: '{fields.heading}'
+            description: 'Groups of rows in the tier table, e.g. Allocation (numbers) and Benefits (ticks).'
             fields:
-              - { name: name, label: Name, type: string, description: 'e.g. Platinum' }
-              - {
-                  name: code,
-                  label: Badge,
-                  type: string,
-                  description: 'The small uppercase badge on the card, e.g. Headline / Partner / Exhibitor.',
-                }
-              - { name: tagline, label: Tagline, type: string }
-              - {
-                  name: benefits,
-                  label: Benefits,
-                  type: string,
-                  list: true,
-                  description: 'One line per benefit. List only what this tier adds — the section explains each tier includes the ones below it.',
-                }
-          - {
-              name: note,
-              label: Note below the tiers,
-              type: text,
-            }
-          - { name: cta, label: Prospectus button, component: cta }
-          - { name: ctaCaption, label: Caption under the button, type: string }
+              - { name: heading, label: Group heading, type: string }
+              - name: rows
+                label: Rows
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: '{fields.label}'
+                description: 'One row per benefit. Fill each tier''s cell: leave it empty if not included, write yes for a tick, or short text shown as-is (e.g. 1, 8, Premium).'
+                fields:
+                  - { name: label, label: Benefit, type: string }
+                  - { name: platinum, label: Platinum, type: string }
+                  - { name: gold, label: Gold, type: string }
+                  - { name: silver, label: Silver, type: string }
 
-      - name: partners
-        label: 5. Current partners
+      # The same contact section as the homepage (one form, four enquiry
+      # types), with this page's own copy; on this page the form opens
+      # preselected on "Partner With Us".
+      - name: contact
+        label: 5. Contact
         type: object
         fields:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
-          - { name: lead, label: Intro line, type: string }
-          - name: items
-            label: Partners
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: '{fields.name}'
-            description: 'The whole section stays hidden on the site until the first partner is added here. Grouped by tier on the page, Platinum first.'
-            fields:
-              - { name: name, label: Organisation, type: string }
-              - { name: logo, label: Logo, component: picture }
-              - { name: href, label: 'Link (optional)', type: string }
-              - name: tier
-                label: Tier
-                type: select
-                options:
-                  values:
-                    - { value: platinum, label: Platinum — Headline }
-                    - { value: gold, label: Gold — Partner }
-                    - { value: silver, label: Silver — Exhibitor }
-
-      - name: contact
-        label: 6. Start the conversation
-        type: object
-        fields:
-          - { name: visible, component: visible }
+          - { name: description, label: Description, type: text }
           - {
-              name: heading,
-              label: Heading,
-              type: string,
-              description: 'Wrap words in *asterisks* to emphasise them.',
-            }
-          - {
-              name: body,
-              label: Body,
+              name: successMessage,
+              label: Success message,
               type: text,
-              description: 'Leave a blank line between paragraphs.',
-            }
-          - {
-              name: email,
-              label: Partnership email,
-              type: string,
-              description: 'Shown as the first contact card and used for the mailto link.',
-            }
-          - { name: formCta, label: Contact form link, component: cta }
-          - {
-              name: formNote,
-              label: Note under the form link,
-              type: string,
+              description: 'Shown after the form is sent. The four enquiry types (Contact / Speaker / Volunteer / Partner) are fixed — ask a developer to change them.',
             }
 
   # ------------------------------------------------------------ Site settings

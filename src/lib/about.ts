@@ -12,14 +12,12 @@
 // working/about-build-plan.md §3).
 import { z } from 'astro/zod';
 
-import {
-  DEFAULT_ICON,
-  ICON_NAMES,
-  type IconName,
-} from '@/components/elements/icon';
+import { DEFAULT_ICON, ICON_NAMES } from '@/components/elements/icon';
 import data from '@/content/about.json';
 import {
   ctaSchema,
+  enumOr,
+  introSchema,
   list,
   mediaSchema,
   parseContent,
@@ -28,27 +26,10 @@ import {
 } from '@/lib/content';
 
 /**
- * Icon choice from the allowlist in components/elements/icon.tsx, mirrored by a
- * `select` in .pages.yml. Anything unrecognised (cleared select, an icon a
- * developer has since removed) lands on the default rather than failing the
- * build — same posture as the partner `tier` field in lib/home.ts.
+ * Icon choice from the allowlist in components/elements/icon.tsx, mirrored by
+ * a `select` in .pages.yml — enumOr documents the forgiving-fallback posture.
  */
-const iconName = z.preprocess(
-  (v) =>
-    typeof v === 'string' && (ICON_NAMES as readonly string[]).includes(v)
-      ? v
-      : DEFAULT_ICON,
-  z.enum(ICON_NAMES as unknown as [IconName, ...IconName[]]),
-);
-
-export const introSchema = z.object({
-  visible,
-  eyebrow: str,
-  // Required in .pages.yml; this is the page's only h1 and an About page
-  // without a title is a broken build.
-  title: z.string(),
-  body: str,
-});
+const iconName = enumOr(ICON_NAMES, DEFAULT_ICON);
 
 export const storySchema = z.object({
   visible,
@@ -118,6 +99,7 @@ export const joinSchema = z.object({
 });
 
 const aboutSchema = z.object({
+  // The shared intro band — schema and IntroContent type live in lib/content.
   intro: introSchema,
   story: storySchema,
   why: whySchema,
@@ -128,7 +110,6 @@ const aboutSchema = z.object({
   join: joinSchema,
 });
 
-export type IntroContent = z.infer<typeof introSchema>;
 export type StoryContent = z.infer<typeof storySchema>;
 export type WhyContent = z.infer<typeof whySchema>;
 export type FaithContent = z.infer<typeof faithSchema>;

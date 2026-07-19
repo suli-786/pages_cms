@@ -13,8 +13,8 @@
 // a scripture pull-quote, or an honest "team coming soon"); the closing join
 // section reuses the homepage's cta.tsx.
 //
-// Every section is static — no client: directives, so this page ships no
-// page-specific JavaScript beyond the shared navbar and footer.
+// The closing join section (cta.tsx, countdown state) is the page's only
+// client: island — every other section is static.
 import Beliefs from '@/components/sections/about/beliefs';
 import Faith from '@/components/sections/about/faith';
 import Story from '@/components/sections/about/story';
@@ -36,7 +36,7 @@ const about = await resolveAboutImages(rawAbout);
   title="About Ummah Tech — more than a conference, a movement"
   description="Ummah Tech is a movement of Muslim technologists, founders and creatives growing out of South Africa, building technology rooted in Islamic values."
 >
-  <!-- Intro → eyebrow, mission statement. Carries the page's h1. -->
+  <!-- Intro → bracketed mission statement. Carries the page's h1. -->
   {about.intro.visible && <PageIntro content={about.intro} />}
 
   <!-- Our story → 2024 to today, with a staggered photo grid -->

@@ -8,11 +8,13 @@ import { z } from 'astro/zod';
 
 import data from '@/content/home.json';
 import {
+  contactSchema,
   ctaSchema,
   link,
   list,
   mediaSchema,
   parseContent,
+  partnersSchema,
   str,
   strList,
   visible,
@@ -70,24 +72,6 @@ const speakersSchema = z.object({
   items: list(speakerSchema),
 });
 
-const partnerLogoSchema = z.object({
-  src: str,
-  alt: str,
-  href: link,
-  // Anything unrecognised (cleared select, legacy items) lands in `regular`.
-  tier: z.preprocess(
-    (v) => (v === 'headline' || v === 'supporting' ? v : 'regular'),
-    z.enum(['headline', 'supporting', 'regular']),
-  ),
-});
-
-const partnersSchema = z.object({
-  visible,
-  heading: str,
-  description: str,
-  items: list(partnerLogoSchema),
-});
-
 const finalCtaSchema = z.object({
   visible,
   eyebrow: str,
@@ -97,13 +81,6 @@ const finalCtaSchema = z.object({
   date: str,
   cta: ctaSchema,
   image: mediaSchema,
-});
-
-const contactSchema = z.object({
-  visible,
-  heading: str,
-  description: str,
-  successMessage: str,
 });
 
 const homeSchema = z.object({
@@ -116,18 +93,12 @@ const homeSchema = z.object({
   contact: contactSchema,
 });
 
-// Re-exported from lib/content.ts so existing imports of these two keep working.
-export type { CtaLink, Media } from '@/lib/content';
-
 export type HeroContent = z.infer<typeof heroSchema>;
 export type VisionContent = z.infer<typeof visionSchema>;
 export type ConferenceContent = z.infer<typeof conferenceSchema>;
 export type Speaker = z.infer<typeof speakerSchema>;
 export type SpeakersContent = z.infer<typeof speakersSchema>;
-export type PartnerLogo = z.infer<typeof partnerLogoSchema>;
-export type PartnersContent = z.infer<typeof partnersSchema>;
 export type FinalCtaContent = z.infer<typeof finalCtaSchema>;
-export type ContactContent = z.infer<typeof contactSchema>;
 export type HomeContent = z.infer<typeof homeSchema>;
 
 export const home: HomeContent = parseContent(
