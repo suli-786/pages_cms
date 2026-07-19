@@ -148,7 +148,7 @@
         "name": "Speaker Name",
         "role": "Managing Director, Company",
         "theme": "Fintech",
-        "portrait": "/images/speakers/11.png"
+        "portrait": "/images/speakers/11sp.png"
       },
       {
         "name": "Speaker Name",
@@ -161,6 +161,38 @@
         "role": "Community Lead, Ummah Tech",
         "theme": "Community",
         "portrait": "/images/speakers/2.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/12.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/15.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/16.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/3.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/4.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/6.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/8sp.png"
+      },
+      {
+        "name": "speaker",
+        "portrait": "/images/speakers/9sp.png"
       }
     ]
   },
