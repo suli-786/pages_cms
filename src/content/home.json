@@ -254,6 +254,18 @@
         "alt": "Partner 9",
         "tier": "regular",
         "href": "#"
+      },
+      {
+        "src": "/images/partners/2.png",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/3.png",
+        "tier": "regular"
+      },
+      {
+        "src": "/images/partners/8.png",
+        "tier": "regular"
       }
     ]
   },
