@@ -1,7 +1,6 @@
 {
   "hero": {
     "visible": true,
-    "eyebrow": "Ummah Tech Conference 2026",
     "title": "We're gathering people *who want to build a future worth inheriting.* Joining us?",
     "eventDetails": [
       {
@@ -19,7 +18,7 @@
     },
     "community": {
       "cta": {
-        "label": "Join the community",
+        "label": "Join the WhatsApp community",
         "href": "whatsapp"
       }
     },
@@ -198,7 +197,7 @@
   },
   "partners": {
     "visible": true,
-    "heading": "Our Partners",
+    "heading": "Last year's partners.",
     "description": "Proudly supported by the organisations backing the Ummah tech community.",
     "items": [
       {
@@ -286,7 +285,7 @@
   "contact": {
     "visible": true,
     "heading": "Get in touch.",
-    "description": "Questions, speaking, volunteering or partnership — one form for all of it. Tell us what you're reaching out about and it reaches the right person.",
+    "description": "Questions, speaking or partnership — one form for all of it. Tell us what you're reaching out about and it reaches the right person.",
     "successMessage": "Thanks — we've got your message and we'll get back to you soon."
   }
 }

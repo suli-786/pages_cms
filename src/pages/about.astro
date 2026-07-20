@@ -8,17 +8,18 @@
 //   story.tsx    ← @shadcnblocks/timeline14 (scroll-driven milestone timeline)
 //   why.tsx      ← @shadcnblocks/feature76
 //   beliefs.tsx  ← @shadcnblocks/feature207 (carries the merged propositions + values)
-// The intro and the closing join (heading + WhatsApp call over a reveal grid
-// of community photos) are bespoke; team is a plain photo wall (hidden while
-// empty); contact reuses the homepage form. The foundational verse lives in
-// the global footer (moved from the removed "Rooted in faith" section).
+//   gallery.tsx  ← @shadcnblocks/gallery30 (the community photo ring)
+// The intro is bespoke; contact reuses the homepage form. The foundational
+// verse lives in the global footer (moved from the removed "Rooted in faith"
+// section). The gallery replaced the team photo wall and the join section on
+// 2026-07-20 (user decision) — note the page no longer carries a WhatsApp
+// call to action of its own.
 //
-// Client: islands — the story timeline (scroll observer), the join reveal
-// grid and the contact form; every other section is static.
+// Client: islands — the story timeline (scroll observer), the photo ring
+// (entrance spring, drag) and the contact form; every other section is static.
 import Beliefs from '@/components/sections/about/beliefs';
-import Join from '@/components/sections/about/join';
+import Gallery from '@/components/sections/about/gallery';
 import Story from '@/components/sections/about/story';
-import Team from '@/components/sections/about/team';
 import Why from '@/components/sections/about/why';
 import Contact from '@/components/sections/contact';
 import PageIntro from '@/components/sections/page-intro';
@@ -44,21 +45,15 @@ const about = await resolveAboutImages(rawAbout);
   <!-- Why we exist → the challenges, as a bordered column band -->
   {about.why.visible && <Why content={about.why} />}
 
+  <!-- Community gallery → a statement with photos ringed around it. Sits
+       between "why we exist" and "what we stand for" (user decision,
+       2026-07-20): the people break up the two argument-heavy bands. -->
+  {about.gallery.visible && <Gallery content={about.gallery} client:visible />}
+
   <!-- What we stand for → numbered proposition rows (merged with the former
        values section) -->
   {about.beliefs.visible && <Beliefs content={about.beliefs} />}
 
-  <!-- Who's behind Ummah Tech → photo wall; hidden until photos are added -->
-  {about.team.visible && <Team content={about.team} />}
-
-  <!-- Join → the closing conversion: message + WhatsApp call over a reveal
-       grid of community photos -->
-  {about.join.visible && <Join content={about.join} client:visible />}
-
-  <!-- Contact → the homepage's shared form section, all four enquiry types -->
-  {
-    about.contact.visible && (
-      <Contact content={about.contact} client:visible />
-    )
-  }
+  <!-- Contact → the homepage's shared form section, all three enquiry types -->
+  {about.contact.visible && <Contact content={about.contact} client:visible />}
 </DefaultLayout>

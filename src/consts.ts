@@ -14,11 +14,14 @@ const SITE_NAME = 'Ummah Tech';
 
 // Primary navigation — one list shared by the navbar and the footer's
 // "Explore" column so the two can't drift apart.
+// Drives both the navbar and the footer's "Explore" column — change here and
+// both follow. Events was dropped (user decision, 2026-07-20); it pointed at
+// the homepage's #event anchor, which still exists and is still reachable from
+// the CMS link fields, just not from the nav.
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'Events', href: '/#event' },
-  { label: 'Partner With Us', href: '/partner' },
   { label: 'About', href: '/about' },
+  { label: 'Partner With Us', href: '/partner' },
 ];
 const SITE_TITLE = 'Ummah Tech Conference — Save the date for 2026';
 const SITE_DESCRIPTION =
@@ -80,7 +83,9 @@ export const SITE_METADATA = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ['/og-image.jpg'],
-    // Matches the real X profile (settings.json → x.com/ummah_tech).
+    // Attribution on X's own link previews. The X profile is no longer linked
+    // from the site (removed from settings.json → Social links), but the
+    // account still exists and this only labels cards shared there.
     creator: '@ummah_tech',
   },
 };

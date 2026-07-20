@@ -22,7 +22,6 @@ import {
 
 const heroSchema = z.object({
   visible,
-  eyebrow: str,
   title: z.string(), // required in .pages.yml; a hero without a title is a broken build
   eventDetails: list(z.object({ label: str, value: str })),
   primaryCta: ctaSchema,

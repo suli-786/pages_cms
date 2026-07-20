@@ -1,4 +1,5 @@
-// Our Partners — three tiers:
+// Partners — three tiers (the heading itself is CMS copy; the homepage frames
+// this as last year's partners, the Partner page as the current 2026 list):
 //   headline   → a square spotlight frame: square logo, corner-bracket arms
 //                exactly half the logo's length, the word HEADLINE as the
 //                top-left corner and PARTNER as the bottom-right (the speakers
@@ -61,11 +62,15 @@ function Logo({
 }
 
 // The square spotlight frame with typographic corners. Proportions are locked
-// to the logo: the logo is a square (128px, 160px from md), each bracket arm
-// runs half the logo's length (64/80px), and the padding makes the whole
-// element a square too (208px / 256px per side). The tier word replaces the
-// top-left bracket and "Partner" the bottom-right one; both are decorative —
-// the group's aria-label names the tier for AT.
+// to the logo: the logo is a square (80px, 96px from md), each bracket arm
+// runs half the logo's length (40/48px), and the padding makes the whole
+// element a square too (136px / 160px per side). Change one and change all
+// three, or the arms stop reading as half the logo. The logo now matches the
+// marquee tier's 96px at md rather than towering over it — these are the same
+// brand marks at different tiers, and the corner words carry the ranking, so
+// scale doesn't have to (user decision, 2026-07-20, tightened twice). The tier
+// word replaces the top-left bracket and "Partner" the bottom-right one; both
+// are decorative — the group's aria-label names the tier for AT.
 const cornerWord =
   'absolute font-mono text-xs tracking-[0.18em] uppercase text-muted-foreground md:text-sm';
 
@@ -77,14 +82,14 @@ function FramedLogo({
   logo: ResolvedPartnerLogo;
 }) {
   return (
-    <li className="relative p-10 md:p-12">
+    <li className="relative p-7 md:p-8">
       <span
         aria-hidden
-        className="border-accent absolute top-0 right-0 size-16 border-t-2 border-r-2 md:size-20"
+        className="border-accent absolute top-0 right-0 size-10 border-t-2 border-r-2 md:size-12"
       />
       <span
         aria-hidden
-        className="border-accent absolute bottom-0 left-0 size-16 border-b-2 border-l-2 md:size-20"
+        className="border-accent absolute bottom-0 left-0 size-10 border-b-2 border-l-2 md:size-12"
       />
       <span aria-hidden className={cn(cornerWord, 'top-0 left-0')}>
         {tier}
@@ -92,22 +97,8 @@ function FramedLogo({
       <span aria-hidden className={cn(cornerWord, 'right-0 bottom-0')}>
         Partner
       </span>
-      <Logo logo={logo} boxClass="size-32 md:size-40" />
+      <Logo logo={logo} boxClass="size-20 md:size-24" />
     </li>
-  );
-}
-
-/** Small centred tier label with hairlines either side. */
-function TierLabel({ children }: { children: string }) {
-  return (
-    <p
-      aria-hidden
-      className="text-muted-foreground flex items-center justify-center gap-4 font-mono text-[0.6rem] tracking-[0.18em] uppercase"
-    >
-      <span className="bg-foreground/25 h-px w-8" />
-      {children}
-      <span className="bg-foreground/25 h-px w-8" />
-    </p>
   );
 }
 
@@ -178,7 +169,9 @@ function Partners({ content }: { content: ResolvedPartnersContent }) {
 
       {regular.length > 0 && (
         <div className="mt-12 flex w-full flex-col gap-6 md:mt-14">
-          <TierLabel>Partners</TierLabel>
+          {/* No tier caption above this row (user decision, 2026-07-20): the
+              framed tiers name themselves in their corners, so a bare
+              "Partners" label here just repeated the section heading. */}
 
           {/* Accessible list for the marquee tier (the strips are decorative). */}
           <ul className="sr-only">

@@ -63,6 +63,45 @@
       }
     ]
   },
+  "gallery": {
+    "visible": true,
+    "heading": "Find your people",
+    "body": "If you are a Muslim technologist, founder, creative or innovator, you belong here. This is the community between conferences, on the road to Ummah Tech Conference 2026 in Johannesburg.",
+    "photos": [
+      {
+        "src": "/images/other/group-photo1.jpg",
+        "alt": "The Ummah Tech community together in Johannesburg"
+      },
+      {
+        "src": "/images/other/coffee-break.jpg",
+        "alt": "Conversations over coffee between sessions"
+      },
+      {
+        "src": "/images/other/prayingtogerther.jpg",
+        "alt": "Attendees praying together at the conference"
+      },
+      {
+        "src": "/images/other/speakroom.jpg",
+        "alt": "A talk in progress in the main room"
+      },
+      {
+        "src": "/images/other/women-team.jpg",
+        "alt": "Members of the Ummah Tech community"
+      },
+      {
+        "src": "/images/other/tickey-area.jpg",
+        "alt": "The registration and welcome area"
+      },
+      {
+        "src": "/images/other/speaerandteam.jpg",
+        "alt": "Speakers and the organising team"
+      },
+      {
+        "src": "/images/other/paneldiscussion.jpg",
+        "alt": "A panel discussion at the Ummah Tech Conference"
+      }
+    ]
+  },
   "beliefs": {
     "visible": true,
     "heading": "What we stand for",
@@ -90,63 +129,10 @@
       }
     ]
   },
-  "team": {
-    "visible": true,
-    "heading": "Who's behind Ummah Tech",
-    "photos": [
-      {
-        "src": "/images/other/women-team.jpg",
-        "alt": "Members of the Ummah Tech team"
-      },
-      {
-        "src": "/images/other/speaerandteam.jpg",
-        "alt": "Speakers and the organising team"
-      }
-    ]
-  },
-  "join": {
-    "visible": true,
-    "heading": "Find your people. *Build what's worth inheriting.*",
-    "body": "If you're a Muslim technologist, founder, creative or innovator, you belong here. The WhatsApp community is where the movement lives between conferences, on the road to Ummah Tech Conference 2026 in Johannesburg.",
-    "cta": {
-      "label": "Join the community",
-      "href": "whatsapp"
-    },
-    "secondaryCta": {
-      "label": "Speak, volunteer or partner",
-      "href": "#contact"
-    },
-    "photos": [
-      {
-        "src": "/images/other/group-photo1.jpg",
-        "alt": "The Ummah Tech community together in Johannesburg"
-      },
-      {
-        "src": "/images/other/coffee-break.jpg",
-        "alt": "Conversations over coffee between sessions"
-      },
-      {
-        "src": "/images/other/prayingtogerther.jpg",
-        "alt": "Attendees praying together at the conference"
-      },
-      {
-        "src": "/images/other/speakroom.jpg",
-        "alt": "A talk in progress in the main room"
-      },
-      {
-        "src": "/images/other/women-team.jpg",
-        "alt": "Members of the Ummah Tech community"
-      },
-      {
-        "src": "/images/other/tickey-area.jpg",
-        "alt": "The registration and welcome area"
-      }
-    ]
-  },
   "contact": {
     "visible": true,
     "heading": "Get in touch.",
-    "description": "Questions, speaking, volunteering or partnership. Tell us what you're reaching out about and it reaches the right person.",
+    "description": "Questions, speaking or partnership. Tell us what you're reaching out about and it reaches the right person.",
     "successMessage": "Thanks, we've got your message. We'll get back to you soon."
   }
 }

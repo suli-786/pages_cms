@@ -57,6 +57,6 @@ const home = await resolveHomeImages(rawHome);
   <!-- Final CTA → full-bleed countdown finale -->
   {home.finalCta.visible && <Cta content={home.finalCta} client:visible />}
 
-  <!-- Contact — one form, four functions (contact / speaker / volunteer / partner) -->
+  <!-- Contact — one form, three functions (contact / speaker / partner) -->
   {home.contact.visible && <Contact content={home.contact} client:visible />}
 </DefaultLayout>

@@ -7,31 +7,24 @@
 // generic answer, which is why this is a per-page file rather than a recursive
 // walker. Import ONLY from server code (about.astro); components may use
 // `import type` for the Resolved* types.
-import type {
-  AboutContent,
-  JoinContent,
-  StoryContent,
-  TeamContent,
-} from '@/lib/about';
+import type { AboutContent, GalleryContent, StoryContent } from '@/lib/about';
 import { type Policy, type ResolvedMedia, resolveMedia } from '@/lib/images';
 
 // Rendered sizes derived from the actual layout (container maxes out at
 // 1432px): timeline milestone photos cap at 440px on desktop and run
-// near-full width on mobile; team photos sit in a 2/3-column grid; the join
-// photo is full-bleed behind a scrim. 2× variants cover retina.
+// near-full width on mobile. 2× variants cover retina.
 const POLICIES = {
   milestonePhoto: {
     widths: [480, 880],
     sizes: '(min-width: 768px) 440px, 90vw',
   },
-  teamPhoto: {
-    widths: [480, 880],
-    sizes: '(min-width: 768px) 33vw, 50vw',
-  },
-  // The closing join grid: full width (1 col) below sm, 2 cols to md, 3 above.
-  joinPhoto: {
-    widths: [480, 960],
-    sizes: '(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw',
+  // The community photo ring. Each photo is sized by width alone (its height
+  // follows its own aspect ratio), and that width is a share of the container:
+  // 13–19% from md, 34–36% below it. The container caps at 1432px, so the
+  // widest photo renders around 272px; 320/640 covers that at 1× and 2×.
+  galleryPhoto: {
+    widths: [320, 640],
+    sizes: '(min-width: 768px) 19vw, 36vw',
   },
 } satisfies Record<string, Policy>;
 
@@ -42,26 +35,19 @@ export type ResolvedMilestone = Omit<
 export type ResolvedStoryContent = Omit<StoryContent, 'milestones'> & {
   milestones: ResolvedMilestone[];
 };
-export type ResolvedTeamContent = Omit<TeamContent, 'photos'> & {
+export type ResolvedGalleryContent = Omit<GalleryContent, 'photos'> & {
   photos: ResolvedMedia[];
 };
-export type ResolvedJoinContent = Omit<JoinContent, 'photos'> & {
-  photos: ResolvedMedia[];
-};
-export type ResolvedAboutContent = Omit<
-  AboutContent,
-  'story' | 'team' | 'join'
-> & {
+export type ResolvedAboutContent = Omit<AboutContent, 'story' | 'gallery'> & {
   story: ResolvedStoryContent;
-  team: ResolvedTeamContent;
-  join: ResolvedJoinContent;
+  gallery: ResolvedGalleryContent;
 };
 
 /** Resolve every image path in the About content. Call from about.astro. */
 export async function resolveAboutImages(
   about: AboutContent,
 ): Promise<ResolvedAboutContent> {
-  const [milestones, teamPhotos, joinPhotos] = await Promise.all([
+  const [milestones, galleryPhotos] = await Promise.all([
     Promise.all(
       about.story.milestones.map(async (m) => ({
         ...m,
@@ -69,13 +55,8 @@ export async function resolveAboutImages(
       })),
     ),
     Promise.all(
-      about.team.photos.map((photo) =>
-        resolveMedia(photo, POLICIES.teamPhoto),
-      ),
-    ),
-    Promise.all(
-      about.join.photos.map((photo) =>
-        resolveMedia(photo, POLICIES.joinPhoto),
+      about.gallery.photos.map((photo) =>
+        resolveMedia(photo, POLICIES.galleryPhoto),
       ),
     ),
   ]);
@@ -83,7 +64,6 @@ export async function resolveAboutImages(
   return {
     ...about,
     story: { ...about.story, milestones },
-    team: { ...about.team, photos: teamPhotos },
-    join: { ...about.join, photos: joinPhotos },
+    gallery: { ...about.gallery, photos: galleryPhotos },
   };
 }

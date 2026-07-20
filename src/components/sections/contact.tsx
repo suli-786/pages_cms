@@ -5,7 +5,6 @@ import { useState, type ReactNode } from 'react';
 import {
   AlertCircle,
   CheckCircle2,
-  HandHeart,
   Handshake,
   Loader2,
   MessagesSquare,
@@ -33,14 +32,15 @@ import { cn } from '@/lib/utils';
 // form on the right. Adapted to this site: the ornaments use the viewfinder
 // corner device (speakers CTA / partner frames), the form keeps the codebase's
 // hand-rolled submit pattern (no react-hook-form/zod), and one shared form
-// serves four functions via the "reaching out about" select below.
+// serves three functions via the "reaching out about" select below.
 //
 // Rendered on the homepage and the Partner page (each with its own CMS copy —
 // contactSchema in lib/content.ts). `defaultFunction` preselects the enquiry
 // type for pages with an obvious one; `functions` narrows the list to a
 // per-page subset (the Partner page passes 'partner' and shows only Contact
 // Us + Partner With Us — sponsors aren't here to apply). The homepage keeps
-// all four.
+// all three. Volunteering was dropped as an enquiry type (user decision,
+// 2026-07-20) — there is no volunteer intake to route it to.
 const FUNCTIONS = [
   {
     value: 'contact',
@@ -53,12 +53,6 @@ const FUNCTIONS = [
     label: 'Apply To Be A Speaker',
     icon: Mic,
     line: 'Share your work on the 2026 stage.',
-  },
-  {
-    value: 'volunteer',
-    label: 'Apply To Be A Volunteer',
-    icon: HandHeart,
-    line: 'Help make the conference happen.',
   },
   {
     value: 'partner',
@@ -98,7 +92,7 @@ function Contact({
     >
       <div className="container">
         <div className="flex flex-col justify-between gap-14 lg:flex-row lg:gap-10">
-          {/* Left — headline with corner brackets, the four functions, email */}
+          {/* Left — headline with corner brackets, the enquiry types, email */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}

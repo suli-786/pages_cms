@@ -101,7 +101,8 @@ function Countdown({ date }: { date: string }) {
 
 // The homepage's final CTA — the countdown finale. (The About page's closing
 // section was once shared with this; since 2026-07-20 it is its own component,
-// about/join.tsx, so this is homepage-only again.)
+// its own closing section, since replaced by about/gallery.tsx, so this is
+// homepage-only again.)
 function Cta({ content }: { content: ResolvedFinalCtaContent }) {
   const { eyebrow, heading, body, cta, image, date } = content;
 

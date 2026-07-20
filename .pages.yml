@@ -69,12 +69,6 @@ content:
         fields:
           - { name: visible, component: visible }
           - {
-              name: eyebrow,
-              label: Eyebrow,
-              type: string,
-              description: 'Small line above the title — the event name. Part of the page heading, so keep it descriptive.',
-            }
-          - {
               name: title,
               label: Title,
               type: string,
@@ -96,7 +90,7 @@ content:
           - name: community
             label: Community invite
             type: object
-            description: 'The WhatsApp community block under the ticket button.'
+            description: 'The WhatsApp invite in the "Stay connected" band, shown as a labelled button beside the social icons. Keep the label short — it sits on one line beside the icons on a phone.'
             fields:
               - { name: body, label: Wording, type: text }
               - { name: cta, label: WhatsApp button, component: cta }
@@ -283,7 +277,7 @@ content:
             }
 
       - name: contact
-        label: 7. Contact
+        label: 6. Contact
         type: object
         fields:
           - { name: visible, component: visible }
@@ -293,7 +287,7 @@ content:
               name: successMessage,
               label: Success message,
               type: text,
-              description: 'Shown after the form is sent. The four enquiry types (Contact / Speaker / Volunteer / Partner) are fixed — ask a developer to change them.',
+              description: 'Shown after the form is sent. The three enquiry types (Contact / Speaker / Partner) are fixed — ask a developer to change them.',
             }
 
   # -------------------------------------------------------------- About page
@@ -385,8 +379,34 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
+      - name: gallery
+        label: 4. Community gallery
+        type: object
+        description: 'The closing band: a short statement with community photos scattered around it, each one draggable.'
+        fields:
+          - { name: visible, component: visible }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Body, type: text }
+          - name: photos
+            label: Community photos
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.alt}'
+            description: 'EIGHT photos is what this layout is built for — each one has its own hand-placed spot in the scatter. Fewer leaves gaps in the arrangement, and a ninth is not shown. On a phone only the first three appear. The order here does not matter: the photos are shuffled into the spots on each visit.'
+            fields:
+              - { name: src, label: Image, type: image }
+              - {
+                  name: alt,
+                  label: Alt text,
+                  type: string,
+                  required: true,
+                  description: 'Describe the photo for screen readers and search engines. Required here: the photos are most of this section, so a photo without a description is invisible to screen-reader visitors.',
+                }
+
       - name: beliefs
-        label: 4. What we stand for
+        label: 5. What we stand for
         type: object
         fields:
           - { name: visible, component: visible }
@@ -404,65 +424,10 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
-      - name: team
-        label: 5. Who's behind Ummah Tech
-        type: object
-        fields:
-          - { name: visible, component: visible }
-          - { name: heading, label: Heading, type: string }
-          - name: photos
-            label: Photos
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: '{fields.alt}'
-            description: 'A photo wall of the people behind Ummah Tech. The whole section stays hidden on the site until the first photo is added here.'
-            fields:
-              - { name: src, label: Image, type: image }
-              - {
-                  name: alt,
-                  label: Alt text,
-                  type: string,
-                  required: true,
-                  description: 'Describe the photo for screen readers and search engines. Required here: the photos are this section''s only content, so a photo without a description is invisible to screen-reader visitors.',
-                }
-
-      - name: join
-        label: 6. Join the community (closing)
-        type: object
-        fields:
-          - { name: visible, component: visible }
-          - {
-              name: heading,
-              label: Heading,
-              type: string,
-              description: 'Wrap words in *asterisks* to emphasise them.',
-            }
-          - { name: body, label: Body, type: text }
-          - { name: cta, label: Main button, component: cta }
-          - { name: secondaryCta, label: Secondary link, component: cta }
-          - name: photos
-            label: Community photos
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: '{fields.alt}'
-            description: 'Shown as a reveal grid below the call to action. Photos of different shapes tile together nicely. Leave empty to show just the heading and buttons.'
-            fields:
-              - { name: src, label: Image, type: image }
-              - {
-                  name: alt,
-                  label: Alt text,
-                  type: string,
-                  description: 'Describe the photo for screen readers and search engines.',
-                }
-
-      # The same contact section as the homepage (one form, four enquiry
+      # The same contact section as the homepage (one form, three enquiry
       # types), with this page's own copy.
       - name: contact
-        label: 7. Contact
+        label: 6. Contact
         type: object
         fields:
           - { name: visible, component: visible }
@@ -472,7 +437,7 @@ content:
               name: successMessage,
               label: Success message,
               type: text,
-              description: 'Shown after the form is sent. The four enquiry types (Contact / Speaker / Volunteer / Partner) are fixed — ask a developer to change them.',
+              description: 'Shown after the form is sent. The three enquiry types (Contact / Speaker / Partner) are fixed — ask a developer to change them.',
             }
 
   # ------------------------------------------------------------- Partner page
@@ -612,7 +577,7 @@ content:
                   - { name: gold, label: Gold, type: string }
                   - { name: silver, label: Silver, type: string }
 
-      # The same contact section as the homepage (one form, four enquiry
+      # The same contact section as the homepage (one form, three enquiry
       # types), with this page's own copy; on this page the form opens
       # preselected on "Partner With Us".
       - name: contact
@@ -626,7 +591,7 @@ content:
               name: successMessage,
               label: Success message,
               type: text,
-              description: 'Shown after the form is sent. The four enquiry types (Contact / Speaker / Volunteer / Partner) are fixed — ask a developer to change them.',
+              description: 'Shown after the form is sent. The three enquiry types (Contact / Speaker / Partner) are fixed — ask a developer to change them.',
             }
 
   # ------------------------------------------------------------ Site settings

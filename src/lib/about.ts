@@ -16,7 +16,6 @@ import { DEFAULT_ICON, ICON_NAMES } from '@/components/elements/icon';
 import data from '@/content/about.json';
 import {
   contactSchema,
-  ctaSchema,
   enumOr,
   introSchema,
   list,
@@ -48,6 +47,20 @@ export const whySchema = z.object({
 });
 
 /**
+ * The community gallery (components/sections/about/gallery.tsx, from
+ * @shadcnblocks/gallery30) — a statement with community photos ringed around
+ * it. Replaced the separate team photo wall and join sections on 2026-07-20,
+ * and sits between `why` and `beliefs` on the page. The ring is built for
+ * eight photos; see the component for what fewer or more do.
+ */
+export const gallerySchema = z.object({
+  visible,
+  heading: str,
+  body: str,
+  photos: list(mediaSchema),
+});
+
+/**
  * What we stand for — the merged propositions + values list (user decision,
  * 2026-07-20: the former separate values section repeated what the intro
  * mission, the faith verse and these propositions already say).
@@ -59,37 +72,14 @@ export const beliefsSchema = z.object({
   items: list(z.object({ title: str, body: str })),
 });
 
-/** A plain photo wall — hidden by team.tsx while the list is empty. */
-export const teamSchema = z.object({
-  visible,
-  heading: str,
-  photos: list(mediaSchema),
-});
-
-/**
- * The closing "join the community" section (components/sections/about/join.tsx)
- * — heading, body, the WhatsApp call and a secondary link, above a reveal grid
- * of community photos. Its own component since 2026-07-20 (was the shared
- * cta.tsx countdown band).
- */
-export const joinSchema = z.object({
-  visible,
-  heading: str,
-  body: str,
-  cta: ctaSchema,
-  secondaryCta: ctaSchema,
-  photos: list(mediaSchema),
-});
-
 const aboutSchema = z.object({
   // The shared intro band — schema and IntroContent type live in lib/content.
   intro: introSchema,
   story: storySchema,
   why: whySchema,
+  gallery: gallerySchema,
   beliefs: beliefsSchema,
-  team: teamSchema,
-  join: joinSchema,
-  // The shared contact section (one form, four enquiry types) — schema and
+  // The shared contact section (one form, three enquiry types) — schema and
   // ContactContent type live in lib/content; the section component is
   // components/sections/contact.tsx, same as the homepage and Partner page.
   contact: contactSchema,
@@ -98,8 +88,7 @@ const aboutSchema = z.object({
 export type StoryContent = z.infer<typeof storySchema>;
 export type WhyContent = z.infer<typeof whySchema>;
 export type BeliefsContent = z.infer<typeof beliefsSchema>;
-export type TeamContent = z.infer<typeof teamSchema>;
-export type JoinContent = z.infer<typeof joinSchema>;
+export type GalleryContent = z.infer<typeof gallerySchema>;
 export type AboutContent = z.infer<typeof aboutSchema>;
 
 export const about: AboutContent = parseContent(

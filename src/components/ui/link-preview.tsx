@@ -66,10 +66,12 @@ export function LinkPreview({
       }
     : {}
 
-  const triggerClass = cn(
-    "font-medium text-foreground underline decoration-accent decoration-2 underline-offset-4",
-    className
-  )
+  // No underline and no weight of its own: the phrase inherits the surrounding
+  // block's weight and only lifts to full contrast, so a phrase with a preview
+  // looks exactly like a highlighted phrase without one. Bold-and-full-contrast
+  // is the section's emphasis mark; the preview is a bonus on top of it, not a
+  // separate "this is a link" style (user decision, 2026-07-20).
+  const triggerClass = cn("text-foreground", className)
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
@@ -121,6 +123,15 @@ export function LinkPreview({
           // The card is a decorative preview; keep focus on the phrase so the
           // reading position doesn't jump.
           onOpenAutoFocus={(e) => e.preventDefault()}
+          // …and don't let Radix *restore* focus to the phrase on close. It
+          // never took focus (above), so restoring it is a no-op for keyboard
+          // users — but for a mouse user it programmatically focused the
+          // trigger the moment the pointer left, and Chrome grants
+          // :focus-visible to programmatic focus. That painted a blue ring
+          // around the phrase on mouse-out which then stayed lit while they
+          // read on (user bug report, 2026-07-20). Tabbing to the phrase still
+          // shows the ring, which is the point of it.
+          onCloseAutoFocus={(e) => e.preventDefault()}
           className="z-50 [transform-origin:var(--radix-popover-content-transform-origin)]"
         >
           <motion.span
