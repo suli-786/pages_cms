@@ -40,8 +40,7 @@
       "/images/other/prayingtogerther.jpg",
       "/images/other/women-team.jpg",
       "/images/other/paneldiscussion.jpg",
-      "/images/other/speaerandteam.jpg",
-      "/images/other/speakroom.jpg"
+      "/images/other/speaerandteam.jpg"
     ]
   },
   "vision": {
@@ -50,16 +49,13 @@
     "statement": "The question isn't whether we'll build.\nIt's what we're building for.\n\nUmmah Tech brings together Muslim technologists, founders, creatives and innovators who believe the technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and service.\n\nBecause when builders find their people, they build what's worth inheriting.",
     "highlights": [
       {
-        "phrase": "what we're building for",
-        "image": "/images/other/o1.jpg"
+        "phrase": "what we're building for"
       },
       {
-        "phrase": "built with purpose",
-        "image": "/images/other/03.jpg"
+        "phrase": "built with purpose"
       },
       {
-        "phrase": "challenge assumptions",
-        "image": "/images/other/02.jpg"
+        "phrase": "challenge assumptions"
       },
       {
         "phrase": "guided by faith, purpose and service"
@@ -126,8 +122,8 @@
     },
     "items": [
       {
-        "name": "Speaker Name",
-        "role": "CEO, Cassava Technologies",
+        "name": "Mushfiqoh Samodien",
+        "role": "Business Director: Aspire Solutions",
         "theme": "Keynote",
         "portrait": "/images/speakers/1.png"
       },
