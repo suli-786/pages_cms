@@ -108,7 +108,7 @@
       {
         "category": "Momentum",
         "title": "Leave with Direction",
-        "body": "To Step Into Your Role\n\nLeave with practical insights and renewed clarity about the unique role you can play in shaping the future.\n"
+        "body": "Leave with practical insights and renewed clarity about the unique role you can play in shaping the future.\n"
       }
     ]
   },
@@ -124,69 +124,72 @@
       {
         "name": "Mushfiqoh Samodien",
         "role": "Business Director: Aspire Solutions",
-        "theme": "Keynote",
         "portrait": "/images/speakers/1.png"
       },
       {
-        "name": "Speaker Name",
-        "role": "Founder & CTO, Company",
-        "theme": "Engineering",
+        "name": "Sh. Sulaimaan Ravat ",
+        "role": "Executive Committee Member: Jamiatul Ulama SA, Host: Radio Islam ",
         "portrait": "/images/speakers/5.png"
       },
       {
-        "name": "Speaker Name",
-        "role": "Head of Product, Company",
-        "theme": "Product",
+        "name": "Ayesha Bayat",
+        "role": "Co-Ceo: DigiYouth Africa, Co-Ceo Mesh-Ed Solutions ",
         "portrait": "/images/speakers/7.png"
       },
       {
-        "name": "Speaker Name",
-        "role": "Managing Director, Company",
-        "theme": "Fintech",
+        "name": "Dr. Bilal Hassam ",
+        "role": "Founder: The Muslim Agency ",
         "portrait": "/images/speakers/11sp.png"
       },
       {
-        "name": "Speaker Name",
-        "role": "AI Lead, Company",
-        "theme": "AI & Data",
+        "name": "Dr. Rashid Toefy ",
+        "role": "Deputy Director - General: Department of Economic Development and Tourism (WC) ",
         "portrait": "/images/speakers/14.png"
       },
       {
-        "name": "Speaker Name",
-        "role": "Community Lead, Ummah Tech",
+        "name": "Huzaifa Khan ",
+        "role": "Chief Growth Officer: Resolute Education, Curator: Global Shapers, Tshwane Hub ",
         "theme": "Community",
         "portrait": "/images/speakers/2.png"
       },
       {
-        "name": "speaker",
+        "name": "Naadiya Moosajee ",
+        "role": "CIO/Co-founder: Womhub ",
         "portrait": "/images/speakers/12.png"
       },
       {
-        "name": "speaker",
+        "name": "Yusuf Omar ",
+        "role": "Co-founder: Seen Tv ",
         "portrait": "/images/speakers/15.png"
       },
       {
-        "name": "speaker",
+        "name": "Ismail Dhorat ",
+        "role": "Founder: Zye Labs ",
         "portrait": "/images/speakers/16.png"
       },
       {
-        "name": "speaker",
+        "name": "Sh. Irshaad Sedick ",
+        "role": "Founder: Isnad Academy ",
         "portrait": "/images/speakers/3.png"
       },
       {
-        "name": "speaker",
+        "name": "Reza Suleman ",
+        "role": "Lead Digital & Innovation Practice: Africa International Advisors ",
         "portrait": "/images/speakers/4.png"
       },
       {
-        "name": "speaker",
+        "name": "Ziaad Suleman ",
+        "role": "CEO: Cassava Technologies ",
         "portrait": "/images/speakers/6.png"
       },
       {
-        "name": "speaker",
+        "name": "Dr. Shahiem Patel ",
+        "role": "Academic Dean: Regent Business School ",
         "portrait": "/images/speakers/8sp.png"
       },
       {
-        "name": "speaker",
+        "name": "Imtiyaaz Riley ",
+        "role": "CEO: Loop ",
         "portrait": "/images/speakers/9sp.png"
       }
     ]
