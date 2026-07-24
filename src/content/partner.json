@@ -2,7 +2,7 @@
   "intro": {
     "visible": true,
     "title": "Put your brand *where the builders are.*",
-    "body": "Ummah Tech is a movement of Muslim technologists, founders and creatives, growing out of South Africa, around an annual flagship conference and a year-round community.\n\nPartnership places your organisation inside that network: on stage, on the venue floor and across our channels. Here is what partnering looks like, and how to start the conversation."
+    "body": "Ummah Tech is a South African non-profit initiative that brings together Muslim founders, technologists, entrepreneurs, researchers and creatives committed to building technology with faith, purpose and long-term responsibility at its centre.\n\nPartnership places your organisation inside that network. "
   },
   "why": {
     "visible": true,
@@ -16,7 +16,7 @@
       {
         "icon": "scale",
         "title": "Align with Islamic values",
-        "body": "Demonstrate a commitment to ethical innovation and socially responsible technology — integrity, sincerity, positive contribution."
+        "body": "Align your intention to please Allah (swt) with a commitment to ethical innovation and socially responsible technology. "
       },
       {
         "icon": "lightbulb",
@@ -26,15 +26,14 @@
       {
         "icon": "sprout",
         "title": "Grow the community",
-        "body": "Help build the space where Muslim professionals collaborate and innovate — solutions that serve the Ummah and society as a whole."
+        "body": "Help build a space where Muslim professionals can collaborate and innovate solutions that serve the Ummah and society. "
       }
     ]
   },
   "partners": {
     "visible": true,
     "heading": "Our 2026 partners",
-    "description": "The organisations partnering with Ummah Tech 2026, at every tier.",
-    "items": []
+    "description": "The organisations partnering with Ummah Tech 2026, at every tier."
   },
   "tiers": {
     "visible": true,
@@ -63,39 +62,31 @@
         "rows": [
           {
             "label": "Speaker slot or panel discussion",
-            "platinum": "yes",
-            "gold": "",
-            "silver": ""
+            "platinum": "yes"
           },
           {
             "label": "Lanyard branding",
-            "platinum": "yes",
-            "gold": "",
-            "silver": ""
+            "platinum": "yes"
           },
           {
             "label": "Placement at the venue",
             "platinum": "Premium",
-            "gold": "yes",
-            "silver": ""
+            "gold": "yes"
           },
           {
             "label": "Propose a topic and speaker",
             "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
+            "gold": "yes"
           },
           {
             "label": "Branding on the ticketing website",
             "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
+            "gold": "yes"
           },
           {
             "label": "Branding on social media posts",
             "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
+            "gold": "yes"
           },
           {
             "label": "Branding on the event website",
