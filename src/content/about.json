@@ -2,7 +2,7 @@
   "intro": {
     "visible": true,
     "title": "Some rooms don't just change what gets built. They *change who builds it together.*",
-    "body": "Some rooms change what gets built.\n\nWe celebrate the finished product. Rarely the conversations that made it possible.\nEvery company, technology and movement has an origin story we don't see.\n\nUsually, it's a conversation. A disagreement. A difficult question.\n\n*A room full of people who care enough to challenge each other.*\n\nTechnology doesn't emerge in a vacuum. Neither do the people who build it.\n\nUmmah Tech exists to create those rooms. Not to tell you what to think, but to bring together people who are willing to think deeply, build responsibly and shape technology with faith, purpose and service.\n\nBecause great civilizations were never built in isolation, and the people who want to build one should know each other. \n"
+    "body": "Some rooms change what gets built.\n\nUsually, it's just a conversation, an opposing idea, perhaps a difficult question that ignites something. \n\n*A room full of people who care enough to build a better world.*\n\nUmmah Tech exists to create those rooms. Not to tell you what to think, but to bring together people who are willing to think deeply, build responsibly and shape technology with faith, purpose and responsibility.\n\nBecause great civilizations were never built in isolation. "
   },
   "story": {
     "visible": true,
@@ -39,34 +39,34 @@
   },
   "why": {
     "visible": true,
-    "heading": "Why we exist",
+    "heading": "Our Why ",
     "items": [
       {
         "icon": "building-2",
         "title": "Big Tech displaces public institutions",
-        "body": "Private platforms now perform roles that belonged to public bodies, funded by harvesting and monetising user data."
+        "body": "Private companies are taking on roles once held by public institutions, the values embedded in those systems matter more than ever. "
       },
       {
         "icon": "cpu",
         "title": "Algorithms shape belief and behaviour",
-        "body": "Recommendation systems and AI decide what billions see and value, at the cost of faith, focus and social cohesion."
+        "body": "Recommendation engines don't just organise information, they shape attention, culture and ultimately society. We need builders who understand both the technology and responsibility."
       },
       {
         "icon": "mic-off",
         "title": "Our voices are censored",
-        "body": "Throughout the war on Gaza, pro-Palestinian posts and accounts have been removed, throttled and shadowbanned. Human Rights Watch documents the suppression on Instagram and Facebook as systemic."
+        "body": "Our ability to communicate, organise and share ideas depends on platforms we do not own or govern. For example, posts about the genocide in Gaza are being shadow banned on social media platforms. Communities that don't build their own infrastructure do not have a platform to share the truth. "
       },
       {
         "icon": "server",
         "title": "Dependent on providers we boycott",
-        "body": "Google, Amazon and Microsoft sell cloud and AI services to the Israeli military, yet still host much of the Ummah's daily infrastructure."
+        "body": "Many of the technologies we rely on every day are built by organisations whose values do not reflect our own. Google, Amazon and Microsoft sell cloud and AI services to the Israeli military.  Even when we want to boycott these companies or platforms, meaningful alternatives often don't exist.\n"
       }
     ]
   },
   "gallery": {
     "visible": true,
     "heading": "Find your people",
-    "body": "If you are a Muslim technologist, founder, creative or innovator, you belong here. This is the community between conferences, on the road to Ummah Tech Conference 2026 in Johannesburg.",
+    "body": "If you are a Muslim technologist, founder, creative or innovator, you belong here. Because if a future worth inheriting is being built, the people building it should know each other.\n",
     "photos": [
       {
         "src": "/images/other/group-photo1.jpg",
