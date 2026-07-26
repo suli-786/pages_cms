@@ -46,7 +46,7 @@
   "vision": {
     "visible": true,
     "heading": "The Ummah is building.",
-    "statement": "The question we're asking is not only what we're building,\nbut what we're building it for.\n\nUmmah Tech brings together Muslim technologists, founders, creatives and innovators who believe the technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and service.\n\nBecause when builders find their people, they build what's worth inheriting.",
+    "statement": "The question we're asking is not only what we're building,\nbut what we're building it for.\n\nUmmah Tech brings together Muslim technologists, founders, creatives and innovators who believe that technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and responsibility.\n\nBecause when builders find their people, they build what's worth inheriting.",
     "highlights": [
       {
         "phrase": "what we're building for"
@@ -68,7 +68,7 @@
   "conference": {
     "visible": true,
     "heading": "Ummah Tech Conference ",
-    "body": "\n\n\nEvery year, Muslim founders, technologists, creatives and innovators come together to exchange ideas, challenge assumptions and build meaningful relationships around a shared purpose: building technology guided by faith, purpose and service.\n\n\nBecause great civilizations were never built in isolation.",
+    "body": "Every year, Muslim founders, technologists, creatives and innovators come together to exchange ideas, challenge assumptions and build meaningful relationships around a shared purpose: building technology guided by faith, purpose and responsibility. \n\nBecause great civilizations were never built in isolation.",
     "tiles": [
       {
         "image": {
