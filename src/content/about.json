@@ -70,7 +70,7 @@
     "photos": [
       {
         "src": "/images/other/group-photo1.jpg",
-        "alt": "The Ummah Tech community together in Johannesburg"
+        "alt": "The Ummah Tech community together in Cape Town"
       },
       {
         "src": "/images/other/coffee-break.jpg",
@@ -105,7 +105,7 @@
   "beliefs": {
     "visible": true,
     "heading": "What we stand for",
-    "lead": "These propositions shape what we build and how we build it.",
+    "lead": "The principles we are shaping the Ummah Tech community around ",
     "items": [
       {
         "title": "_Niyyah_ (sincere intention).",
@@ -113,26 +113,26 @@
       },
       {
         "title": "Technological independence.",
-        "body": "Striving for independence in technology to secure the Ummah's future."
+        "body": "Striving for technological independence to secure the Ummah's future."
       },
       {
         "title": "Values-based technology design.",
-        "body": "Technology is not neutral. We design and deploy it consciously, embedding Islamic values of justice, fairness and integrity in its foundations."
+        "body": "Technology is not neutral. We design consciously with our Islamic values of justice, fairness and integrity. "
       },
       {
-        "title": "Rethinking progress.",
-        "body": "Progress measured beyond GDP and consumption: justice, poverty reduction, morality and flourishing communities."
+        "title": "Purpose and profit ",
+        "body": "Seeking to build tech that is purposeful and profitable. "
       },
       {
-        "title": "Creativity and innovation.",
-        "body": "We encourage futuristic thinking, keeping Muslim technologists at the forefront of global tech."
+        "title": "Creativity and innovation",
+        "body": "Keeping Muslim technologists at the forefront of global tech."
       }
     ]
   },
   "contact": {
     "visible": true,
-    "heading": "Get in touch.",
-    "description": "Questions, speaking or partnership. Tell us what you're reaching out about and it reaches the right person.",
+    "heading": "Get in touch",
+    "description": "Whether you'd like to partner with us, speak at an event or simply start a conversation, we'd love to hear from you.\n\nDrop us a message below and we'll be in touch.",
     "successMessage": "Thanks, we've got your message. We'll get back to you soon."
   }
 }
