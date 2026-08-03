@@ -19,7 +19,6 @@ import Vision from '@/components/sections/vision';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { home as rawHome } from '@/lib/home';
 import { resolveHomeImages } from '@/lib/images';
-import { site } from '@/lib/site';
 
 // Optimize every CMS image path (resize + WebP + srcset) at build time; the
 // sections receive plain optimized props — see src/lib/images.ts.
@@ -29,14 +28,8 @@ const home = await resolveHomeImages(rawHome);
 <!-- darkHero: the hero is a `.dark` full-bleed band, so the navbar uses its
      light-on-dark treatment at scroll-top. -->
 <DefaultLayout darkHero>
-  <!-- Hero → statement, date/venue, ticket CTA, WhatsApp community invite,
-       social links, rotating photo grid. Social links are cross-fed from Site
-       settings so the CMS holds that list once. -->
-  {
-    home.hero.visible && (
-      <Hero content={home.hero} socials={site.socials} client:load />
-    )
-  }
+  <!-- Hero → statement, date/venue, ticket CTA, rotating photo grid. -->
+  {home.hero.visible && <Hero content={home.hero} client:load />}
 
   <!-- Vision → large centered statement with hover photo previews -->
   {home.vision.visible && <Vision content={home.vision} client:visible />}

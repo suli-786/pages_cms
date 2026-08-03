@@ -7,45 +7,24 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 
 import { CtaButton } from '@/components/elements/cta-button';
 import { renderEmphasis } from '@/components/elements/emphasis';
-import { SocialGlyph } from '@/components/elements/social-icons';
-import { SocialLinks } from '@/components/elements/social-links';
 import type { ResolvedHeroContent, ResolvedImage } from '@/lib/images';
-import type { SocialLink } from '@/lib/site';
-import { cn, isExternal } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 // Adapted from @shadcnblocks/hero272: a split layout with a stacked, divided
-// left column and a nine-cell photo grid that rotates on a timer. The three
-// left bands carry the conference's pitch — the bracket-framed statement, the
-// ticket CTA with the date/venue beside it, and "stay connected" (the WhatsApp
-// community invite + social links). Social links come from Site settings so
-// the whole site shares one list.
+// left column and a nine-cell photo grid that rotates on a timer. The two left
+// bands carry the conference's pitch — the bracket-framed statement, and the
+// ticket CTA with the date/venue beside it.
 const GRID_SIZE = 9;
 const ROTATION_INTERVAL = 7000; // ms
 
 // Icons for the event-details strip, matched to eventDetails by position.
 const detailIcons: LucideIcon[] = [CalendarDays, MapPin];
 
-function Hero({
-  content,
-  socials = [],
-}: {
-  content: ResolvedHeroContent;
-  socials?: SocialLink[];
-}) {
-  const {
-    title,
-    eventDetails = [],
-    primaryCta,
-    community,
-    socialsLabel,
-    gallery = [],
-  } = content;
+function Hero({ content }: { content: ResolvedHeroContent }) {
+  const { title, eventDetails = [], primaryCta, gallery = [] } = content;
 
   const galleryImages = gallery.filter((g) => g.src);
   const hasGallery = galleryImages.length > 0;
-  const hasCommunity = Boolean(community.body || community.cta.label);
-  // The `whatsapp` CMS token is already resolved to a real URL by lib/home.ts.
-  const communityHref = community.cta.href;
 
   return (
     <section className="dark bg-background text-foreground relative overflow-hidden">
@@ -80,52 +59,49 @@ function Hero({
               </div>
             </div>
 
-            {/* Band 2 — the ticket CTA and when/where, left-packed on one line
-                like the bands above and below it. Even gaps throughout — no
-                justify-between, which stranded the venue at the far edge with
-                dead space between. The row still wraps as a safety net rather
-                than clipping: the band is half the grid from lg, so its width
-                doesn't track the viewport's and a hard breakpoint would be
-                wrong at some size. On a phone the details stack to keep the
-                whole band on one line (see below); that holds down to 360px,
-                and 320px falls back to wrapping — the content is 270px wide
-                against 238px of band there, so nothing can straighten it. */}
+            {/* Band 2 — when/where, then the ticket CTA as the band's closing
+                action. Removing band 3 gave this band roughly half the column
+                instead of a third, so everything steps up: the details read as
+                real typography rather than a caption, and the button is
+                unmistakably the hero's primary action.
+
+                The details and the button take separate rows rather than
+                sharing one wrapping line. At these sizes a single row
+                overflows the band from lg (the band is half the grid, so its
+                width doesn't track the viewport) and would wrap at some widths
+                but not others — two rows behave identically at every width and
+                give the button its own weight.
+
+                Phone: details stack vertically above a full-width button —
+                side-by-side details need ~269px against the 238px of band
+                available at 320px, so stacking is what keeps 320px free of
+                horizontal scroll. From sm the details sit on one line. */}
             <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-6 sm:gap-x-10">
-                <CtaButton
-                  size="lg"
-                  className="shrink-0 px-4 text-[13px] sm:px-6 sm:text-sm"
-                  cta={primaryCta}
-                />
+              <div className="flex flex-col items-stretch gap-6 sm:items-start md:gap-8">
                 {eventDetails.length > 0 && (
-                  // On a phone the two details stack into the button's own
-                  // height (h-12, justify-between spreads them top and bottom),
-                  // so the band reads as one line: CTA, then when/where beside
-                  // it. From sm there is room to lay them out side by side and
-                  // the height constraint is dropped.
-                  <ul className="flex h-12 flex-col justify-between sm:h-auto sm:flex-row sm:items-center sm:gap-x-10">
+                  <ul className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-x-10 md:gap-x-14">
                     {eventDetails.map((d, i) => {
                       const Icon = detailIcons[i] ?? CalendarDays;
                       return (
                         <li
                           key={`${d.label}-${i}`}
-                          className="flex items-center gap-2 sm:gap-2.5"
+                          className="flex items-center gap-2.5 sm:gap-3"
                         >
                           <Icon
                             aria-hidden
-                            className="text-accent size-4 shrink-0 sm:size-5"
+                            className="text-accent size-5 shrink-0 sm:size-6 md:size-7"
                             strokeWidth={1.5}
                           />
-                          {/* The label is an eyebrow above the value from sm,
-                              where both items then share one silhouette. On a
-                              phone there is no room for a second line inside
-                              the button's height, so it stays for screen
-                              readers only and the icon carries it visually. */}
+                          {/* Label as an eyebrow above the value. It is now
+                              visible at every width — the vertical stack on a
+                              phone has the room the old single-line band did
+                              not, so the icon no longer has to carry the
+                              meaning alone visually. */}
                           <span>
-                            <span className="sm:text-foreground/55 sr-only sm:not-sr-only sm:block sm:text-[11px] sm:tracking-[0.16em] sm:uppercase">
+                            <span className="text-foreground/55 block text-[11px] tracking-[0.16em] uppercase sm:text-xs">
                               {d.label}
                             </span>
-                            <span className="block text-[13px] font-medium whitespace-nowrap sm:text-sm">
+                            <span className="block text-base font-medium whitespace-nowrap sm:text-lg md:text-xl">
                               {d.value}
                             </span>
                           </span>
@@ -134,62 +110,18 @@ function Hero({
                     })}
                   </ul>
                 )}
+                {/* Full-width on a phone (a 52px-tall edge-to-edge target),
+                    natural width from sm. The arrow is scaled up with the
+                    button — CtaButton hard-codes size-4 on it, which reads as
+                    undersized next to text-lg. */}
+                <CtaButton
+                  size="lg"
+                  className="h-13 w-full px-6 text-sm [&_svg]:size-5 sm:h-14 sm:w-auto sm:px-8 sm:text-base md:h-16 md:px-10 md:text-lg md:[&_svg]:size-6"
+                  cta={primaryCta}
+                />
               </div>
             </div>
 
-            {/* Band 3 — stay connected: the WhatsApp community invite moved down
-                to sit with the social links. */}
-            {((hasCommunity && community.cta.label && communityHref) ||
-              socials.length > 0) && (
-              <div className="flex flex-1 flex-col justify-center gap-4 p-6 md:p-8">
-                {socialsLabel && (
-                  <p className="text-foreground/70 text-sm font-medium tracking-tight">
-                    {socialsLabel}
-                  </p>
-                )}
-                {community.body && (
-                  <p className="text-foreground/70 max-w-md text-sm text-pretty">
-                    {community.body}
-                  </p>
-                )}
-                {/* The WhatsApp community leads as a labelled pill — it's the
-                    year-round invite, not one more platform icon — with the
-                    Site-settings socials beside it. The row wraps between the
-                    two; the icons themselves never wrap (`wrap={false}`), so
-                    they hold one line at every width. Measured floors below sm
-                    (size-8 icons, 1.5 gap, inside this band's padding): six
-                    icons need a 304px viewport, seven need 342px, eight 380px.
-                    Six is what Site settings ships, so a seventh platform
-                    breaks 320px phones unless social-links.tsx' `md` sizes
-                    come down with it. */}
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
-                  {hasCommunity && community.cta.label && communityHref && (
-                    // Shrinkable, and the label wraps rather than being held on
-                    // one line: at its natural width the pill is wider than the
-                    // band's content box on a 320px phone, and pinning it would
-                    // eat the band's right padding. Flex only shrinks it once
-                    // the icons have wrapped to their own line, so the two never
-                    // squeeze each other.
-                    <a
-                      href={communityHref}
-                      {...(isExternal(communityHref)
-                        ? { target: '_blank', rel: 'noopener noreferrer' }
-                        : {})}
-                      className="border-foreground/15 text-foreground hover:border-accent hover:bg-accent/10 focus-visible:ring-ring inline-flex min-h-11 max-w-full min-w-0 items-center gap-2 rounded-4xl border px-4 py-2 text-[13px] font-medium transition-colors outline-none focus-visible:ring-2 sm:gap-2.5 sm:px-5 sm:text-sm"
-                    >
-                      <SocialGlyph
-                        platform="whatsapp"
-                        className="text-accent size-4 shrink-0 sm:size-[18px]"
-                      />
-                      {community.cta.label}
-                    </a>
-                  )}
-                  {socials.length > 0 && (
-                    <SocialLinks socials={socials} size="md" wrap={false} />
-                  )}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Rotating photo grid — ambient event imagery, hidden from AT */}

@@ -15,8 +15,8 @@ export type ResolvedPartnerContent = Omit<PartnerContent, 'partners'> & {
 export async function resolvePartnerImages(
   partner: PartnerContent,
 ): Promise<ResolvedPartnerContent> {
-  // The current-partners logos, with the same tier-appropriate policies as
-  // the homepage's partners section (the two render identically).
+  // The current-partners logos, resolved exactly as the homepage's partners
+  // section does (the two render identically).
   const items = await resolvePartnerLogos(partner.partners.items);
   return { ...partner, partners: { ...partner.partners, items } };
 }

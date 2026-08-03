@@ -69,7 +69,7 @@ export const strList = z.preprocess(
  * (a cleared select, a value a developer has since removed) lands on
  * `fallback` rather than failing the build. Pass the same const array that
  * drives the matching `select` in .pages.yml, so the vocabulary has one
- * source per field (e.g. ICON_NAMES, PARTNER_TIERS).
+ * source per field (e.g. ICON_NAMES).
  */
 export const enumOr = <T extends string>(
   values: readonly T[],
@@ -122,18 +122,19 @@ export const contactSchema = z.object({
 });
 
 /**
- * The shared partners section (components/sections/partners.tsx): framed
- * spotlights for the headline/supporting display tiers, the counter-scrolling
- * marquee for regular. Rendered on the homepage (previous partners) and the
+ * The shared partners section (components/sections/partners.tsx): one flat,
+ * unranked counter-scrolling marquee — there are no display tiers (user
+ * decision, 2026-08-03). Rendered on the homepage (previous partners) and the
  * Partner page (current partners — hidden there while the list is empty).
  * Promoted from lib/home.ts once the Partner page reused the section.
+ *
+ * `href` is retained on each logo but is not currently rendered: marquee logos
+ * are deliberately non-clickable because they are moving targets.
  */
 export const partnerLogoSchema = z.object({
   src: str,
   alt: str,
   href: link,
-  // Anything unrecognised (cleared select, legacy items) lands in `regular`.
-  tier: enumOr(['headline', 'supporting', 'regular'], 'regular'),
 });
 
 export const partnersSchema = z.object({

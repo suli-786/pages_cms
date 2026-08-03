@@ -15,7 +15,10 @@ import { Button } from '@/components/ui/button';
 import { NAV_LINKS } from '@/consts';
 import { cn } from '@/lib/utils';
 
-const CTA = { label: 'Get Tickets', href: '/#contact' };
+const CTA = {
+  label: 'Get Tickets',
+  href: 'https://www.quicket.co.za/events/387499-ummah-tech-2026/#/',
+};
 
 // Hardcoded Ummah Tech lockup: brand mark + wordmark. Both SVGs are decorative
 // here — the wrapping link carries the accessible name. The wordmark inherits
@@ -250,7 +253,7 @@ function Navbar({
                 )}
                 asChild
               >
-                <a href={CTA.href}>
+                <a href={CTA.href} target="_blank" rel="noopener noreferrer">
                   {CTA.label}
                   <ArrowRight
                     aria-hidden
@@ -344,7 +347,12 @@ function Navbar({
 
               <div className="mt-auto pt-8">
                 <Button size="lg" className="w-full" asChild>
-                  <a href={CTA.href} onClick={() => setMenuOpen(false)}>
+                  <a
+                    href={CTA.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     {CTA.label}
                     <ArrowRight
                       aria-hidden

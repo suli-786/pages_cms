@@ -33,7 +33,10 @@ function Footer({
   const connectLinks = [
     { label: 'hello@ummahtech.net', href: 'mailto:hello@ummahtech.net' },
     { label: 'WhatsApp community', href: whatsapp || '#' },
-    { label: 'Get tickets', href: '/#contact' },
+    {
+      label: 'Get tickets',
+      href: 'https://www.quicket.co.za/events/387499-ummah-tech-2026/#/',
+    },
   ];
 
   return (

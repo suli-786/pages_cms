@@ -6,16 +6,13 @@
 //
 // Pro blocks adapted into the template's design:
 //   why.tsx    ← @shadcnblocks/feature203
-//   tiers.tsx  ← @shadcnblocks/pricing23 (comparison matrix, no prices)
 // The other sections are shared with the rest of the site: the intro band
-// (promoted from the About page), the partners section (the homepage's framed
-// spotlights + marquee, here holding CURRENT partners) and the closing
+// (promoted from the About page), the partners section (the homepage's
+// unranked logo marquee, here holding CURRENT partners) and the closing
 // contact section (the homepage's form, preselected on the Partner enquiry
-// type). Two client: islands — the tiers matrix (its mobile tier switcher;
-// hydrated via client:media on small screens only) and the contact form.
+// type). One client: island — the contact form.
 import Contact from '@/components/sections/contact';
 import PageIntro from '@/components/sections/page-intro';
-import Tiers from '@/components/sections/partner/tiers';
 import Why from '@/components/sections/partner/why';
 import Partners from '@/components/sections/partners';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
@@ -29,7 +26,7 @@ const partner = await resolvePartnerImages(rawPartner);
 
 <DefaultLayout
   title="Partner With Us — Ummah Tech"
-  description="Partner with Ummah Tech: put your organisation behind South Africa's community of Muslim technologists, founders and creatives — three partnership tiers around the annual conference and a year-round community."
+  description="Partner with Ummah Tech: put your organisation behind South Africa's community of Muslim technologists, founders and creatives — the annual conference and a year-round community."
 >
   <!-- Intro → bracketed statement. Carries the page's h1. -->
   {partner.intro.visible && <PageIntro content={partner.intro} />}
@@ -43,14 +40,6 @@ const partner = await resolvePartnerImages(rawPartner);
   {
     partner.partners.visible && partner.partners.items.length > 0 && (
       <Partners content={partner.partners} />
-    )
-  }
-
-  <!-- Partnership tiers → comparison matrix, no prices; prospectus by email.
-       JS only serves the mobile tier switcher, so hydrate below md only. -->
-  {
-    partner.tiers.visible && (
-      <Tiers content={partner.tiers} client:media="(max-width: 767px)" />
     )
   }
 

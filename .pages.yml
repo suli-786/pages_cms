@@ -223,24 +223,15 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.alt}'
-            description: 'Grouped by tier: Headline and Supporting logos get a square framed spotlight (labelled by tier), Regular logos scroll in the marquee. Order within the list is the order within each tier.'
+            description: 'Every partner is shown the same way, in one scrolling row — there are no tiers. The list order is the order they scroll in.'
             fields:
               - { name: src, label: Logo, type: image }
               - { name: alt, label: Name / alt text, type: string }
-              - name: tier
-                label: Tier
-                type: select
-                default: regular
-                options:
-                  values:
-                    - { value: headline, label: Headline }
-                    - { value: supporting, label: Supporting }
-                    - { value: regular, label: Regular }
               - {
                   name: href,
                   label: Website (optional),
                   type: string,
-                  description: 'Headline and Supporting logos become links when this is a full URL. The scrolling Regular logos are never clickable.',
+                  description: 'Not shown on the site at the moment — the scrolling logos are never clickable, because they are moving targets. Kept so the address is on record.',
                 }
 
       - name: finalCta
@@ -505,9 +496,9 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
-      # The same partners section as the homepage (framed spotlights +
-      # scrolling row), here holding the CURRENT partners. Mirrors the shared
-      # partnersSchema in src/lib/content.ts.
+      # The same partners section as the homepage (one unranked scrolling row),
+      # here holding the CURRENT partners. Mirrors the shared partnersSchema in
+      # src/lib/content.ts.
       - name: partners
         label: 3. Current partners
         type: object
@@ -522,66 +513,22 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.alt}'
-            description: 'The whole section stays hidden on the site until the first partner is added here. Headline and Supporting logos get a square framed spotlight (labelled by tier), Regular logos scroll in the marquee — e.g. Platinum → Headline, Gold → Supporting, Silver → Regular. Order within the list is the order within each tier.'
+            description: 'The whole section stays hidden on the site until the first partner is added here. Every partner is shown the same way, in one scrolling row — there are no tiers. The list order is the order they scroll in.'
             fields:
               - { name: src, label: Logo, type: image }
               - { name: alt, label: Name / alt text, type: string }
-              - name: tier
-                label: Tier
-                type: select
-                default: regular
-                options:
-                  values:
-                    - { value: headline, label: Headline }
-                    - { value: supporting, label: Supporting }
-                    - { value: regular, label: Regular }
               - {
                   name: href,
                   label: Website (optional),
                   type: string,
-                  description: 'Headline and Supporting logos become links when this is a full URL. The scrolling Regular logos are never clickable.',
+                  description: 'Not shown on the site at the moment — the scrolling logos are never clickable, because they are moving targets. Kept so the address is on record.',
                 }
-
-      # A comparison matrix. The three tier columns (Platinum / Gold / Silver)
-      # are fixed — they mirror PARTNER_TIERS in src/lib/partner.ts; only the
-      # rows are edited here. No prices on purpose — current pricing goes in
-      # the prospectus you email to interested organisations.
-      - name: tiers
-        label: 4. Partnership tiers
-        type: object
-        fields:
-          - { name: visible, component: visible }
-          - { name: heading, label: Heading, type: string }
-          - { name: lead, label: Intro paragraph, type: text }
-          - name: groups
-            label: Comparison rows
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: '{fields.heading}'
-            description: 'Groups of rows in the tier table, e.g. Allocation (numbers) and Benefits (ticks).'
-            fields:
-              - { name: heading, label: Group heading, type: string }
-              - name: rows
-                label: Rows
-                type: object
-                list:
-                  collapsible:
-                    collapsed: true
-                    summary: '{fields.label}'
-                description: 'One row per benefit. Fill each tier''s cell: leave it empty if not included, write yes for a tick, or short text shown as-is (e.g. 1, 8, Premium).'
-                fields:
-                  - { name: label, label: Benefit, type: string }
-                  - { name: platinum, label: Platinum, type: string }
-                  - { name: gold, label: Gold, type: string }
-                  - { name: silver, label: Silver, type: string }
 
       # The same contact section as the homepage (one form, three enquiry
       # types), with this page's own copy; on this page the form opens
       # preselected on "Partner With Us".
       - name: contact
-        label: 5. Contact
+        label: 4. Contact
         type: object
         fields:
           - { name: visible, component: visible }

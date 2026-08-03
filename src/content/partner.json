@@ -34,88 +34,60 @@
     "visible": true,
     "heading": "Our 2026 partners",
     "description": "The organisations partnering with Ummah Tech 2026, at every tier.",
-    "items": []
-  },
-  "tiers": {
-    "visible": true,
-    "heading": "Partnership tiers",
-    "lead": "Three tiers, scaled by prominence. Each includes everything in the tier below it, and complimentary tickets come with all three.",
-    "groups": [
+    "items": [
       {
-        "heading": "Allocation",
-        "rows": [
-          {
-            "label": "Slots available",
-            "platinum": "1",
-            "gold": "3",
-            "silver": "6"
-          },
-          {
-            "label": "Free tickets",
-            "platinum": "8",
-            "gold": "4",
-            "silver": "2"
-          }
-        ]
+        "src": "/images/partners/Ashraful aid logo.png",
+        "alt": "Ashraful Aid",
+        "href": "#"
       },
       {
-        "heading": "Benefits",
-        "rows": [
-          {
-            "label": "Speaker slot or panel discussion",
-            "platinum": "yes",
-            "gold": "",
-            "silver": ""
-          },
-          {
-            "label": "Lanyard branding",
-            "platinum": "yes",
-            "gold": "",
-            "silver": ""
-          },
-          {
-            "label": "Placement at the venue",
-            "platinum": "Premium",
-            "gold": "yes",
-            "silver": ""
-          },
-          {
-            "label": "Propose a topic and speaker",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
-          },
-          {
-            "label": "Branding on the ticketing website",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
-          },
-          {
-            "label": "Branding on social media posts",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": ""
-          },
-          {
-            "label": "Branding on the event website",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": "yes"
-          },
-          {
-            "label": "Partnership announcement — social media & WhatsApp",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": "yes"
-          },
-          {
-            "label": "Exhibition table",
-            "platinum": "yes",
-            "gold": "yes",
-            "silver": "yes"
-          }
-        ]
+        "src": "/images/partners/Awqaf logo.png",
+        "alt": "Awqaf SA",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/1.png",
+        "alt": "Partner 3",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/10.png",
+        "alt": "Partner 4",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/4.png",
+        "alt": "Partner 5",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/7.png",
+        "alt": "Partner 6",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/9.png",
+        "alt": "Partner 7",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/6.png",
+        "alt": "Partner 8",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/5.png",
+        "alt": "Partner 9",
+        "href": "#"
+      },
+      {
+        "src": "/images/partners/2.png"
+      },
+      {
+        "src": "/images/partners/3.png"
+      },
+      {
+        "src": "/images/partners/8.png"
       }
     ]
   },

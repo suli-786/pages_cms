@@ -14,7 +14,7 @@
     ],
     "primaryCta": {
       "label": "Get Tickets",
-      "href": "#contact"
+      "href": "https://www.quicket.co.za/events/387499-ummah-tech-2026/#/"
     },
     "community": {
       "cta": {
@@ -203,68 +203,56 @@
       {
         "src": "/images/partners/Ashraful aid logo.png",
         "alt": "Ashraful Aid",
-        "tier": "headline",
         "href": "#"
       },
       {
         "src": "/images/partners/Awqaf logo.png",
         "alt": "Awqaf SA",
-        "tier": "supporting",
         "href": "#"
       },
       {
         "src": "/images/partners/1.png",
         "alt": "Partner 3",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/10.png",
         "alt": "Partner 4",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/4.png",
         "alt": "Partner 5",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/7.png",
         "alt": "Partner 6",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/9.png",
         "alt": "Partner 7",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/6.png",
         "alt": "Partner 8",
-        "tier": "regular",
         "href": "#"
       },
       {
         "src": "/images/partners/5.png",
         "alt": "Partner 9",
-        "tier": "regular",
         "href": "#"
       },
       {
-        "src": "/images/partners/2.png",
-        "tier": "regular"
+        "src": "/images/partners/2.png"
       },
       {
-        "src": "/images/partners/3.png",
-        "tier": "regular"
+        "src": "/images/partners/3.png"
       },
       {
-        "src": "/images/partners/8.png",
-        "tier": "regular"
+        "src": "/images/partners/8.png"
       }
     ]
   },
@@ -275,7 +263,7 @@
     "date": "2026-11-07",
     "cta": {
       "label": "Get Tickets",
-      "href": "#contact"
+      "href": "https://www.quicket.co.za/events/387499-ummah-tech-2026/#/"
     },
     "image": {
       "src": "/images/other/02.jpg",
