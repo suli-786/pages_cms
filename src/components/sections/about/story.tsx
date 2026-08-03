@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+import { FramedCta } from '@/components/elements/framed-cta';
 import type { ResolvedStoryContent } from '@/lib/images-about';
 import { cn } from '@/lib/utils';
 
@@ -75,16 +76,26 @@ function Story({ content }: { content: ResolvedStoryContent }) {
               floating navbar reappears on upward scroll it sits INSIDE this
               bar — 86px = the navbar's 12px offset + its 62px pill + an equal
               12px below (measured from navbar.tsx: mt-3 + p-2.5 + size-10
-              content + borders). Change the pill, re-measure this. */}
+              content + borders). Change the pill, re-measure this.
+
+              The index reads "Level N", zero-based (Level 0 → Level 2 for
+              these three rows) — user decision, 2026-08-03: ties it to the
+              "Level 1 | Building Madinah" / "Level 2 | Growing Madinah"
+              language already in the milestone titles, with the first
+              milestone standing as Level 0. Sized down from the date beside
+              it (was the same size as the date, matching the old 2-digit
+              "01"): "Level 2" is much wider than "02", so the size and date
+              now have their own classes instead of inheriting one shared
+              size from the parent. */}
           <div
             aria-hidden
             className="border-border bg-background sticky top-0 z-10 h-[86px] border-y"
           >
-            <div className="container flex h-full items-center justify-between gap-4 font-mono text-2xl md:text-4xl">
-              <p className="text-muted-foreground">
-                {String(activeIndex + 1).padStart(2, '0')}
+            <div className="container flex h-full items-center justify-between gap-4 font-mono">
+              <p className="text-muted-foreground -ms-1 text-xl md:text-3xl">
+                {`Level[${activeIndex}]`}
               </p>
-              <p>{rows[activeIndex]?.date}</p>
+              <p className="text-2xl md:text-4xl">{rows[activeIndex]?.date}</p>
             </div>
           </div>
 
@@ -96,7 +107,15 @@ function Story({ content }: { content: ResolvedStoryContent }) {
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
-                  className="flex flex-col items-center gap-7 py-14 md:flex-row md:gap-10 md:py-20"
+                  className={cn(
+                    'flex flex-col items-center gap-7 py-14 md:flex-row md:gap-10 md:py-20',
+                    // Stretch this row's two columns to equal height (image,
+                    // text) ONLY when there's a CTA to anchor to the bottom —
+                    // the other rows keep their vertically-centered look.
+                    milestone.cta.label &&
+                      milestone.cta.href &&
+                      'md:items-stretch',
+                  )}
                 >
                   {/* The block dims whole inactive rows to 50%; here the photo
                       takes the full dim but the text floor is 85% — 50% drops
@@ -121,18 +140,40 @@ function Story({ content }: { content: ResolvedStoryContent }) {
                   )}
                   <div
                     className={cn(
-                      'opacity-85 transition-opacity duration-300',
+                      'flex flex-col gap-6 opacity-85 transition-opacity duration-300',
                       index === activeIndex && 'opacity-100',
                     )}
                   >
-                    <h3 className="mb-3 text-2xl font-medium tracking-tight text-pretty md:mb-4 md:text-4xl">
-                      <span className="sr-only">{milestone.date}: </span>
-                      {milestone.title}
-                    </h3>
-                    {milestone.body && (
-                      <p className="text-muted-foreground leading-relaxed text-pretty md:text-balance">
-                        {milestone.body}
-                      </p>
+                    <div>
+                      <h3 className="mb-3 text-2xl font-medium tracking-tight text-pretty md:mb-4 md:text-4xl">
+                        <span className="sr-only">{milestone.date}: </span>
+                        {milestone.title}
+                      </h3>
+                      {milestone.body && (
+                        <p className="text-muted-foreground leading-relaxed text-pretty md:text-balance">
+                          {milestone.body}
+                        </p>
+                      )}
+                    </div>
+                    {/* Same framed CTA as Speakers/Partners — set on the
+                        upcoming milestone only (2026, "Coming up: Level[2]")
+                        to sell tickets right where the reader's attention
+                        already is. No margin trick: the frame's own edge
+                        (where the corner brackets sit) lines up with the
+                        heading/body above it because neither has extra
+                        padding — that's what "aligned with the start of
+                        text" means here, not the label inside the frame.
+                        md:mt-auto sinks it to the bottom of this column,
+                        which — with items-stretch on the row above — is the
+                        image's own bottom edge, not just whatever height the
+                        text happens to need. */}
+                    {milestone.cta.label && milestone.cta.href && (
+                      <div className="md:mt-auto">
+                        <FramedCta
+                          label={milestone.cta.label}
+                          href={milestone.cta.href}
+                        />
+                      </div>
                     )}
                   </div>
                 </li>

@@ -141,6 +141,7 @@ export const partnersSchema = z.object({
   visible,
   heading: str,
   description: str,
+  cta: ctaSchema,
   items: list(partnerLogoSchema),
 });
 

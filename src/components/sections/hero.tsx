@@ -10,10 +10,28 @@ import { renderEmphasis } from '@/components/elements/emphasis';
 import type { ResolvedHeroContent, ResolvedImage } from '@/lib/images';
 import { cn } from '@/lib/utils';
 
-// Adapted from @shadcnblocks/hero272: a split layout with a stacked, divided
-// left column and a nine-cell photo grid that rotates on a timer. The two left
-// bands carry the conference's pitch — the bracket-framed statement, and the
-// ticket CTA with the date/venue beside it.
+// Adapted from @shadcnblocks/hero272, restructured (user decision, 2026-08-03).
+//
+// The frame is a plate + a rail:
+//   plate → the bracket-framed statement (left) and the rotating photo grid
+//           (right), side by side from lg
+//   rail  → a full-frame-width row beneath both, carrying the hard facts and
+//           the action as hairline-divided cells: DATE | VENUE | Get Tickets
+//
+// Why the rail spans the whole frame rather than sitting in the left column,
+// as it used to: the left column is HALF the grid from lg, so it is *narrower*
+// at 1024px (430px) than at 768px (670px) — the band lost width exactly as the
+// screen gained it. One line of date + venue + button needs ~619px at the
+// sizes we want, which never fit that column below 1536px. Spanning the frame
+// turns 430px into ~990px at 1024px and makes the available width grow
+// monotonically with the viewport, so the cliff stops existing and the type
+// can get bigger on desktop instead of smaller.
+//
+// DOM order is headline → rail → photos, which is also the mobile visual
+// order: the ticket CTA stays above the fold instead of being buried under the
+// photo grid. From lg the three are placed explicitly onto a 2×2 grid. The
+// photo grid is decorative and aria-hidden, so keeping it last costs nothing
+// for assistive tech and puts the CTA earlier in the tab order.
 const GRID_SIZE = 9;
 const ROTATION_INTERVAL = 7000; // ms
 
@@ -59,50 +77,68 @@ function Hero({ content }: { content: ResolvedHeroContent }) {
               </div>
             </div>
 
-            {/* Band 2 — when/where, then the ticket CTA as the band's closing
-                action. Removing band 3 gave this band roughly half the column
-                instead of a third, so everything steps up: the details read as
-                real typography rather than a caption, and the button is
-                unmistakably the hero's primary action.
+            {/* Band 2 — date, venue and the ticket button, always on one line.
+                No dividers: this is one row of the band, not a table.
 
-                The details and the button take separate rows rather than
-                sharing one wrapping line. At these sizes a single row
-                overflows the band from lg (the band is half the grid, so its
-                width doesn't track the viewport) and would wrap at some widths
-                but not others — two rows behave identically at every width and
-                give the button its own weight.
+                Everything here sizes off the BAND's own width (@container/band)
+                rather than the viewport, because the two disagree: the band is
+                half the grid from lg, so it is 670px wide at a 768px viewport
+                but only 430px at 1024px. It gets NARROWER as the screen gets
+                wider. A viewport breakpoint would therefore set the type from
+                the wrong number and overflow at exactly 1024px; a container
+                query reads the space that actually exists.
 
-                Phone: details stack vertically above a full-width button —
-                side-by-side details need ~269px against the 238px of band
-                available at 320px, so stacking is what keeps 320px free of
-                horizontal scroll. From sm the details sit on one line. */}
-            <div className="flex flex-1 flex-col justify-center p-6 md:p-8">
-              <div className="flex flex-col items-stretch gap-6 sm:items-start md:gap-8">
+                Thresholds, against measured band widths
+                (320→238, 360→278, 375→293, 640→558, 768→670, 900→802,
+                1023→925, 1024→430, 1280→558, 1440→634, 1536→634):
+                  <400px  short values ("7 Nov 2026" / "JHB"), 14px, no arrow
+                  ≥400px  full values, 14px      — this is the 1024px case
+                  ≥520px  full values, 16px
+                  ≥600px  full values, 20px      — this is the common
+                          1440-1920px desktop case (band plateaus at 634px:
+                          used width at this tier measures 532px, so 102px of
+                          margin — was previously stuck one tier down at 16px
+                          only because the old 660px threshold missed 634px by
+                          26px, wasting that headroom)
+                  ≥800px  full values, 20px, larger icon/button chrome — the
+                          768-1023px single-column zone, which has 270-390px
+                          to spare even at the 600px tier
+                Below ~340px of band there is no arrangement that fits, so the
+                row wraps rather than overflowing — horizontal scroll at 320px
+                would fail WCAG 1.4.10 Reflow; wrapping does not. */}
+            <div className="@container/band flex flex-col justify-center p-6 md:p-8">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-4 @[400px]/band:gap-x-3 @[520px]/band:gap-x-6 @[600px]/band:gap-x-8 @[800px]/band:gap-x-10">
                 {eventDetails.length > 0 && (
-                  <ul className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-x-10 md:gap-x-14">
+                  <ul className="flex shrink-0 items-center gap-x-2 @[400px]/band:gap-x-3 @[520px]/band:gap-x-6 @[600px]/band:gap-x-8 @[800px]/band:gap-x-10">
                     {eventDetails.map((d, i) => {
                       const Icon = detailIcons[i] ?? CalendarDays;
                       return (
                         <li
                           key={`${d.label}-${i}`}
-                          className="flex items-center gap-2.5 sm:gap-3"
+                          className="flex items-center gap-1.5 @[400px]/band:gap-2 @[520px]/band:gap-3 @[800px]/band:gap-4"
                         >
                           <Icon
                             aria-hidden
-                            className="text-accent size-5 shrink-0 sm:size-6 md:size-7"
+                            className="text-accent size-4 shrink-0 @[520px]/band:size-5 @[600px]/band:size-6 @[800px]/band:size-7"
                             strokeWidth={1.5}
                           />
-                          {/* Label as an eyebrow above the value. It is now
-                              visible at every width — the vertical stack on a
-                              phone has the room the old single-line band did
-                              not, so the icon no longer has to carry the
-                              meaning alone visually. */}
                           <span>
-                            <span className="text-foreground/55 block text-[11px] tracking-[0.16em] uppercase sm:text-xs">
+                            <span className="text-foreground/55 block text-[10px] tracking-[0.16em] uppercase @[520px]/band:text-[11px]">
                               {d.label}
                             </span>
-                            <span className="block text-base font-medium whitespace-nowrap sm:text-lg md:text-xl">
-                              {d.value}
+                            {/* The short form is a separate element rather than
+                                a swapped string: `hidden` drops the unused one
+                                out of the accessibility tree, so a screen
+                                reader reads exactly one value, never both.
+                                Falls back to the full value when the CMS has
+                                no short form. */}
+                            <span className="block text-sm font-medium whitespace-nowrap @[520px]/band:text-base @[600px]/band:text-xl">
+                              <span className="@[400px]/band:hidden">
+                                {d.short || d.value}
+                              </span>
+                              <span className="hidden @[400px]/band:inline">
+                                {d.value}
+                              </span>
                             </span>
                           </span>
                         </li>
@@ -110,18 +146,17 @@ function Hero({ content }: { content: ResolvedHeroContent }) {
                     })}
                   </ul>
                 )}
-                {/* Full-width on a phone (a 52px-tall edge-to-edge target),
-                    natural width from sm. The arrow is scaled up with the
-                    button — CtaButton hard-codes size-4 on it, which reads as
-                    undersized next to text-lg. */}
+                {/* The arrow only appears once the band can afford it — it
+                    costs ~24px, which is the difference between fitting and
+                    not at 360px. h-11 keeps a 44px touch target at every
+                    width (WCAG 2.5.8). */}
                 <CtaButton
                   size="lg"
-                  className="h-13 w-full px-6 text-sm [&_svg]:size-5 sm:h-14 sm:w-auto sm:px-8 sm:text-base md:h-16 md:px-10 md:text-lg md:[&_svg]:size-6"
+                  className="h-11 shrink-0 px-2.5 text-sm [&_svg]:hidden @[400px]/band:px-3 @[400px]/band:[&_svg]:inline @[400px]/band:[&_svg]:size-4 @[520px]/band:h-12 @[520px]/band:px-6 @[600px]/band:h-14 @[600px]/band:px-8 @[600px]/band:text-base @[600px]/band:[&_svg]:size-5 @[800px]/band:h-16 @[800px]/band:px-10 @[800px]/band:[&_svg]:size-6"
                   cta={primaryCta}
                 />
               </div>
             </div>
-
           </div>
 
           {/* Rotating photo grid — ambient event imagery, hidden from AT */}

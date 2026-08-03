@@ -14,7 +14,9 @@
     "astro": "astro",
     "check": "astro check && node scripts/check-palettes.mjs",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
-    "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\""
+    "lint": "eslint \"src/**/*.{js,ts,jsx,tsx,astro}\"",
+    "cf-typegen": "wrangler types",
+    "postinstall": "wrangler types"
   },
   "dependencies": {
     "@astrojs/react": "5.0.1",
@@ -47,6 +49,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "4.118.0"
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 
 import {
   AlertCircle,
@@ -23,7 +23,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { useFakeSubmit } from '@/hooks/use-fake-submit';
 import type { ContactContent } from '@/lib/content';
 import { cn } from '@/lib/utils';
 
@@ -62,7 +61,14 @@ const FUNCTIONS = [
   },
 ];
 
-const EMAIL = 'hello@ummahtech.net';
+// The address shown beside the form follows the enquiry type, so it always
+// matches where src/worker.ts actually delivers that submission — keep these
+// two in sync with GENERAL_INBOX / PARTNER_INBOX there.
+const GENERAL_EMAIL = 'hello@ummahtech.net';
+const PARTNER_EMAIL = 'partners@ummahtech.net';
+
+const emailFor = (about: string) =>
+  about === 'partner' ? PARTNER_EMAIL : GENERAL_EMAIL;
 
 const ERROR_MESSAGE = 'Something went wrong. Please try again in a moment.';
 
@@ -84,6 +90,16 @@ function Contact({
     ? FUNCTIONS.filter((f) => functions.includes(f.value))
     : FUNCTIONS;
   const shown = requested.length > 0 ? requested : FUNCTIONS;
+
+  // `about` lives here rather than in ContactForm because BOTH columns depend
+  // on it: the form's select sets it, and the mailto link in the left column
+  // reads it. An unknown defaultFunction would render an empty select
+  // trigger — fall back to the first shown option.
+  const initial = shown.some((f) => f.value === defaultFunction)
+    ? (defaultFunction as string)
+    : shown[0].value;
+  const [about, setAbout] = useState(initial);
+  const email = emailFor(about);
 
   return (
     <section
@@ -143,24 +159,34 @@ function Contact({
               ))}
             </ul>
 
-            <a
-              href={`mailto:${EMAIL}`}
+            {/* Tracks the enquiry type: partner enquiries show the
+                partnerships inbox, everything else the general one. `key`
+                forces a remount on change so the swap crossfades rather than
+                silently substituting the text under the reader's eyes. */}
+            <motion.a
+              key={email}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.25, ease: EASE_OUT }}
+              href={`mailto:${email}`}
               className="group hover:text-accent flex w-fit items-center gap-3 text-2xl font-medium tracking-tight transition-colors md:text-3xl"
             >
-              {EMAIL}
+              {email}
               <MoveUpRight
                 aria-hidden
                 className="size-5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
+            </motion.a>
           </motion.div>
 
           {/* Right — the shared form */}
           <div className="w-full lg:max-w-xl lg:pl-10">
             <ContactForm
               successMessage={successMessage}
-              defaultFunction={defaultFunction}
               functions={shown}
+              about={about}
+              setAbout={setAbout}
+              initial={initial}
             />
           </div>
         </div>
@@ -174,24 +200,44 @@ const fieldClass =
 
 function ContactForm({
   successMessage,
-  defaultFunction,
   functions,
+  about,
+  setAbout,
+  initial,
 }: {
   successMessage: string;
-  defaultFunction?: string;
   functions: typeof FUNCTIONS;
+  // Owned by Contact above — the mailto link in the other column reads it too.
+  about: string;
+  setAbout: (value: string) => void;
+  initial: string;
 }) {
-  // An unknown value would render an empty select trigger — fall back.
-  const initial = functions.some((f) => f.value === defaultFunction)
-    ? (defaultFunction as string)
-    : functions[0].value;
-  const [about, setAbout] = useState(initial);
-  const { status, busy, onSubmit } = useFakeSubmit({
-    onSuccess: (form) => {
+  const [status, setStatus] = useState<
+    'idle' | 'submitting' | 'success' | 'error'
+  >('idle');
+  const busy = status === 'submitting';
+
+  // Posts to src/worker.ts (POST /api/contact), which sends via Cloudflare
+  // Email — see that file for the hello@/partners@ routing. Not
+  // react-hook-form/zod, matching this form's existing hand-rolled pattern
+  // (see the file-level comment above).
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setStatus('submitting');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('request failed');
+      setStatus('success');
       form.reset();
       setAbout(initial);
-    },
-  });
+    } catch {
+      setStatus('error');
+    }
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-2.5">
@@ -219,6 +265,11 @@ function ContactForm({
           ))}
         </SelectContent>
       </Select>
+      {/* The Select above is a Radix component with no native form
+          participation (no `name`, nothing lands in FormData on its own) —
+          this hidden input is what actually carries the enquiry type to the
+          server for the hello@/partners@ routing in src/worker.ts. */}
+      <input type="hidden" name="about" value={about} />
 
       <fieldset
         disabled={busy}
@@ -246,18 +297,6 @@ function ContactForm({
           placeholder="Email"
           autoComplete="email"
           required
-          className={fieldClass}
-        />
-
-        <label htmlFor="contact-phone" className="sr-only">
-          Phone number (optional)
-        </label>
-        <Input
-          id="contact-phone"
-          name="phone"
-          type="tel"
-          placeholder="Phone (optional)"
-          autoComplete="tel"
           className={fieldClass}
         />
 

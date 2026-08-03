@@ -82,10 +82,16 @@ content:
               collapsible:
                 collapsed: true
                 summary: '{fields.value}'
-            description: 'Shown with calendar / map-pin icons, in this order.'
+            description: 'The rail under the hero — date and venue sit beside the ticket button on one line, with calendar / map-pin icons, in this order.'
             fields:
               - { name: label, label: Label, type: string }
               - { name: value, label: Value, type: string }
+              - {
+                  name: short,
+                  label: 'Short value (phones)',
+                  type: string,
+                  description: 'Used on phones only (under 640px), where the full value would not fit on one line beside the ticket button — e.g. "7 Nov 2026" for "7 November 2026". Leave empty to use the full value everywhere.',
+                }
           - { name: primaryCta, label: Ticket button, component: cta }
           - name: community
             label: Community invite
@@ -108,38 +114,8 @@ content:
               description: 'The rotating 3×3 wall. The first nine images show first, then it cycles nine at a time. The nine Home-carousal-logo tiles assemble the logo — keep them together and in their 1-9 order (they show first right now).',
             }
 
-      - name: vision
-        label: 2. Vision
-        type: object
-        fields:
-          - { name: visible, component: visible }
-          - {
-              name: heading,
-              label: Heading,
-              type: string,
-              description: 'The opening declaration. Same size as the text below it, but in full colour.',
-            }
-          - {
-              name: statement,
-              label: Statement,
-              type: text,
-              description: 'Everything under the heading. Leave an empty line between paragraphs; a single new line breaks the line where you break it. Wrap words in *asterisks* to emphasise them.',
-            }
-          - name: highlights
-            label: Highlighted phrases
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: '{fields.phrase}'
-            description: 'Each phrase must appear word-for-word in the heading or statement above. It is shown in full colour; add a photo and it also reveals that photo on hover. A phrase with no photo is still highlighted, just without the hover preview.'
-            fields:
-              - { name: phrase, label: Phrase, type: string }
-              - { name: image, label: 'Hover photo (optional)', type: image }
-              - { name: href, label: 'Link (optional)', type: string }
-
       - name: conference
-        label: 3. Conference & Why Attend
+        label: 2. Conference & Why Attend
         type: object
         fields:
           - { name: visible, component: visible }
@@ -187,6 +163,36 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
 
+      - name: vision
+        label: 3. Vision
+        type: object
+        fields:
+          - { name: visible, component: visible }
+          - {
+              name: heading,
+              label: Heading,
+              type: string,
+              description: 'The opening declaration. Same size as the text below it, but in full colour.',
+            }
+          - {
+              name: statement,
+              label: Statement,
+              type: text,
+              description: 'Everything under the heading. Leave an empty line between paragraphs; a single new line breaks the line where you break it. Wrap words in *asterisks* to emphasise them.',
+            }
+          - name: highlights
+            label: Highlighted phrases
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: '{fields.phrase}'
+            description: 'Each phrase must appear word-for-word in the heading or statement above. It is shown in full colour; add a photo and it also reveals that photo on hover. A phrase with no photo is still highlighted, just without the hover preview.'
+            fields:
+              - { name: phrase, label: Phrase, type: string }
+              - { name: image, label: 'Hover photo (optional)', type: image }
+              - { name: href, label: 'Link (optional)', type: string }
+
       - name: speakers
         label: 4. Speakers
         type: object
@@ -216,6 +222,7 @@ content:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
+          - { name: cta, label: 'Corner link (top right)', component: cta }
           - name: items
             label: Partner logos
             type: object
@@ -332,6 +339,12 @@ content:
               - { name: title, label: Title, type: string }
               - { name: body, label: Body, type: text }
               - { name: image, label: Photo, component: picture }
+              - {
+                  name: cta,
+                  label: 'Button (optional)',
+                  component: cta,
+                  description: 'Shown at the end of this milestone. Leave empty except on the upcoming one — e.g. a "Get Tickets" button on the current year''s entry.',
+                }
 
       - name: why
         label: 3. Why we exist
@@ -506,6 +519,7 @@ content:
           - { name: visible, component: visible }
           - { name: heading, label: Heading, type: string }
           - { name: description, label: Description, type: text }
+          - { name: cta, label: 'Corner link (top right)', component: cta }
           - name: items
             label: Partner logos
             type: object

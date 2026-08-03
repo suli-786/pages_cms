@@ -32,8 +32,12 @@
   },
   "partners": {
     "visible": true,
-    "heading": "Our 2026 partners",
-    "description": "The organisations partnering with Ummah Tech 2026, at every tier.",
+    "heading": "Our past partners.",
+    "description": "Proudly supported by the organisations backing the Ummah tech community.",
+    "cta": {
+      "label": "Partner with us",
+      "href": "#contact"
+    },
     "items": [
       {
         "src": "/images/partners/Ashraful aid logo.png",

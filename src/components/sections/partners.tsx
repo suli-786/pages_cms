@@ -12,6 +12,8 @@
 // targets), pauses on hover, and holds still entirely under
 // prefers-reduced-motion (global.css); there is no manual pause control.
 
+import { FramedCta } from '@/components/elements/framed-cta';
+import SectionHeader from '@/components/elements/section-header';
 import { Marquee } from '@/components/ui/marquee';
 import type {
   ResolvedPartnerLogo,
@@ -19,7 +21,7 @@ import type {
 } from '@/lib/images';
 
 function Partners({ content }: { content: ResolvedPartnersContent }) {
-  const { heading, description, items = [] } = content;
+  const { heading, description, cta, items = [] } = content;
 
   // Two counter-scrolling rows only once there are enough logos to fill them;
   // below that a split just makes the marquee's repetition obvious.
@@ -32,15 +34,19 @@ function Partners({ content }: { content: ResolvedPartnersContent }) {
       id="partners"
       className="section-padding scroll-mt-24 overflow-hidden"
     >
-      <div className="container text-center">
-        {heading && (
-          <h2 className="text-2xl tracking-tight text-balance md:text-3xl lg:text-4xl">
-            {heading}
-          </h2>
-        )}
-        {description && (
-          <p className="text-muted-foreground mt-3 text-lg">{description}</p>
-        )}
+      {/* Same heading treatment as Speakers (user decision, 2026-08-03):
+          left-aligned SectionHeader with the framed CTA on the right — only
+          the header changed, the marquee below is untouched. */}
+      <div className="container">
+        <SectionHeader
+          heading={heading}
+          description={description}
+          mark={
+            cta.label && cta.href ? (
+              <FramedCta label={cta.label} href={cta.href} />
+            ) : undefined
+          }
+        />
       </div>
 
       {items.length > 0 && (

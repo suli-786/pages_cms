@@ -31,11 +31,11 @@ const home = await resolveHomeImages(rawHome);
   <!-- Hero → statement, date/venue, ticket CTA, rotating photo grid. -->
   {home.hero.visible && <Hero content={home.hero} client:load />}
 
-  <!-- Vision → large centered statement with hover photo previews -->
-  {home.vision.visible && <Vision content={home.vision} client:visible />}
-
   <!-- Conference intro + Why Attend → header, photo tiles, benefit cells -->
   {home.conference.visible && <ConferenceIntro content={home.conference} />}
+
+  <!-- Vision → large centered statement with hover photo previews -->
+  {home.vision.visible && <Vision content={home.vision} client:visible />}
 
   <!-- Speakers → even card grid -->
   {

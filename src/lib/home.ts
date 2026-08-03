@@ -23,7 +23,11 @@ import {
 const heroSchema = z.object({
   visible,
   title: z.string(), // required in .pages.yml; a hero without a title is a broken build
-  eventDetails: list(z.object({ label: str, value: str })),
+  // `short` is an optional phone-only form of `value`. The hero rail keeps
+  // date, venue and the ticket button on one line; below 640px the full
+  // "7 November 2026" does not fit, so the short form renders there instead.
+  // Empty falls back to `value`.
+  eventDetails: list(z.object({ label: str, value: str, short: str })),
   primaryCta: ctaSchema,
   community: z
     .object({ body: str, cta: ctaSchema })
@@ -84,8 +88,8 @@ const finalCtaSchema = z.object({
 
 const homeSchema = z.object({
   hero: heroSchema,
-  vision: visionSchema,
   conference: conferenceSchema,
+  vision: visionSchema,
   speakers: speakersSchema,
   partners: partnersSchema,
   finalCta: finalCtaSchema,

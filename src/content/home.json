@@ -5,11 +5,13 @@
     "eventDetails": [
       {
         "label": "Date",
-        "value": "7 November 2026"
+        "value": "7 November 2026",
+        "short": "7 Nov 2026"
       },
       {
         "label": "Venue",
-        "value": "Johannesburg"
+        "value": "Johannesburg",
+        "short": "JHB"
       }
     ],
     "primaryCta": {
@@ -42,28 +44,6 @@
       "/images/other/paneldiscussion.jpg",
       "/images/other/speaerandteam.jpg",
       "/images/dsc2748-2.jpg"
-    ]
-  },
-  "vision": {
-    "visible": true,
-    "heading": "The Ummah isn't standing on the sidelines anymore. We're building.",
-    "statement": "The obvious question would be to ask what we're building when in fact, we should be asking what we're building for?\n\nWe believe the future is an amānah entrusted to us for the generations to come.\n\nThat's why Ummah Tech brings together Muslim technologists, founders, creatives and innovators who believe that technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and responsibility.\n\nBecause the people building a future worth inheriting should know each other. ",
-    "highlights": [
-      {
-        "phrase": "what we're building it for?"
-      },
-      {
-        "phrase": "technology should be built with purpose."
-      },
-      {
-        "phrase": "challenge assumptions"
-      },
-      {
-        "phrase": "guided by faith, purpose and responsibility."
-      },
-      {
-        "phrase": " a future worth inheriting "
-      }
     ]
   },
   "conference": {
@@ -113,10 +93,32 @@
       }
     ]
   },
+  "vision": {
+    "visible": true,
+    "heading": "The Ummah isn't standing on the sidelines anymore. We're building.",
+    "statement": "The obvious question would be to ask what we're building when in fact, we should be asking what we're building for?\n\nWe believe the future is an amānah entrusted to us for the generations to come.\n\nThat's why Ummah Tech brings together Muslim technologists, founders, creatives and innovators who believe that technology should be built with purpose.\n\nWe create spaces where we exchange ideas, challenge assumptions, find collaborators and explore what becomes possible when innovation is guided by faith, purpose and responsibility.\n\nBecause the people building a future worth inheriting should know each other. ",
+    "highlights": [
+      {
+        "phrase": "what we're building it for?"
+      },
+      {
+        "phrase": "technology should be built with purpose."
+      },
+      {
+        "phrase": "challenge assumptions"
+      },
+      {
+        "phrase": "guided by faith, purpose and responsibility."
+      },
+      {
+        "phrase": " a future worth inheriting "
+      }
+    ]
+  },
   "speakers": {
     "visible": true,
-    "heading": "Last year's speakers.",
-    "description": "A look back at the founders, leaders and builders who shared the stage at Ummah Tech 2025.",
+    "heading": "Our past speakers.",
+    "description": "Founders, leaders and builders who took the stage at Ummah Tech.",
     "cta": {
       "label": "Interested in speaking?",
       "href": "#contact"
@@ -197,8 +199,12 @@
   },
   "partners": {
     "visible": true,
-    "heading": "Last year's partners.",
+    "heading": "Our past partners.",
     "description": "Proudly supported by the organisations backing the Ummah tech community.",
+    "cta": {
+      "label": "Partner with us",
+      "href": "/partner"
+    },
     "items": [
       {
         "src": "/images/partners/Ashraful aid logo.png",

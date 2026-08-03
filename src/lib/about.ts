@@ -16,6 +16,7 @@ import { DEFAULT_ICON, ICON_NAMES } from '@/components/elements/icon';
 import data from '@/content/about.json';
 import {
   contactSchema,
+  ctaSchema,
   enumOr,
   introSchema,
   list,
@@ -31,12 +32,23 @@ import {
  */
 const iconName = enumOr(ICON_NAMES, DEFAULT_ICON);
 
-/** Timeline milestones (timeline14 in story.tsx) — one dated beat each. */
+/**
+ * Timeline milestones (timeline14 in story.tsx) — one dated beat each. `cta`
+ * is optional and typically only set on the upcoming milestone — story.tsx
+ * renders it as the same framed CTA the Speakers/Partners sections use,
+ * beneath that milestone's body.
+ */
 export const storySchema = z.object({
   visible,
   heading: str,
   milestones: list(
-    z.object({ date: str, title: str, body: str, image: mediaSchema }),
+    z.object({
+      date: str,
+      title: str,
+      body: str,
+      image: mediaSchema,
+      cta: ctaSchema,
+    }),
   ),
 });
 

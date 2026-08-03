@@ -33,6 +33,10 @@
         "image": {
           "src": "/images/other/zam-zam-water.jpg",
           "alt": "Zam Zam gift at Ummah Tech"
+        },
+        "cta": {
+          "label": "Get Tickets",
+          "href": "https://www.quicket.co.za/events/387499-ummah-tech-2026/#/"
         }
       }
     ]

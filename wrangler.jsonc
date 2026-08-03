@@ -1,11 +1,42 @@
 {
   // Deploys the static Astro build output (dist/) as a Cloudflare Worker with
-  // static assets. Used by the "Workers Builds" deploy command `npx wrangler deploy`.
-  // Note: Cloudflare Pages ignores this file (no `pages_build_output_dir` key).
+  // static assets, PLUS one small custom Worker script (src/worker.ts) for the
+  // contact form's real submission (user decision, 2026-08-03 — previously a
+  // client-only fake setTimeout). Used by the "Workers Builds" deploy command
+  // `npx wrangler deploy`. Note: Cloudflare Pages ignores this file (no
+  // `pages_build_output_dir` key).
+  //
+  // Default routing (no run_worker_first) serves any request matching a static
+  // file straight from `assets` — src/worker.ts only ever runs for POST
+  // /api/contact, which has no matching file. The `binding: "ASSETS"` is what
+  // lets that script fall through to the static build for everything else via
+  // `env.ASSETS.fetch(request)`.
   "name": "ummah-tech",
   "compatibility_date": "2025-01-01",
+  "main": "./src/worker.ts",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  // Cloudflare Email Sending — see src/worker.ts for the send call. Requires
+  // the domain onboarded via Dashboard (Email Service → Email Sending) or
+  // `wrangler email sending enable ummahtech.net`; sends fail with
+  // E_SENDER_NOT_VERIFIED until that's done. Independent of the domain's MX
+  // records (Google Workspace) — only adds SPF/DKIM, never touches inbound
+  // mail routing.
+  "send_email": [{ "name": "EMAIL" }],
+  // Newsletter signup → Mailchimp (src/worker.ts, POST /api/subscribe).
+  // MAILCHIMP_LIST_ID is the Audience ID from Mailchimp → Audience → Settings
+  // → "Audience name and defaults". Not a credential, so it lives here rather
+  // than in a secret. Leave MAILCHIMP_SERVER_PREFIX empty to derive it from
+  // the API key's trailing data centre (e.g. "...-us21" → "us21"); set it
+  // only if that ever stops matching the dashboard URL.
+  //
+  // The API key itself is a SECRET — never put it here:
+  //   npx wrangler secret put MAILCHIMP_API_KEY
+  "vars": {
+    "MAILCHIMP_LIST_ID": "e849be65b5",
+    "MAILCHIMP_SERVER_PREFIX": "us8"
   },
   // Custom domains bind the Worker to the zone and make Cloudflare create and
   // manage the proxied DNS records itself — do not add A/CNAME records for these

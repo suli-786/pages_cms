@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode } from 'react';
+import { useState, type FormEvent, type ReactNode } from 'react';
 
 import { Loader2, MoveUpRight } from 'lucide-react';
 
@@ -9,7 +9,6 @@ import { UmmahMark, UmmahWordmark } from '@/components/layout/logo';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { NAV_LINKS } from '@/consts';
-import { useFakeSubmit } from '@/hooks/use-fake-submit';
 import type { SocialLink } from '@/lib/site';
 import { cn, isExternal } from '@/lib/utils';
 
@@ -100,11 +99,32 @@ function Footer({
   );
 }
 
-// Compact one-field signup. Shares the placeholder submit with the main form
-// (src/hooks/use-fake-submit.ts) — wire both when a backend exists.
+// Compact one-field signup. Posts to src/worker.ts (POST /api/subscribe),
+// which adds the address straight to the Mailchimp audience as `subscribed`
+// — single opt-in, no confirmation step (user decision, 2026-08-03).
 function NewsletterForm() {
-  const { status, busy, onSubmit } = useFakeSubmit();
+  const [status, setStatus] = useState<
+    'idle' | 'submitting' | 'success' | 'error'
+  >('idle');
+  const busy = status === 'submitting';
   const locked = busy || status === 'success';
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    setStatus('submitting');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('request failed');
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
+  };
 
   return (
     <form className="mt-5" onSubmit={onSubmit}>
