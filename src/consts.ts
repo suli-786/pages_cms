@@ -70,8 +70,13 @@ export const SITE_METADATA = {
     siteName: SITE_NAME,
     images: [
       {
-        // TODO: replace with an Ummah Tech Conference OG image.
-        url: '/og-image.jpg',
+        // Generated from the live hero (logo, statement, date/venue), so the
+        // card matches the page it links to. The FILENAME is versioned on
+        // purpose: WhatsApp, iMessage, Slack and LinkedIn cache preview images
+        // per-URL and give no way to purge, so replacing the file in place
+        // would leave every previously-shared link showing the old card
+        // indefinitely. Bump the year/suffix whenever the image changes.
+        url: '/og-image-2026.jpg',
         width: 1200,
         height: 630,
         alt: SITE_TITLE,
@@ -82,7 +87,7 @@ export const SITE_METADATA = {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/og-image.jpg'],
+    images: ['/og-image-2026.jpg'],
     // Attribution on X's own link previews. The X profile is no longer linked
     // from the site (removed from settings.json → Social links), but the
     // account still exists and this only labels cards shared there.
